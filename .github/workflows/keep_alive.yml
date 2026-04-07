@@ -1,0 +1,15 @@
+name: "Nexus Keep-Alive"
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Every 15 minutes
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Ping Nexus Engine"
+        run: |
+          curl -s https://nexus-mobility.onrender.com/health
+          echo "Nexus Engine heart-beat transmitted successfully."

@@ -50,7 +50,7 @@ app.include_router(predictions.router, prefix="/api/predictions", tags=["Predict
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 app.include_router(analyst.router, prefix="/api/analyst", tags=["Analyst"])
 
-@app.get("/")
+@app.get("/", methods=["GET", "HEAD"])
 def read_root():
     return {
         "message": "Welcome to Smart Traffic API",
@@ -65,7 +65,7 @@ def read_root():
         }
     }
 
-@app.get("/health")
+@app.get("/health", methods=["GET", "HEAD"])
 def health_check():
     return {
         "status": "healthy",
