@@ -17,7 +17,7 @@ export const normalizeRole = (role: string | null | undefined): UserRole => {
 };
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ?? 'http://127.0.0.1:8001/api';
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ?? 'https://nexus-mobility-backend.onrender.com/api';
 
 export const getToken = () => sessionStorage.getItem('nexus_token') || localStorage.getItem('nexus_token');
 

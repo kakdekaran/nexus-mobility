@@ -70,7 +70,11 @@ const Login = () => {
         navigate(getDefaultRouteForRole(normalizedRole));
       }
     } catch (err: any) {
-      setError(err.response?.data?.detail || "Sequence failed. Verify municipal credentials.");
+      if (!err.response) {
+        setError("GRID CONNECTIVITY FAULT: Backend is unreachable. Ensure VITE_API_BASE_URL is set.");
+      } else {
+        setError(err.response?.data?.detail || "Authentication failed. Check credentials.");
+      }
     } finally {
       setLoading(false);
     }
