@@ -16,8 +16,12 @@ export const normalizeRole = (role: string | null | undefined): UserRole => {
   return ROLE_ALIASES[role] ?? 'User';
 };
 
+const isLocal = typeof window !== 'undefined' && 
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ?? 'https://nexus-mobility-backend.onrender.com/api';
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ?? 
+  (isLocal ? 'http://127.0.0.1:8001/api' : 'https://nexus-mobility-backend.onrender.com/api');
 
 export const getToken = () => sessionStorage.getItem('nexus_token') || localStorage.getItem('nexus_token');
 
