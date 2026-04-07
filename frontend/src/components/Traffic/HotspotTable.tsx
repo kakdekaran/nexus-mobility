@@ -90,7 +90,7 @@ const HotspotTable: React.FC<HotspotTableProps> = ({ data: apiData }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-            {sortedHotspots.map((spot: any, i: number) => (
+            {sortedHotspots.map((spot: any) => (
               <tr key={spot.name} className="group hover:bg-white/[0.03] transition-all duration-300">
                 <td className="px-10 py-6">
                   <div className="flex items-center gap-4">

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion'; // Unused
 import DynamicGridMap from '../../components/Traffic/DynamicGridMap';
 
 interface LiveMonitorProps {
@@ -11,7 +11,7 @@ interface LiveMonitorProps {
   } | null;
 }
 
-const LiveMonitor: React.FC<LiveMonitorProps> = ({ city = "Delhi", stats }) => {
+const NexusLiveMonitor = ({ city = "Delhi", stats }: LiveMonitorProps) => {
   const trafficLoad = stats?.avg_traffic_index || 0;
   const activeAlerts = stats?.active_alerts || 0;
   
@@ -76,4 +76,4 @@ const LiveMonitor: React.FC<LiveMonitorProps> = ({ city = "Delhi", stats }) => {
   );
 };
 
-export default LiveMonitor;
+export default NexusLiveMonitor;

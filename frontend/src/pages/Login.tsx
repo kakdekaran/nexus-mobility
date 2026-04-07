@@ -18,347 +18,247 @@ const Login = () => {
     const token = sessionStorage.getItem('nexus_token') || localStorage.getItem('nexus_token');
     if (token) {
       const role = sessionStorage.getItem('role') || localStorage.getItem('role');
-      window.location.href = getDefaultRouteForRole(normalizeRole(role));
+      if (role) {
+        const normalizedRole = normalizeRole(role);
+        navigate(getDefaultRouteForRole(normalizedRole));
+      }
     }
-  }, []);
+  }, [navigate]);
 
-  // Login Form State
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    fullName: '',
+    role: 'User'
+  });
 
-  // Register Form State
-  const [regName, setRegName] = useState('');
-  const [regEmail, setRegEmail] = useState('');
-  const [regPassword, setRegPassword] = useState('');
-  const [regRole, setRegRole] = useState('User');
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setNotice(null);
-    try {
-      const res = await axios.post(`${API_BASE}/login`, {
-        email: loginEmail.trim().toLowerCase(),
-        password: loginPassword
-      });
-      setSession(res.data);
-      // Using window.location.href instead of navigate() to force a clean re-sync of auth state
-      window.location.href = getDefaultRouteForRole(normalizeRole(res.data.role));
-    } catch (err: any) {
-      setError(err.response?.data?.detail || 'Authentication failed. Please check your credentials.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setNotice(null);
     try {
-      await axios.post(`${API_BASE}/register`, {
-        name: regName.trim(),
-        email: regEmail.trim().toLowerCase(),
-        password: regPassword,
-        role: regRole || 'User'
-      });
-      setIsRegister(false);
-      setNotice('Registration successful. Please sign in.');
-      setRegName('');
-      setRegEmail('');
-      setRegPassword('');
-      setRegRole('User');
+      if (isRegister) {
+        await axios.post(`${API_BASE}/register`, {
+          email: formData.email,
+          password: formData.password,
+          full_name: formData.fullName,
+          role: formData.role
+        });
+        setNotice("Account created successfully. You can now login.");
+        setIsRegister(false);
+      } else {
+        const response = await axios.post(`${API_BASE}/login`, {
+          username: formData.email,
+          password: formData.password
+        });
+
+        const { access_token, user } = response.data;
+        setSession({ 
+          access_token, 
+          role: user.role, 
+          name: user.full_name,
+          user_id: user.id 
+        });
+        
+        // Immediate redirection: bypass context delay
+        const normalizedRole = normalizeRole(user.role);
+        navigate(getDefaultRouteForRole(normalizedRole));
+      }
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      setError(err.response?.data?.detail || "Authentication sequence failed. Check secure telemetry.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-background font-body selection:bg-primary/20 selection:text-primary">
-      {/* Background Map Visualization (Subtle Overlay) */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
-        <img 
-          alt="Digital abstract map layout" 
-          className="w-full h-full object-cover grayscale brightness-50" 
-          src="https://images.unsplash.com/photo-1573101808447-d1bd55a6d5ae?auto=format&fit=crop&q=80&w=2600"
-        />
+    <div className="min-h-screen relative overflow-hidden bg-black font-body">
+      {/* Background: Metropolitan Telemetry Canvas (HD) */}
+      <div className="absolute inset-0 z-0">
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen scale-110"
+        >
+          <source 
+            src="https://assets.mixkit.co/videos/preview/mixkit-night-city-traffic-from-above-41864-large.mp4" 
+            type="video/mp4" 
+          />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/80 to-primary/20" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,188,212,0.1)_0%,transparent_70%)]" />
       </div>
 
-      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden rounded-2xl bg-surface-container-low shadow-2xl relative z-10 border border-white/5 font-body">
-        {/* Left Side: Login Identity Panel */}
-        <div className="hidden md:flex flex-col justify-between p-12 bg-slate-950/40 relative group border-r border-white/5">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-primary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>hub</span>
-              <h1 className="font-headline font-black text-2xl tracking-tighter text-primary uppercase antialiased">Nexus Mobility</h1>
+      {/* Main Container */}
+      <div className="relative z-10 container mx-auto h-screen flex flex-col items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full max-w-md"
+        >
+          {/* Logo & Identity */}
+          <div className="text-center mb-10 space-y-2">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-primary/10 border border-primary/20 backdrop-blur-xl mb-4 group shadow-[0_0_30px_rgba(0,188,212,0.2)]">
+              <span className="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">
+                traffic
+              </span>
             </div>
-            <p className="text-on-surface-variant font-headline text-3xl font-black leading-tight uppercase antialiased tracking-tighter">
-              Precision traffic intelligence <br/> for the modern metropolis.
+            <h1 className="text-4xl font-headline font-black text-white uppercase tracking-[-0.05em] leading-none antialiased">
+              NEXUS <span className="text-primary italic">MOBILITY</span>
+            </h1>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.4em] opacity-60">
+              Municipal Grid Command • v4.0 PRO
             </p>
           </div>
 
-          <div className="space-y-8">
-            <div className="p-6 rounded-xl bg-surface-container-high/50 border-l-4 border-primary shadow-xl">
-              <p className="italic text-on-surface-variant mb-4 text-xs font-bold uppercase tracking-widest leading-relaxed opacity-80">
-                "The Digital Cartographer allows us to visualize congestion before it even occurs, saving thousands of transit hours."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-black text-xs border border-primary/20">CP</div>
-                <div>
-                  <p className="text-sm font-black text-white uppercase tracking-tighter leading-none">Director of Logistics</p>
-                  <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-[0.2em] mt-1">Metro Planning Division</p>
+          {/* Login Card */}
+          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl p-10 relative overflow-hidden group">
+            {/* Subtle light effect */}
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-[80px]" />
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-tertiary/10 rounded-full blur-[80px]" />
+
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+              <AnimatePresence mode="wait">
+                {isRegister && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="space-y-4"
+                  >
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Full Name</label>
+                      <input 
+                        type="text" 
+                        required
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder:text-white/20 outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-bold"
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Assigned Role</label>
+                      <select 
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white outline-none focus:ring-2 focus:ring-primary/40 transition-all font-bold appearance-none cursor-pointer"
+                        value={formData.role}
+                        onChange={(e) => setFormData({...formData, role: e.target.value})}
+                      >
+                        <option value="User" className="bg-slate-900">Citizen Terminal</option>
+                        <option value="Analyst" className="bg-slate-900">Systems Analyst</option>
+                        <option value="Admin" className="bg-slate-900">Grand Administrator</option>
+                      </select>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Email Identifier</label>
+                <div className="relative">
+                  <input 
+                    type="email" 
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-5 py-3.5 text-white placeholder:text-white/20 outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-bold"
+                    placeholder="admin@nexus.gov"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-xl">
+                    alternate_email
+                  </span>
                 </div>
               </div>
-            </div>
-            
-            <div className="flex gap-10">
-              <div className="flex flex-col">
-                <span className="text-primary font-headline text-2xl font-black tracking-tighter">142+</span>
-                <span className="text-on-surface-variant text-[10px] uppercase font-black tracking-[0.2em] opacity-60">Cities Unified</span>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Security Key</label>
+                <div className="relative">
+                  <input 
+                    type="password" 
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-5 py-3.5 text-white placeholder:text-white/20 outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all font-bold"
+                    placeholder="**********"
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                  />
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-xl">
+                    lock
+                  </span>
+                </div>
               </div>
-              <div className="w-px h-12 bg-white/5"></div>
-              <div className="flex flex-col">
-                <span className="text-tertiary font-headline text-2xl font-black tracking-tighter">0.8s</span>
-                <span className="text-on-surface-variant text-[10px] uppercase font-black tracking-[0.2em] opacity-60">Latent Response</span>
-              </div>
+
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }} 
+                  animate={{ opacity: 1, x: 0 }}
+                  className="p-4 bg-error/10 border border-error/20 rounded-2xl flex gap-3 items-center"
+                >
+                  <span className="material-symbols-outlined text-error text-xl">error</span>
+                  <p className="text-[11px] font-bold text-error tracking-tight">{error}</p>
+                </motion.div>
+              )}
+
+              {notice && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }} 
+                  animate={{ opacity: 1, x: 0 }}
+                  className="p-4 bg-primary/10 border border-primary/20 rounded-2xl flex gap-3 items-center"
+                >
+                  <span className="material-symbols-outlined text-primary text-xl">info</span>
+                  <p className="text-[11px] font-bold text-primary tracking-tight">{notice}</p>
+                </motion.div>
+              )}
+
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full bg-primary hover:bg-primary-dark text-black font-black uppercase tracking-[0.2em] py-4 rounded-2xl transition-all shadow-[0_4px_30px_rgba(0,188,212,0.3)] hover:shadow-[0_8px_40px_rgba(0,188,212,0.5)] active:scale-[0.98] disabled:opacity-50 disabled:grayscale relative overflow-hidden"
+              >
+                <span className="relative z-10 italic">
+                  {loading ? "Decrypting..." : isRegister ? "Initialize Access" : "Secure Launch"}
+                </span>
+                {loading && (
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    className="absolute inset-0 bg-white/20 z-0"
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                )}
+              </button>
+            </form>
+
+            <div className="mt-8 text-center relative z-10">
+              <button 
+                onClick={() => { setIsRegister(!isRegister); setError(null); setNotice(null); }}
+                className="text-[11px] font-bold text-slate-400 hover:text-white uppercase tracking-widest transition-colors"
+              >
+                {isRegister ? "Already part of the grid? Authenticate" : "New municipal node? Request Access"}
+              </button>
             </div>
           </div>
-        </div>
 
-        {/* Right Side: Auth Forms */}
-        <div className="p-8 md:p-16 flex flex-col justify-center bg-surface-container-low relative">
-          <AnimatePresence mode="wait">
-            {!isRegister ? (
-              <motion.div 
-                key="login"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="space-y-10"
-              >
-                <header className="space-y-2">
-                  <h2 className="text-3xl font-headline font-black text-white tracking-tighter uppercase antialiased">Access Control</h2>
-                  <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Enter your credentials to manage city mobility logs.</p>
-                </header>
-
-                {error && (
-                  <div className="bg-error/10 border border-error/20 text-error p-4 rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-3">
-                    <span className="material-symbols-outlined text-lg">error</span>
-                    {error}
-                  </div>
-                )}
-
-                {notice && (
-                  <div className="bg-tertiary/10 border border-tertiary/20 text-tertiary p-4 rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-3">
-                    <span className="material-symbols-outlined text-lg">check_circle</span>
-                    {notice}
-                  </div>
-                )}
-
-                <form onSubmit={handleLogin} className="space-y-8">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] px-1 opacity-60" htmlFor="email">Institutional Email</label>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-primary transition-colors">alternate_email</span>
-                        <input 
-                          required
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all text-sm font-medium outline-none" 
-                          id="email" 
-                          type="email" 
-                          placeholder="name@nexus-mobility.gov"
-                          value={loginEmail}
-                          onChange={(e) => setLoginEmail(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center px-1">
-                        <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60" htmlFor="password">Access Cipher</label>
-                        <button type="button" className="text-[10px] font-black text-primary hover:text-primary-fixed-dim transition-colors uppercase tracking-widest">Forgot Password?</button>
-                      </div>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-primary transition-colors">lock</span>
-                        <input 
-                          required
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all text-sm font-medium outline-none" 
-                          id="password" 
-                          type="password" 
-                          placeholder="Enter your password"
-                          value={loginPassword}
-                          onChange={(e) => setLoginPassword(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 px-1">
-                    <input className="w-4 h-4 rounded border-none bg-surface-container-highest text-primary focus:ring-primary/40" id="remember" type="checkbox"/>
-                    <label className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60 cursor-pointer" htmlFor="remember">Trust this workstation for 30 days</label>
-                  </div>
-
-                  <button 
-                    disabled={loading}
-                    className="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-black uppercase tracking-widest py-4 rounded-full flex items-center justify-center gap-3 shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50" 
-                    type="submit"
-                  >
-                    {loading ? 'Initializing Interface...' : 'Initialize Session'}
-                    {!loading && <span className="material-symbols-outlined text-lg">arrow_forward</span>}
-                  </button>
-                </form>
-
-                <footer className="pt-8 border-t border-white/5 flex flex-col items-center gap-4">
-                  <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-40">Unregistered personnel?</p>
-                  <button 
-                    onClick={() => setIsRegister(true)}
-                    className="text-[10px] font-black text-white hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest group"
-                  >
-                    Create Operator Profile
-                    <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">chevron_right</span>
-                  </button>
-                </footer>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="register"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="space-y-8"
-              >
-                <header className="space-y-2">
-                  <div className="flex items-center gap-3 mb-6">
-                    <button 
-                      onClick={() => setIsRegister(false)}
-                      className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface-container-highest text-on-surface-variant hover:text-primary transition-all border border-white/5"
-                    >
-                      <span className="material-symbols-outlined text-lg">arrow_back</span>
-                    </button>
-                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Operator Onboarding</span>
-                  </div>
-                  <h2 className="text-3xl font-headline font-black text-white tracking-tighter uppercase antialiased leading-none">Create Identity</h2>
-                  <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Provision your access credentials for the analytics system.</p>
-                </header>
-
-                <form onSubmit={handleRegister} className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] px-1 opacity-60" htmlFor="reg-name">Full Operator Name</label>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-tertiary transition-colors">badge</span>
-                        <input 
-                          required
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary/40 transition-all text-sm font-medium outline-none" 
-                          id="reg-name" 
-                          type="text" 
-                          placeholder="Adrian Sterling"
-                          value={regName}
-                          onChange={(e) => setRegName(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] px-1 opacity-60" htmlFor="reg-email">Institutional Email</label>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-tertiary transition-colors">alternate_email</span>
-                        <input 
-                          required
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary/40 transition-all text-sm font-medium outline-none" 
-                          id="reg-email" 
-                          type="email" 
-                          placeholder="a.sterling@nexus-mobility.gov"
-                          value={regEmail}
-                          onChange={(e) => setRegEmail(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] px-1 opacity-60" htmlFor="reg-role">Deployment Role</label>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-tertiary transition-colors">manage_accounts</span>
-                        <select 
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white appearance-none focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary/40 transition-all text-sm font-medium outline-none cursor-pointer" 
-                          id="reg-role"
-                          value={regRole}
-                          onChange={(e) => setRegRole(e.target.value)}
-                        >
-                          <option value="User" className="bg-surface-dim">User</option>
-                          <option value="Analyst" className="bg-surface-dim">Analyst</option>
-                        </select>
-                        <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant pointer-events-none">expand_more</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="block text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] px-1 opacity-60" htmlFor="reg-password">Access Cipher</label>
-                      <div className="relative group">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-lg group-focus-within:text-tertiary transition-colors">lock</span>
-                        <input 
-                          required
-                          minLength={6}
-                          className="w-full bg-surface-container-highest border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:ring-2 focus:ring-tertiary/40 focus:border-tertiary/40 transition-all text-sm font-medium outline-none" 
-                          id="reg-password" 
-                          type="password" 
-                          placeholder="Minimum 6 characters"
-                          value={regPassword}
-                          onChange={(e) => setRegPassword(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 px-1">
-                    <input className="mt-1 w-4 h-4 rounded border-none bg-surface-container-highest text-tertiary focus:ring-tertiary/40" id="terms" type="checkbox" required/>
-                    <label className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60 leading-relaxed cursor-pointer" htmlFor="terms">
-                      I confirm that I am an authorized employee or contractor for the Nexus Mobility Project and agree to the <span className="text-tertiary hover:underline">Standard Security Protocols</span>.
-                    </label>
-                  </div>
-
-                  <button 
-                    disabled={loading}
-                    className="w-full bg-gradient-to-br from-tertiary to-tertiary-container text-on-tertiary font-black uppercase tracking-widest py-4 rounded-full flex items-center justify-center gap-3 shadow-2xl shadow-tertiary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50" 
-                    type="submit"
-                  >
-                    {loading ? 'Provisioning Identity...' : 'Register Operator'}
-                    {!loading && <span className="material-symbols-outlined text-lg">how_to_reg</span>}
-                  </button>
-                </form>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Footer Legal/Status */}
-      <div className="mt-12 flex flex-col md:flex-row gap-10 items-center justify-between w-full max-w-5xl px-6 text-[10px] font-black uppercase tracking-[0.3em] opacity-40">
-        <div className="flex items-center gap-10">
-          <div className="flex items-center gap-3">
-            <div className="w-2.5 h-2.5 rounded-full bg-tertiary animate-pulse shadow-[0_0_10px_rgba(112,216,200,0.5)]"></div>
-            <span>All Systems Operational</span>
+          {/* Footer Stats Summary */}
+          <div className="mt-12 flex justify-between items-center text-white/40 font-bold px-4">
+            <div className="flex items-center gap-4">
+              <div className="text-center">
+                <p className="text-[16px] text-white">99.9%</p>
+                <p className="text-[8px] uppercase tracking-widest">Uptime</p>
+              </div>
+              <div className="w-px h-6 bg-white/10" />
+              <div className="text-center">
+                <p className="text-[16px] text-white">4.2ms</p>
+                <p className="text-[8px] uppercase tracking-widest">Latency</p>
+              </div>
+            </div>
+            <p className="text-[8px] uppercase tracking-[0.3em] font-black">Secure Nexus Tunnel • AES-256</p>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="material-symbols-outlined text-sm">encrypted</span>
-            <span>AES-256 Encrypted</span>
-          </div>
-        </div>
-        <div className="flex gap-8">
-          <a className="hover:text-primary transition-colors cursor-pointer" href="#">Privacy Policy</a>
-          <a className="hover:text-primary transition-colors cursor-pointer" href="#">Compliance</a>
-          <a className="hover:text-primary transition-colors cursor-pointer" href="#">Support</a>
-        </div>
+        </motion.div>
       </div>
-
-      {/* Floating Abstract Geometry (Decorative) */}
-      <div className="absolute -top-48 -left-48 w-96 h-96 bg-primary/10 rounded-full blur-[140px] pointer-events-none"></div>
-      <div className="absolute -bottom-48 -right-48 w-96 h-96 bg-tertiary/10 rounded-full blur-[140px] pointer-events-none"></div>
-    </main>
+    </div>
   );
 };
 
