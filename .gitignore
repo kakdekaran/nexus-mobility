@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+
+# Logs
+*.log
+logs/
+data/logs/
+
+# Database (Sanitized Master Entry for Review)
+!data/db.json
+
+# Essential Datasets (Whitelisted for immediate review)
+!data/processed_sample.csv
+!data/city_summary.json
+
+# Large datasets — too big for GitHub
+*.csv
+data/uploads/
+india_aqi_complete_*.csv
+
+# Model artifacts — regenerate on setup
+backend/ml_model/*.pkl
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+.cache/
+*.tsbuildinfo
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp files
+*.tmp
+*.bak
+error_report.txt

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --font-body: 'Inter', sans-serif;
+  --font-headline: 'Manrope', sans-serif;
+  
+  /* Core Municipal Palette */
+  --color-primary: #94ccff;
+  --color-on-primary: #003355;
+  --color-primary-container: #004a77;
+  --color-on-primary-container: #cce5ff;
+  
+  --color-secondary: #b6c9d8;
+  --color-on-secondary: #21333e;
+  --color-secondary-container: #374955;
+  --color-on-secondary-container: #d2e5f5;
+  
+  --color-tertiary: #cfbcff;
+  --color-on-tertiary: #381e72;
+  --color-tertiary-container: #4f378b;
+  --color-on-tertiary-container: #eaddff;
+  
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* Surface System (Critical for visibility) */
+  --color-surface: #101418;
+  --color-on-surface: #f8fafc;
+  --color-on-surface-variant: #94a3b8;
+  --color-outline: #475569;
+  --color-surface-container-lowest: #0c0e10;
+  --color-surface-container-low: #191c20;
+  --color-surface-container: #1d2024;
+  --color-surface-container-high: #272a2f;
+  --color-surface-container-highest: #32353a;
+
+  --animate-pulse-soft: pulse-soft 3s ease-in-out infinite;
+}
+
+@layer base {
+  body { 
+    @apply bg-surface-container-lowest text-on-surface font-body;
+    background-color: #0c0e10;
+    color: #f8fafc;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, h5, h6 { 
+    font-family: var(--font-headline);
+    @apply tracking-tight;
+    text-rendering: optimizeLegibility;
+  }
+  input::placeholder {
+    color: #64748b !important;
+    opacity: 1;
+  }
+  
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    line-height: 1;
+  }
+  
+  .glass-panel {
+    @apply bg-surface-container-low/60 backdrop-blur-2xl border border-white/5;
+  }
+  
+  .flow-gradient-primary {
+    background: linear-gradient(135deg, #94ccff 0%, #005b8d 100%);
+  }
+
+  .cta-gradient {
+    background: linear-gradient(135deg, #94ccff 0%, #0078b4 50%, #005b8d 100%);
+  }
+
+  .tonal-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Fix for overlapping text and specific visibility issues */
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #32353a; border-radius: 10px; }
+}
+
+/* Modern Minimalist Scrollbar (Global) */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: #32353a; 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #414750;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Chart Animations */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}

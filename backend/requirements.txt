@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+scikit-learn
+pandas
+numpy
+python-multipart
+pyjwt
+passlib
+bcrypt==3.2.0
+python-dotenv
+email-validator
+gunicorn
