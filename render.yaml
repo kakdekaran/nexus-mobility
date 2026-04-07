@@ -10,6 +10,8 @@ services:
         generateValue: true
       - key: PYTHON_VERSION
         value: 3.10.8
+      - key: PYTHONPATH
+        value: backend
       - key: NODE_ENV
         value: production
     healthCheckPath: /health

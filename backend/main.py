@@ -1,4 +1,10 @@
+import os
+import sys
 import logging
+
+# Ensure backend directory is in the path for module resolution on Render/HuggingFace
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import time
 from datetime import datetime
 from pathlib import Path
