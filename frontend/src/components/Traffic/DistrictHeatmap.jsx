@@ -67,3 +67,4 @@ const DistrictHeatmap = ({ data: apiData }) => {
 export default DistrictHeatmap;
 
 
+

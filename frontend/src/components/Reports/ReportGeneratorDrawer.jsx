@@ -65,7 +65,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
             className="fixed right-0 top-0 h-screen w-[420px] bg-surface-container-high shadow-2xl z-[70] border-l border-on-surface/5 p-8 overflow-y-auto font-body"
           >
             <div className="flex items-center justify-between mb-10">
-              <h3 className="text-2xl font-headline font-black text-white tracking-tight leading-none uppercase">Generate Report</h3>
+              <h3 className="text-2xl font-headline font-black text-on-surface tracking-tight leading-none uppercase">Generate Report</h3>
               <button onClick={onClose} className="p-2 text-on-surface-variant hover:text-white transition-colors">
                 <span className="material-symbols-outlined text-2xl leading-none">close</span>
               </button>
@@ -153,5 +153,6 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
 };
 
 export default ReportGeneratorDrawer;
+
 
 

@@ -78,11 +78,11 @@ const Predictions = () => {
 
       {/* Role View Toggle */}
       <div className="flex justify-end pt-8">
-        <div className="bg-surface-container rounded-full p-1.5 flex gap-1 ring-1 ring-white/5 shadow-inner">
-          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-surface-container-highest text-white shadow-lg transition-all active:scale-95">
+        <div className="bg-surface-container rounded-full p-1.5 flex gap-1 ring-1 ring-on-surface/5 shadow-inner">
+          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-surface-container-highest text-on-surface shadow-lg transition-all active:scale-95">
             {currentRole} Access
           </button>
-          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-on-surface-variant transition-all">
+          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-on-surface-variant transition-all cursor-default">
             Backend verified
           </button>
         </div>
@@ -92,5 +92,6 @@ const Predictions = () => {
 };
 
 export default Predictions;
+
 
 

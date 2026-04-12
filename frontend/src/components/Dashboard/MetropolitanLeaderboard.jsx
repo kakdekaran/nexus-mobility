@@ -27,7 +27,7 @@ const MetropolitanLeaderboard = () => {
     return (
         <div className="bg-surface-container-low p-6 rounded-[2rem] border border-on-surface/5 shadow-2xl space-y-4">
             <div className="flex items-center justify-between px-2">
-                <h3 className="text-sm font-black text-white uppercase tracking-widest font-headline">Metropolitan Efficiency</h3>
+                <h3 className="text-sm font-black text-on-surface uppercase tracking-widest font-headline">Metropolitan Efficiency</h3>
                 <span className="text-[8px] font-black text-on-surface-variant uppercase tracking-widest">Ranked by Least Traffic</span>
             </div>
 
@@ -46,12 +46,12 @@ const MetropolitanLeaderboard = () => {
                             {index + 1}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-xs font-black text-white truncate uppercase tracking-tight">{item.city}</p>
+                            <p className="text-xs font-black text-on-surface truncate uppercase tracking-tight">{item.city}</p>
                             <p className="text-[9px] font-bold text-on-surface-variant uppercase tracking-widest">{item.status}</p>
                         </div>
                         <div className="text-right">
                             <p className="text-xs font-black text-primary tabular-nums">{item.congestion}%</p>
-                            <p className="text-[8px] font-bold text-slate-600 uppercase">Load</p>
+                            <p className="text-[8px] font-bold text-on-surface-variant uppercase">Load</p>
                         </div>
                     </motion.div>
                 ))}
@@ -61,5 +61,6 @@ const MetropolitanLeaderboard = () => {
 };
 
 export default MetropolitanLeaderboard;
+
 
 

@@ -75,3 +75,4 @@ const CoreTechnologies = () => {
 export default CoreTechnologies;
 
 
+

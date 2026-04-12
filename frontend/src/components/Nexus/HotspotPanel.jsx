@@ -42,7 +42,7 @@ const HotspotPanel = ({ city = 'Delhi' }) => {
         className="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-8 shadow-2xl border border-on-surface/5"
       >
         <div className="mb-8">
-          <h3 className="text-lg font-black text-white uppercase tracking-tight">Critical Hubs</h3>
+          <h3 className="text-lg font-black text-on-surface uppercase tracking-tight">Critical Hubs</h3>
           <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60 mt-1">Metropolitan Particulate Peaks</p>
         </div>
 
@@ -87,5 +87,6 @@ const HotspotPanel = ({ city = 'Delhi' }) => {
 };
 
 export default HotspotPanel;
+
 
 

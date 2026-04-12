@@ -23,7 +23,7 @@ const SignalHero = ({ city, onCityChange }) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-4xl lg:text-6xl font-black text-white tracking-tight leading-[0.95] mb-6"
+          className="text-4xl lg:text-6xl font-black text-on-surface tracking-tight leading-[0.95] mb-6"
         >
           Smart Signal <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-sky-400 to-tertiary">Optimization</span>
@@ -79,6 +79,7 @@ const SignalHero = ({ city, onCityChange }) => {
 };
 
 export default SignalHero;
+
 
 
 

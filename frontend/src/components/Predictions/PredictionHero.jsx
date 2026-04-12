@@ -10,7 +10,7 @@ const PredictionHero = () => {
     <section className="w-full space-y-6 font-body">
       <div className="space-y-3">
         <span className="text-sky-400 font-headline font-bold text-sm tracking-widest uppercase">Predictive Intelligence</span>
-        <h2 className="text-4xl font-headline font-extrabold text-white tracking-tight leading-tight">Mobility Forecasting Engine</h2>
+        <h2 className="text-4xl font-headline font-extrabold text-on-surface tracking-tight leading-tight">Mobility Forecasting Engine</h2>
         <p className="text-on-surface-variant max-w-2xl font-medium leading-relaxed opacity-90">
           Leverage neural network-driven analysis to anticipate urban flow patterns, congestion risks, and environmental impact before they occur.
         </p>
@@ -36,5 +36,6 @@ const PredictionHero = () => {
 };
 
 export default PredictionHero;
+
 
 

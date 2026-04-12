@@ -28,17 +28,17 @@ const HelpCenter = () => {
              <div className="absolute top-0 right-0 p-4 opacity-10">
                 <span className="material-symbols-outlined text-6xl">contact_support</span>
              </div>
-             <h4 className="text-xl font-black font-headline text-white mb-2 uppercase tracking-tighter antialiased">Still need help?</h4>
-             <p className="text-[10px] text-on-surface-variant mb-6 uppercase font-black tracking-widest opacity-60 leading-relaxed">Our designated urban planners are available 24/7 for technical escalation.</p>
-             <button className="w-full py-4 rounded-full bg-white text-slate-900 text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all shadow-xl active:scale-95">
+             <h4 className="text-xl font-black font-headline text-on-surface mb-2 uppercase tracking-tighter antialiased">Still need help?</h4>
+             <p className="text-[10px] text-on-surface-variant mb-6 uppercase font-black tracking-widest opacity-60 leading-relaxed">Our designated urban planners are available 24/7 for technical escalation community.</p>
+             <button className="w-full py-4 rounded-full bg-surface-container-highest text-on-surface text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all shadow-xl active:scale-95">
                 Start Live Session
              </button>
           </div>
         </div>
       </div>
 
-      <button className="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-primary text-on-primary shadow-2xl shadow-primary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group border-4 border-slate-950">
-        <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-2xl pointer-events-none">
+      <button className="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-primary text-on-primary shadow-2xl shadow-primary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group border-4 border-surface-container-lowest">
+        <div className="absolute -top-12 right-0 bg-surface-container-highest text-on-surface px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-2xl pointer-events-none">
           Live Assistant
         </div>
         <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
@@ -57,5 +57,6 @@ const HelpCenter = () => {
 };
 
 export default HelpCenter;
+
 
 

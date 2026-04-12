@@ -34,7 +34,7 @@ const NotificationPreferences = () => {
           <span className="material-symbols-outlined text-primary leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>notifications_active</span>
         </div>
         <div>
-          <h3 className="text-lg font-black text-white font-headline tracking-tighter uppercase antialiased">Alert Subscriptions</h3>
+          <h3 className="text-lg font-black text-on-surface font-headline tracking-tighter uppercase antialiased">Alert Subscriptions</h3>
           <p className="text-on-surface-variant text-[10px] uppercase font-black tracking-widest leading-none">Telemetry Broadcasts</p>
         </div>
       </div>
@@ -64,5 +64,6 @@ const NotificationPreferences = () => {
 };
 
 export default NotificationPreferences;
+
 
 

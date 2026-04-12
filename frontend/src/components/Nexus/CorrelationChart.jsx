@@ -16,7 +16,7 @@ const CorrelationChart = ({ data: apiData, city = 'Delhi' }) => {
   ];
 
   return (
-    <div className="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-10 font-body border border-on-surface/5 shadow-2xl hover:bg-white/[0.04] transition-all">
+    <div className="bg-surface-container-low backdrop-blur-md rounded-[2.5rem] p-10 font-body border border-on-surface/5 shadow-2xl hover:bg-surface-container transition-all">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
         <div>
           <h3 className="text-2xl font-black text-on-surface uppercase tracking-tight">
@@ -44,27 +44,28 @@ const CorrelationChart = ({ data: apiData, city = 'Delhi' }) => {
             <CartesianGrid 
               strokeDasharray="3 3" 
               vertical={false} 
-              stroke="rgba(255,255,255,0.05)" 
+              stroke="var(--outline-variant)" 
+              strokeOpacity={0.1}
             />
             <XAxis 
               dataKey="time" 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 900 }} 
+              tick={{ fill: 'var(--on-surface-variant)', fontSize: 10, fontWeight: 900, opacity: 0.5 }} 
               dy={15}
             />
             <YAxis hide domain={[0, 100]} />
             <Tooltip 
-              cursor={{ fill: 'rgba(255,255,255,0.05)', radius: 10 }}
+              cursor={{ fill: 'var(--on-surface)', opacity: 0.05, radius: 10 }}
               contentStyle={{ 
-                background: 'rgba(15, 23, 42, 0.9)', 
+                background: 'var(--surface-container-high)', 
                 backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255,255,255,0.1)', 
+                border: '1px solid var(--outline-variant)', 
                 borderRadius: '20px',
                 padding: '16px 20px',
                 boxShadow: '0 25px 30px -5px rgb(0 0 0 / 0.2)'
               }}
-              labelStyle={{ color: '#fff', fontWeight: 900, marginBottom: '10px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em' }}
+              labelStyle={{ color: 'var(--on-surface)', fontWeight: 900, marginBottom: '10px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em' }}
               itemStyle={{ fontSize: '12px', fontWeight: 700, padding: '4px 0' }}
             />
             <Bar 
@@ -97,5 +98,6 @@ const CorrelationChart = ({ data: apiData, city = 'Delhi' }) => {
 };
 
 export default CorrelationChart;
+
 
 

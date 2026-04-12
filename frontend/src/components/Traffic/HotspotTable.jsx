@@ -131,3 +131,4 @@ const HotspotTable = ({ data: apiData }) => {
 export default HotspotTable;
 
 
+

@@ -91,3 +91,4 @@ const PredictionResultCard = ({ result }) => {
 export default PredictionResultCard;
 
 
+

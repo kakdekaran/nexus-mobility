@@ -89,3 +89,4 @@ const GoldenWindow = ({ city }) => {
 export default GoldenWindow;
 
 
+

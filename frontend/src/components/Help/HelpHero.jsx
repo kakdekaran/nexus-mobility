@@ -18,7 +18,7 @@ const HelpHero = () => {
       ></div>
       
       <div className="relative z-10 max-w-2xl mx-auto text-center space-y-8">
-        <h2 className="text-4xl font-black font-headline tracking-tighter text-white antialiased leading-tight">
+        <h2 className="text-4xl font-black font-headline tracking-tighter text-on-surface antialiased leading-tight">
           How can we assist your city planning today?
         </h2>
         <p className="text-on-surface-variant font-medium text-sm leading-relaxed max-w-md mx-auto opacity-80">
@@ -38,7 +38,7 @@ const HelpHero = () => {
               }`}>
                 {link.icon}
               </span>
-              <p className="text-[10px] font-black uppercase tracking-widest text-white leading-none">{link.label}</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-on-surface leading-none">{link.label}</p>
             </div>
           ))}
         </div>
@@ -48,5 +48,6 @@ const HelpHero = () => {
 };
 
 export default HelpHero;
+
 
 

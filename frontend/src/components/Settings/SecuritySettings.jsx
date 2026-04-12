@@ -36,7 +36,7 @@ const SecuritySettings = () => {
             <span className="material-symbols-outlined text-primary leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
           </div>
           <div>
-            <h3 className="text-lg font-black text-white font-headline tracking-tighter uppercase antialiased">Security & Access</h3>
+            <h3 className="text-lg font-black text-on-surface font-headline tracking-tighter uppercase antialiased">Security & Access</h3>
             <p className="text-on-surface-variant text-[10px] uppercase font-black tracking-widest leading-none">Authentication Protocols</p>
           </div>
         </div>
@@ -92,5 +92,6 @@ const SecuritySettings = () => {
 };
 
 export default SecuritySettings;
+
 
 

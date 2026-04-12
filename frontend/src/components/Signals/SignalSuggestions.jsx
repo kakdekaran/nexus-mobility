@@ -26,7 +26,7 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
     >
       <div className="flex justify-between items-start relative z-10">
         <div className="space-y-1.5 flex-1 min-w-0">
-          <h4 className="text-base font-black text-white uppercase tracking-tight truncate group-hover:text-primary transition-colors">{title}</h4>
+          <h4 className="text-base font-black text-on-surface uppercase tracking-tight truncate group-hover:text-primary transition-colors">{title}</h4>
           <p className="text-[11px] text-on-surface-variant font-black uppercase tracking-[0.2em] mt-1 opacity-50">ID_NODE: {id.slice(-8).toUpperCase()} • {status}</p>
         </div>
         <div className={`p-2.5 rounded-2xl bg-surface-container border border-on-surface/10 ${colorClass.split(' ')[0]} shadow-xl`}>
@@ -170,6 +170,7 @@ const SignalSuggestions = ({ city, signals, loading }) => {
 };
 
 export default SignalSuggestions;
+
 
 
 

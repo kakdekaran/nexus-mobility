@@ -60,3 +60,4 @@ const IntelligencePanel = ({ stats, city }) => {
 export default IntelligencePanel;
 
 
+
