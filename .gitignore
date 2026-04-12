@@ -27,10 +27,11 @@ data/logs/
 !data/city_summary.json
 
 # Large datasets — too big for GitHub
+raw_data/
 *.csv
 !data/india_aqi_lite.csv
 data/uploads/
-india_aqi_complete_*.csv
+
 
 # Model artifacts — regenerate on setup
 backend/ml_model/*.pkl
