@@ -1,56 +1,91 @@
-# Nexus Mobility: Municipal Command & Analytics Platform
-**Advanced Urban Infrastructure Telemetry & Predictive Governance**
+# Nexus Mobility | Municipal Command Center
 
-[![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-green.svg)](#)
-[![Stack: React + FastAPI](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-blue.svg)](#)
-[![Predictions: Enabled](https://img.shields.io/badge/Predictions-Enabled-orange.svg)](#)
+[![Production Status](https://img.shields.io/badge/Status-Live-emerald?style=for-the-badge&logo=vercel)](https://nexus-mobility-gray.vercel.app)
+[![ML Performance](https://img.shields.io/badge/Model-Random_Forest-blueviolet?style=for-the-badge)](/backend/ml_model)
+[![High Contrast](https://img.shields.io/badge/Visuals-Absolute_Black-black?style=for-the-badge)](/frontend/src/index.css)
 
-## 🌐 Overview
-Nexus Mobility is a high-precision metropolitan command center designed for modern municipal governance. It features a unique **Real-Time Telemetry Streaming Engine** that simulates live-sensor throughput by randomly sampling authentic records from the National AQI dataset. This provides an integrated environment for the monitoring of urban infrastructure load across major Indian cities (Delhi, Mumbai, Bengaluru, Hyderabad, and Chennai).
+Nexus Mobility is a premium, high-precision Smart Traffic & Mobility Analytics platform designed for municipal governance and urban planning. Built with a reactive **Absolute Black** tonal architecture, the command center provides real-time telemetry, predictive traffic insights, and environmental correlation analysis across primary metropolitan sectors.
 
-The platform leverages a scalable **FastAPI** backend and a reactive **React (JSX)** frontend to deliver a production-ready dashboard with **high-frequency (3s) data synchronization**.
+---
 
-## 🏗️ Technical Architecture
-- **Frontend**: Developed with **React.js 18** and **Vite**. Features a modern UI with **Framer Motion** state transitions and **Lucide React** iconography.
-- **Backend**: Powered by **FastAPI (Python 3.10+)**, utilizing asynchronous handling to process metropolitan sensor data.
-- **ML Intelligence**: Features a **Random Forest Regressor** trained on historical AQI and weather telemetry, providing high-accuracy congestion forecasting.
+## 🛡️ Core Capabilities
 
-## 📊 Data & ML Strategy
-### 📡 Live Telemetry Simulation
-The system is equipped with a **High-Frequency Sync Engine** that:
-- **Samples**: Randomly picks real historical rows from `india_aqi_lite.csv` every 3 seconds.
-- **Validates**: Automatically runs these real rows against the Random Forest ML model.
-- **Streams**: Updates the dashboard in real-time, allowing planners to observe system behavior across varying "real-world" conditions without static stalls.
+### ⚡ Metropolitan Terminal Grid
+- **Recursive Sync Engine**: Real-time telemetry streaming from historical municipal datasets (AQI, Congestion, Volume).
+- **Neural Mesh Tracking**: Visual correlation of traffic density across Mumbai, Delhi, Bengaluru, and Chennai sectors.
+- **Operational Hub**: Unified command interface for municipal directives and emergency broadcasts.
 
-### Generating the Model
-To retrain the ML model using the latest city telemetry:
-```bash
-python backend/ml_model/train.py
-```
-This script will process the AQI data, synthesize congestion labels, and save the binary model to `data/models/traffic_predictor_lite.pkl`.
+### 🧠 Intelligence Engine
+- **Predictive Analytics**: Integrated Random Forest regression model trained on metropolitan traffic patterns.
+- **Environmental Correlation**: Real-time analysis of AQI (Air Quality Index) vs. traffic saturation.
+- **Anomaly Detection**: Automated identification of critical bottlenecks and infrastructure alerts.
 
-## 🛠️ Installation & Setup
+### 🎨 Absolute Black Design Language
+- **High-Contrast Precision**: Reactive CSS variable architecture ensuring 100% legibility in both 'Light' and 'Dark' modes.
+- **Glassmorphism HUD**: Premium translucent overlays for metropolitan metrics and telemetry panels.
+- **Dynamic Grid Maps**: Interactive SVG infrastructure mapping with live pulsating nodes.
+
+---
+
+## 🛠️ Technical Architecture
+
+### Frontend [Vite + React + TailwindCSS]
+- **State Management**: Reactive React Context for global theme and session synchronization.
+- **Animations**: Framer Motion for high-fidelity micro-interactions and HUD transitions.
+- **Design System**: Atomic component architecture with semantic tonal tokens.
+
+### Backend [FastAPI + Python]
+- **Asynchronous Grid**: Highly performant ASGI backend for concurrent telemetry streaming.
+- **Security**: JWT-based session management and hashed identity protocols.
+- **ML Pipeline**: Scikit-Learn integration for real-time traffic index forecasting.
+
+---
+
+## 🚀 Deployment & Installation
 
 ### Prerequisites
-- **Python**: 3.10+ | **Node.js**: 18+
+- **Python**: 3.10+
+- **Node.js**: 18+
 
 ### 1. Backend Provisioning
 ```bash
+# Navigate to the core service
 cd backend
+
+# Synchronize dependencies
 pip install -r requirements.txt
-python main.py
+
+# Launch High-Frequency Server
+uvicorn main:app --reload --port 8000
 ```
 
-### 2. Frontend Deployment
+### 2. Frontend Launch
 ```bash
+# Navigate to terminal interface
 cd frontend
+
+# Install node dependencies
 npm install
+
+# Launch Development Hub
 npm run dev
 ```
 
-## 👤 Admin Access
-For testing and review, use the following credentials:
-- **Email**: `admin@smart.com` | **Password**: `admin123`
+---
+
+## 📊 ML Model Training
+To retrain the Traffic Predictor using updated metropolitan data:
+```bash
+python backend/ml_model/train.py
+```
+*Model artifacts are stored in `data/models/traffic_predictor_lite.pkl`.*
 
 ---
-*Clean, production-grade repository maintained for Municipal Urban Infrastructure Analytics.*
+
+## 🌐 Production Grid
+The system is optimized for automated deployment:
+- **Frontend**: Managed via [Vercel](https://vercel.com)
+- **Backend API**: Synchronized on [Render](https://render.com) using `render.yaml` blueprints.
+
+---
+**© 2026 Nexus Mobility Division | Smart City Infrastructure**
