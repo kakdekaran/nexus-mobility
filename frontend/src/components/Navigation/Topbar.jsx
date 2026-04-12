@@ -139,7 +139,7 @@ const Topbar = ({ user: initialUser }) => {
                         <span className="text-sm font-bold text-on-surface leading-none">{node.title}</span>
                         <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest mt-1">{node.category}</span>
                       </div>
-                      <span className="material-symbols-outlined text-sm text-slate-600 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                      <span className="material-symbols-outlined text-sm text-on-surface ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
                     </button>
                   )) : (
                     <div className="px-4 py-6 text-center">
@@ -161,7 +161,7 @@ const Topbar = ({ user: initialUser }) => {
           >
             <span className="material-symbols-outlined">notifications</span>
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-white text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-900 animate-pulse">
+              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-on-surface text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-slate-900 animate-pulse">
                 {unreadCount}
               </span>
             )}
@@ -200,7 +200,7 @@ const Topbar = ({ user: initialUser }) => {
                           </span>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-white mb-1 leading-tight">{notif.title}</p>
+                          <p className="text-xs font-bold text-on-surface mb-1 leading-tight">{notif.title}</p>
                           <p className={`text-[10px] text-on-surface-variant leading-relaxed ${expandedNotif === notif.id ? '' : 'truncate'}`}>
                             {notif.message}
                           </p>
@@ -223,7 +223,7 @@ const Topbar = ({ user: initialUser }) => {
                     </div>
                   )) : (
                     <div className="p-10 text-center">
-                      <span className="material-symbols-outlined text-4xl text-slate-700 mb-4 block">mail_lock</span>
+                      <span className="material-symbols-outlined text-4xl text-on-surface mb-4 block">mail_lock</span>
                       <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Nexus Inbox Clean</p>
                     </div>
                   )}
@@ -293,7 +293,7 @@ const Topbar = ({ user: initialUser }) => {
                   <Link 
                     to="/settings" 
                     onClick={() => setIsProfileOpen(false)}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-on-surface/5 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-on-surface hover:bg-on-surface/5 rounded-xl transition-all group"
                   >
                     <span className="material-symbols-outlined text-xl group-hover:text-primary">account_circle</span>
                     <div className="flex flex-col">
@@ -305,7 +305,7 @@ const Topbar = ({ user: initialUser }) => {
                   <Link 
                     to="/settings" 
                     onClick={() => setIsProfileOpen(false)}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-on-surface/5 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-on-surface hover:bg-on-surface/5 rounded-xl transition-all group"
                   >
                     <span className="material-symbols-outlined text-xl group-hover:text-tertiary">lock</span>
                     <div className="flex flex-col">
@@ -334,6 +334,7 @@ const Topbar = ({ user: initialUser }) => {
 };
 
 export default Topbar;
+
 
 
 

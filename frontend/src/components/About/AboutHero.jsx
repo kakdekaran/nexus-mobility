@@ -5,7 +5,7 @@ const AboutHero = () => {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-tertiary/10 border border-tertiary/20 text-tertiary text-[10px] font-black uppercase tracking-[0.2em] antialiased">
           The Digital Cartographer
         </div>
-        <h2 className="text-5xl lg:text-7xl font-headline font-black tracking-tighter text-white leading-[1.1] antialiased">
+        <h2 className="text-5xl lg:text-7xl font-headline font-black tracking-tighter text-on-surface leading-[1.1] antialiased">
           Architecting the <span className="text-primary italic">Pulse</span> of Modern Cities.
         </h2>
         <p className="text-lg text-on-surface-variant leading-relaxed max-w-2xl font-medium opacity-90">
@@ -39,6 +39,7 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
+
 
 
 

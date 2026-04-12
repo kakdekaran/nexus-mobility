@@ -34,7 +34,7 @@ const FlowForecast = ({ city = 'Delhi', aqi = 50 }) => {
   return (
     <div className="bg-surface-container-low rounded-xl p-6 space-y-4 border border-slate-800/50 shadow-lg font-body">
       <div className="flex justify-between items-start">
-        <h5 className="text-sm font-headline font-black text-white uppercase tracking-widest leading-none">Flow Forecast</h5>
+        <h5 className="text-sm font-headline font-black text-on-surface uppercase tracking-widest leading-none">Flow Forecast</h5>
         <span className="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded uppercase ring-1 ring-primary/10 tracking-widest leading-none">6H Prediction</span>
       </div>
       
@@ -74,6 +74,7 @@ const FlowForecast = ({ city = 'Delhi', aqi = 50 }) => {
 };
 
 export default FlowForecast;
+
 
 
 

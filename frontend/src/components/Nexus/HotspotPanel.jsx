@@ -64,7 +64,7 @@ const HotspotPanel = ({ city = 'Delhi' }) => {
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-black text-white uppercase tracking-tight truncate">{sensor.name}</p>
+                  <p className="text-sm font-black text-on-surface uppercase tracking-tight truncate">{sensor.name}</p>
                   <p className="text-[9px] text-on-surface-variant font-black uppercase tracking-widest truncate mt-0.5">{sensor.traffic}</p>
                 </div>
               </div>
@@ -78,7 +78,7 @@ const HotspotPanel = ({ city = 'Delhi' }) => {
           ))}
         </div>
         
-        <button className="w-full mt-8 py-4 rounded-2xl bg-on-surface/5 text-white/60 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-on-surface/10 hover:text-white transition-all border border-on-surface/5 shadow-xl active:scale-95">
+        <button className="w-full mt-8 py-4 rounded-2xl bg-on-surface/5 text-on-surface/60 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-on-surface/10 hover:text-on-surface transition-all border border-on-surface/5 shadow-xl active:scale-95">
           View All 42 Sensor Nodes
         </button>
       </motion.div>
@@ -87,6 +87,7 @@ const HotspotPanel = ({ city = 'Delhi' }) => {
 };
 
 export default HotspotPanel;
+
 
 
 

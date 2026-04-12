@@ -54,14 +54,14 @@ const PredictionResultCard = ({ result }) => {
           <div className="grid grid-cols-2 gap-6 w-full max-w-md">
             <div className="bg-on-surface/5 backdrop-blur-xl p-5 rounded-2xl border border-on-surface/10 shadow-xl flex flex-col items-center text-center">
               <span className="block text-[9px] text-on-surface-variant font-black uppercase mb-3 tracking-[0.2em] opacity-50">Weather Impact</span>
-              <div className="text-white text-xs font-black uppercase tracking-widest flex items-center gap-3">
+              <div className="text-on-surface text-xs font-black uppercase tracking-widest flex items-center gap-3">
                 <span className="material-symbols-outlined text-primary text-lg leading-none">rainy</span>
                 Moderate Rain
               </div>
             </div>
             <div className="bg-on-surface/5 backdrop-blur-xl p-5 rounded-2xl border border-on-surface/10 shadow-xl flex flex-col items-center text-center">
               <span className="block text-[9px] text-on-surface-variant font-black uppercase mb-3 tracking-[0.2em] opacity-50">Public Transit</span>
-              <div className="text-white text-xs font-black uppercase tracking-widest flex items-center gap-3">
+              <div className="text-on-surface text-xs font-black uppercase tracking-widest flex items-center gap-3">
                 <span className="material-symbols-outlined text-tertiary text-lg leading-none">subway</span>
                 Full Op Capacity
               </div>
@@ -89,6 +89,7 @@ const PredictionResultCard = ({ result }) => {
 };
 
 export default PredictionResultCard;
+
 
 
 

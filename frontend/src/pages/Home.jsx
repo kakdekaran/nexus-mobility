@@ -16,7 +16,7 @@ const Home = () => {
             <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-lg shadow-primary/20">
               <span className="material-symbols-outlined font-black">transit_enterexit</span>
             </div>
-            <h1 className="text-xl md:text-2xl font-black tracking-tighter text-white antialiased">Nexus Mobility</h1>
+            <h1 className="text-xl md:text-2xl font-black tracking-tighter text-on-surface antialiased">Nexus Mobility</h1>
           </div>
           <nav className="hidden lg:flex items-center gap-6 md:gap-8">
             <a className="text-on-surface-variant font-black text-[10px] uppercase tracking-widest hover:text-sky-300 transition-all cursor-pointer" href="#tech">Technology</a>
@@ -27,7 +27,7 @@ const Home = () => {
         <div className="flex items-center gap-4 md:gap-6">
           <Link 
             to="/login" 
-            className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-white transition-all px-3 py-2"
+            className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-all px-3 py-2"
           >
             Sign In
           </Link>
@@ -66,6 +66,7 @@ const Home = () => {
 };
 
 export default Home;
+
 
 
 

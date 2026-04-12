@@ -145,7 +145,7 @@ const PollutionInsights = () => {
             <button 
               onClick={handleExport}
               disabled={exporting}
-              className="px-5 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:bg-primary hover:text-white transition-all disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:bg-primary hover:text-on-surface transition-all disabled:opacity-50"
             >
               <span className="material-symbols-outlined text-base">{exporting ? 'sync' : 'ios_share'}</span>
               {exporting ? 'Generating...' : 'Export'}
@@ -186,6 +186,7 @@ const PollutionInsights = () => {
 };
 
 export default PollutionInsights;
+
 
 
 

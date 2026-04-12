@@ -38,7 +38,7 @@ const CoreTechnologies = () => {
   return (
     <section className="space-y-10 mb-20 font-body">
       <div className="flex flex-col gap-3">
-        <h3 className="text-3xl font-black font-headline tracking-tighter text-white uppercase antialiased">Core Technologies</h3>
+        <h3 className="text-3xl font-black font-headline tracking-tighter text-on-surface uppercase antialiased">Core Technologies</h3>
         <p className="text-on-surface-variant text-sm font-medium opacity-70">The hardware and logic driving our precision analytics suite.</p>
       </div>
       
@@ -73,6 +73,7 @@ const CoreTechnologies = () => {
 };
 
 export default CoreTechnologies;
+
 
 
 

@@ -105,7 +105,7 @@ const SafetyHub = () => {
                    <div className="w-40 h-40 rounded-full bg-surface-container-lowest flex flex-col items-center justify-center border border-on-surface/5 relative shadow-inner">
                       <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em] leading-none mb-2">AQI Pulse</p>
                       <p className={`text-5xl font-black font-headline tracking-tighter ${advisory?.color}`}>{profile?.pm25}</p>
-                      <p className="text-[8px] text-slate-600 font-bold uppercase mt-2">Verified PM2.5</p>
+                      <p className="text-[8px] text-on-surface font-bold uppercase mt-2">Verified PM2.5</p>
                    </div>
 
                    <div className="flex-1 text-center md:text-left">
@@ -160,6 +160,7 @@ const SafetyHub = () => {
 };
 
 export default SafetyHub;
+
 
 
 

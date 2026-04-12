@@ -11,7 +11,7 @@ const VehicleStats = () => {
 
     return (
         <div className="space-y-3">
-            <h5 className="text-[9px] font-black text-white uppercase tracking-[0.25em] opacity-40">Live Vessel Breakdown</h5>
+            <h5 className="text-[9px] font-black text-on-surface uppercase tracking-[0.25em] opacity-40">Live Vessel Breakdown</h5>
             <div className="space-y-2.5">
                 {stats.map((s, i) => (
                     <motion.div
@@ -26,7 +26,7 @@ const VehicleStats = () => {
                                 <span className={`material-symbols-outlined ${s.color} text-sm`}>{s.icon}</span>
                             </div>
                             <div className="space-y-1">
-                                <p className="text-[9px] font-black text-white uppercase tracking-tight leading-none">{s.label}</p>
+                                <p className="text-[9px] font-black text-on-surface uppercase tracking-tight leading-none">{s.label}</p>
                                 <div className="h-0.5 w-16 bg-on-surface/5 rounded-full overflow-hidden">
                                     <motion.div
                                         animate={{ width: ['20%', '60%', '45%'] }}
@@ -36,7 +36,7 @@ const VehicleStats = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-xs font-black text-white tabular-nums">{s.count.toLocaleString()}</p>
+                        <p className="text-xs font-black text-on-surface tabular-nums">{s.count.toLocaleString()}</p>
                     </motion.div>
                 ))}
             </div>
@@ -45,6 +45,7 @@ const VehicleStats = () => {
 };
 
 export default VehicleStats;
+
 
 
 

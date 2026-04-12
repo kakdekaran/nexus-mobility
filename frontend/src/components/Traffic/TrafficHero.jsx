@@ -46,8 +46,8 @@ const TrafficHero = ({ data, filters, setFilters }) => {
               onClick={() => setFilters({ ...filters, range: r.id })}
               className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-500 ${
                 filters.range === r.id 
-                  ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' 
-                  : 'text-on-surface-variant hover:text-white hover:bg-on-surface/5'
+                  ? 'bg-primary text-on-surface shadow-lg shadow-primary/20 scale-105' 
+                  : 'text-on-surface-variant hover:text-on-surface hover:bg-on-surface/5'
               }`}
             >
               {r.label}
@@ -83,7 +83,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
               className="relative w-full max-w-xl bg-surface-container border border-on-surface/10 rounded-[2.5rem] p-10 shadow-3xl overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8">
-                <button onClick={() => setShowFilters(false)} className="text-white/40 hover:text-white transition-colors">
+                <button onClick={() => setShowFilters(false)} className="text-on-surface/40 hover:text-on-surface transition-colors">
                   <span className="material-symbols-outlined">close</span>
                 </button>
               </div>
@@ -95,7 +95,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
 
               <div className="space-y-8">
                 <div>
-                  <label className="block text-[10px] font-black text-white uppercase tracking-widest mb-4 opacity-40">Regional Jurisdiction</label>
+                  <label className="block text-[10px] font-black text-on-surface uppercase tracking-widest mb-4 opacity-40">Regional Jurisdiction</label>
                   <div className="grid grid-cols-2 gap-3">
                     {cities.map(city => (
                       <button
@@ -114,7 +114,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black text-white uppercase tracking-widest mb-4 opacity-40">Minimum Congestion Baseline ({filters.minCongestion}%)</label>
+                  <label className="block text-[10px] font-black text-on-surface uppercase tracking-widest mb-4 opacity-40">Minimum Congestion Baseline ({filters.minCongestion}%)</label>
                   <input 
                     type="range" 
                     min="0" 
@@ -123,7 +123,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
                     onChange={(e) => setFilters({ ...filters, minCongestion: parseInt(e.target.value) })}
                     className="w-full h-1.5 bg-on-surface/10 rounded-lg appearance-none cursor-pointer accent-primary"
                   />
-                  <div className="flex justify-between mt-2 text-[10px] font-black text-white/20 uppercase tracking-widest">
+                  <div className="flex justify-between mt-2 text-[10px] font-black text-on-surface/20 uppercase tracking-widest">
                     <span>Optimal</span>
                     <span>Critical</span>
                   </div>
@@ -131,7 +131,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
 
                 <button 
                   onClick={() => setShowFilters(false)}
-                  className="w-full py-5 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all shadow-xl shadow-primary/20 mt-4"
+                  className="w-full py-5 bg-primary text-on-surface rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-110 transition-all shadow-xl shadow-primary/20 mt-4"
                 >
                   Apply Telemetry Sync
                 </button>
@@ -145,6 +145,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
 };
 
 export default TrafficHero;
+
 
 
 

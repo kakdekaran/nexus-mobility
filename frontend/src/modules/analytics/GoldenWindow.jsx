@@ -78,7 +78,7 @@ const GoldenWindow = ({ city }) => {
           </div>
         )}
 
-        <button className="w-full py-3 bg-on-surface/5 hover:bg-on-surface/10 border border-on-surface/5 hover:border-primary/30 rounded-xl text-[9px] font-black text-white uppercase tracking-[0.2em] transition-all">
+        <button className="w-full py-3 bg-on-surface/5 hover:bg-on-surface/10 border border-on-surface/5 hover:border-primary/30 rounded-xl text-[9px] font-black text-on-surface uppercase tracking-[0.2em] transition-all">
           Generate Full Forecast
         </button>
       </div>
@@ -87,6 +87,7 @@ const GoldenWindow = ({ city }) => {
 };
 
 export default GoldenWindow;
+
 
 
 

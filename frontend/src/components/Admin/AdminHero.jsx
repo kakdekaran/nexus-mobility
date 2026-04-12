@@ -5,7 +5,7 @@ const AdminHero = () => {
         <span className="material-symbols-outlined text-xs leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>verified_user</span>
         System Governance
       </div>
-      <h2 className="text-3xl font-extrabold font-headline tracking-tighter text-white antialiased uppercase">Administrative Interface</h2>
+      <h2 className="text-3xl font-extrabold font-headline tracking-tighter text-on-surface antialiased uppercase">Administrative Interface</h2>
       <p className="text-on-surface-variant text-sm max-w-2xl font-medium leading-relaxed">
         Manage global access levels, verify telemetry data integrity, and monitor infrastructure health from the central node.
       </p>
@@ -14,6 +14,7 @@ const AdminHero = () => {
 };
 
 export default AdminHero;
+
 
 
 

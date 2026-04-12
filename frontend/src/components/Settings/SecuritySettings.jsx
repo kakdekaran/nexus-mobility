@@ -43,7 +43,7 @@ const SecuritySettings = () => {
         <button 
           onClick={handleUpdate}
           disabled={loading || !passwords.old || !passwords.new}
-          className="px-6 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+          className="px-6 py-2 bg-primary text-on-surface text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
         >
           {loading ? 'Rotating...' : 'Rotate Cipher'}
         </button>
@@ -92,6 +92,7 @@ const SecuritySettings = () => {
 };
 
 export default SecuritySettings;
+
 
 
 

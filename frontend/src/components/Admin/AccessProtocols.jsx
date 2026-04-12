@@ -6,7 +6,7 @@ const AccessProtocols = () => {
         <span className="px-3 py-1 rounded text-[10px] font-black bg-tertiary text-on-tertiary uppercase tracking-widest leading-none">Super Admin Access</span>
         <span className="material-symbols-outlined text-tertiary leading-none" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
       </div>
-      <h4 className="text-sm font-black text-white mb-2 uppercase tracking-tighter antialiased">Enhanced Control Protocols</h4>
+      <h4 className="text-sm font-black text-on-surface mb-2 uppercase tracking-tighter antialiased">Enhanced Control Protocols</h4>
       <p className="text-xs text-on-surface-variant leading-relaxed font-medium">Your account has root-level permissions. All actions are logged and subject to audit by the Central Governing Entity.</p>
       
       <div className="mt-6 flex items-center gap-4">
@@ -22,6 +22,7 @@ const AccessProtocols = () => {
 };
 
 export default AccessProtocols;
+
 
 
 

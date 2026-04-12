@@ -39,7 +39,7 @@ const ScenarioParameters = ({ onPredict, isLoading }) => {
                 onClick={() => setCity(c)}
                 className={`py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${
                   city === c 
-                    ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-[1.02]' 
+                    ? 'bg-primary text-on-surface border-primary shadow-lg shadow-primary/20 scale-[1.02]' 
                     : 'bg-on-surface/5 text-on-surface-variant border-on-surface/5 hover:bg-on-surface/10'
                 }`}
               >
@@ -54,7 +54,7 @@ const ScenarioParameters = ({ onPredict, isLoading }) => {
           <label className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Projection Timestamp</label>
           <div className="relative group">
             <input 
-              className="w-full bg-on-surface/5 text-white border border-on-surface/5 rounded-2xl py-4 px-5 focus:bg-on-surface/10 focus:border-primary/50 text-sm font-black tracking-widest transition-all outline-none" 
+              className="w-full bg-on-surface/5 text-on-surface border border-on-surface/5 rounded-2xl py-4 px-5 focus:bg-on-surface/10 focus:border-primary/50 text-sm font-black tracking-widest transition-all outline-none" 
               type="time" 
               value={hour}
               onChange={(e) => setHour(e.target.value)}
@@ -82,7 +82,7 @@ const ScenarioParameters = ({ onPredict, isLoading }) => {
         {/* Input: Rain Toggle */}
         <div className="flex items-center justify-between p-5 bg-on-surface/5 rounded-2xl border border-on-surface/5 shadow-inner">
           <div className="space-y-1">
-            <p className="text-[10px] font-black uppercase tracking-widest text-white">Precipitation Factor</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-on-surface">Precipitation Factor</p>
             <p className="text-[10px] text-on-surface-variant font-black uppercase opacity-40">Rainy conditions</p>
           </div>
           <button 
@@ -108,6 +108,7 @@ const ScenarioParameters = ({ onPredict, isLoading }) => {
 };
 
 export default ScenarioParameters;
+
 
 
 

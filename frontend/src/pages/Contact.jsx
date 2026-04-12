@@ -32,7 +32,7 @@ const Contact = () => {
               <div className="w-20 h-20 rounded-full bg-tertiary/20 flex items-center justify-center text-tertiary shadow-2xl shadow-tertiary/20 border border-tertiary/20">
                 <span className="material-symbols-outlined text-4xl">send_and_archive</span>
               </div>
-              <h3 className="text-2xl font-black font-headline text-white uppercase tracking-tighter antialiased">Request Dispatched</h3>
+              <h3 className="text-2xl font-black font-headline text-on-surface uppercase tracking-tighter antialiased">Request Dispatched</h3>
               <p className="text-[10px] text-on-surface-variant uppercase font-black tracking-widest opacity-60 max-w-sm mx-auto leading-relaxed">
                 Uplink established. Your technical query has been routed to the Tier-3 engineering queue.
               </p>
@@ -53,7 +53,7 @@ const Contact = () => {
                   <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Full Name</label>
                   <input 
                     required
-                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
+                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-on-surface focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
                     placeholder="Alex Rivera" 
                     type="text"
                   />
@@ -62,7 +62,7 @@ const Contact = () => {
                   <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Institutional Email</label>
                   <input 
                     required
-                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
+                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-on-surface focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
                     placeholder="a.rivera@city.gov" 
                     type="email"
                   />
@@ -83,7 +83,7 @@ const Contact = () => {
                 <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Detailed Message</label>
                 <textarea 
                   required
-                  className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all resize-none text-sm font-medium" 
+                  className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-on-surface focus:ring-2 focus:ring-primary/40 outline-none transition-all resize-none text-sm font-medium" 
                   placeholder="Please provide specific timestamps, sensor IDs, or error codes..." 
                   rows={6}
                 ></textarea>
@@ -154,7 +154,7 @@ const Contact = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-tertiary"></span>
               </span>
-              <span className="text-[10px] font-black text-white uppercase tracking-[0.2em] antialiased">Systems Operational</span>
+              <span className="text-[10px] font-black text-on-surface uppercase tracking-[0.2em] antialiased">Systems Operational</span>
             </div>
             <button className="text-[10px] font-black text-primary hover:text-primary-fixed-dim transition-colors uppercase tracking-widest">
               View Status Page
@@ -188,6 +188,7 @@ const Contact = () => {
 };
 
 export default Contact;
+
 
 
 

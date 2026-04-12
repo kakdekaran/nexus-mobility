@@ -22,7 +22,7 @@ const IntelligencePanel = ({ stats, city }) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xs font-black text-white uppercase tracking-[0.25em] opacity-40">Intelligence Node</h2>
+        <h2 className="text-xs font-black text-on-surface uppercase tracking-[0.25em] opacity-40">Intelligence Node</h2>
         <div className="flex gap-1">
           <div className="w-1 h-1 rounded-full bg-primary animate-ping"></div>
           <div className="w-1 h-1 rounded-full bg-primary animate-ping [animation-delay:0.2s]"></div>
@@ -49,7 +49,7 @@ const IntelligencePanel = ({ stats, city }) => {
           <span className="material-symbols-outlined text-4xl text-primary">psychology</span>
         </div>
         <p className="text-[9px] font-black text-primary uppercase tracking-[0.2em] mb-3">Governance Insight</p>
-        <p className="text-sm font-black text-white leading-relaxed tracking-tight relative z-10">
+        <p className="text-sm font-black text-on-surface leading-relaxed tracking-tight relative z-10">
           {loading ? "..." : insight}
         </p>
       </div>
@@ -58,6 +58,7 @@ const IntelligencePanel = ({ stats, city }) => {
 };
 
 export default IntelligencePanel;
+
 
 
 

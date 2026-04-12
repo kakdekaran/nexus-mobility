@@ -10,7 +10,7 @@ const CategoryGrid = () => {
 
   return (
     <section className="space-y-8 pt-12 border-t border-on-surface/5 font-body">
-      <h3 className="text-xl font-black font-headline text-white px-2 tracking-tighter uppercase antialiased leading-none">Browse by Category</h3>
+      <h3 className="text-xl font-black font-headline text-on-surface px-2 tracking-tighter uppercase antialiased leading-none">Browse by Category</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {categories.map((cat, i) => (
           <a 
@@ -22,7 +22,7 @@ const CategoryGrid = () => {
             <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-all text-3xl leading-none">
               {cat.icon}
             </span>
-            <span className="text-[10px] font-black text-white uppercase tracking-widest">{cat.label}</span>
+            <span className="text-[10px] font-black text-on-surface uppercase tracking-widest">{cat.label}</span>
           </a>
         ))}
       </div>
@@ -31,6 +31,7 @@ const CategoryGrid = () => {
 };
 
 export default CategoryGrid;
+
 
 
 

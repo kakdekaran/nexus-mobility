@@ -66,7 +66,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
           >
             <div className="flex items-center justify-between mb-10">
               <h3 className="text-2xl font-headline font-black text-on-surface tracking-tight leading-none uppercase">Generate Report</h3>
-              <button onClick={onClose} className="p-2 text-on-surface-variant hover:text-white transition-colors">
+              <button onClick={onClose} className="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
                 <span className="material-symbols-outlined text-2xl leading-none">close</span>
               </button>
             </div>
@@ -118,7 +118,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
               </div>
 
               <div className="rounded-2xl border border-on-surface/5 bg-surface-container-highest p-5">
-                <p className="text-[10px] font-black uppercase tracking-widest text-white">Export format</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-on-surface">Export format</p>
                 <p className="mt-2 text-sm font-bold text-on-surface-variant">
                   CSV report with congestion, pollution, weather, and hourly trend columns.
                 </p>
@@ -153,6 +153,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
 };
 
 export default ReportGeneratorDrawer;
+
 
 
 

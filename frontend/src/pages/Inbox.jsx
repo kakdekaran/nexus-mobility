@@ -56,7 +56,7 @@ const Inbox = () => {
               key={f}
               onClick={() => setFilter(f)}
               className={`px-6 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all ${
-                filter === f ? 'bg-primary text-white shadow-lg' : 'text-on-surface-variant hover:text-white'
+                filter === f ? 'bg-primary text-on-surface shadow-lg' : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               {f}
@@ -95,7 +95,7 @@ const Inbox = () => {
                     <p className={`text-xs font-black truncate uppercase tracking-tight ${!notif.read ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                       {notif.title}
                     </p>
-                    <span className="text-[8px] text-slate-600 font-bold tabular-nums">
+                    <span className="text-[8px] text-on-surface font-bold tabular-nums">
                       {new Date(notif.timestamp).toLocaleDateString()}
                     </span>
                   </div>
@@ -107,7 +107,7 @@ const Inbox = () => {
             </motion.div>
           )) : (
             <div className="p-12 text-center bg-on-surface/5 rounded-3xl border border-on-surface/5 border-dashed">
-              <span className="material-symbols-outlined text-4xl text-slate-700 mb-4 block">drafts</span>
+              <span className="material-symbols-outlined text-4xl text-on-surface mb-4 block">drafts</span>
               <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em]">Archival Registry Empty</p>
             </div>
           )}
@@ -138,7 +138,7 @@ const Inbox = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-[9px] text-on-surface-variant font-black uppercase tracking-widest leading-none mb-1">Transmission ID</p>
-                      <p className="text-[10px] text-white font-mono opacity-40 uppercase">{selectedNotif.id.split('-')[0]}</p>
+                      <p className="text-[10px] text-on-surface font-mono opacity-40 uppercase">{selectedNotif.id.split('-')[0]}</p>
                     </div>
                   </div>
 
@@ -152,7 +152,7 @@ const Inbox = () => {
                     </div>
                     <div>
                       <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest leading-none">Dispatcher</p>
-                      <p className="text-xs text-white font-bold mt-1 uppercase tracking-tight">{selectedNotif.sender_role} • {selectedNotif.sender.split('@')[0]}</p>
+                      <p className="text-xs text-on-surface font-bold mt-1 uppercase tracking-tight">{selectedNotif.sender_role} • {selectedNotif.sender.split('@')[0]}</p>
                     </div>
                     <div className="ml-auto text-right">
                       <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest leading-none">Timestamp</p>
@@ -181,7 +181,7 @@ const Inbox = () => {
             ) : (
               <div className="h-full flex flex-col items-center justify-center bg-on-surface/5 rounded-[40px] border border-on-surface/5 border-dashed p-12 text-center opacity-40">
                 <div className="w-20 h-20 bg-surface-container-high rounded-full flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-4xl text-slate-600">visibility</span>
+                  <span className="material-symbols-outlined text-4xl text-on-surface">visibility</span>
                 </div>
                 <h3 className="text-sm font-black text-on-surface-variant uppercase tracking-widest leading-none">Selective Inspection Required</h3>
                 <p className="text-xs text-on-surface-variant mt-2 max-w-[280px]">Select a municipal record from the dispatch queue to read the full intelligence directive.</p>
@@ -195,6 +195,7 @@ const Inbox = () => {
 };
 
 export default Inbox;
+
 
 
 

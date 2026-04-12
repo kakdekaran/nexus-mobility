@@ -48,7 +48,7 @@ const VisionaryTeam = () => {
   return (
     <section className="space-y-16 pb-32 font-body">
       <div className="text-center space-y-4">
-        <h3 className="text-4xl font-headline font-black tracking-tighter text-white uppercase antialiased">The Visionaries</h3>
+        <h3 className="text-4xl font-headline font-black tracking-tighter text-on-surface uppercase antialiased">The Visionaries</h3>
         <p className="text-on-surface-variant max-w-xl mx-auto text-sm font-medium opacity-60">A multidisciplinary team of data scientists, urban architects, and traffic engineers defining city intelligence.</p>
       </div>
       
@@ -62,6 +62,7 @@ const VisionaryTeam = () => {
 };
 
 export default VisionaryTeam;
+
 
 
 

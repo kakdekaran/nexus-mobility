@@ -89,9 +89,9 @@
   --on-error: #ffffff;
 
   --surface: #ffffff;
-  --on-surface: #111827;
-  --on-surface-variant: #44474e;
-  --outline: #74777f;
+  --on-surface: #000000;
+  --on-surface-variant: #000000;
+  --outline: #000000;
   --surface-container-lowest: #ffffff;
   --surface-container-low: #f8fafc;
   --surface-container: #f1f5f9;

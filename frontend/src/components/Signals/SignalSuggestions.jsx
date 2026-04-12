@@ -55,7 +55,7 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
             disabled={applying}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: 10 }}
-            className="w-full h-12 bg-on-surface/5 border border-on-surface/10 text-[10px] font-black uppercase tracking-[0.2em] text-white rounded-xl hover:bg-primary transition-all shadow-xl disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative group/btn"
+            className="w-full h-12 bg-on-surface/5 border border-on-surface/10 text-[10px] font-black uppercase tracking-[0.2em] text-on-surface rounded-xl hover:bg-primary transition-all shadow-xl disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative group/btn"
           >
             {applying ? (
               <>
@@ -106,7 +106,7 @@ const SignalSuggestions = ({ city, signals, loading }) => {
       
       <div className="flex items-center justify-between mb-8">
         <div className="space-y-1">
-          <h3 className="text-sm font-black text-white uppercase tracking-[0.3em] leading-none">Neural Mesh Proposals</h3>
+          <h3 className="text-sm font-black text-on-surface uppercase tracking-[0.3em] leading-none">Neural Mesh Proposals</h3>
           <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em] opacity-30">Autonomous Modulation Queue</p>
         </div>
         <div className="px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 flex items-center gap-2">
@@ -160,7 +160,7 @@ const SignalSuggestions = ({ city, signals, loading }) => {
       </div>
 
       <div className="mt-10">
-        <button className="w-full text-[10px] font-black text-on-surface-variant flex items-center justify-center gap-3 hover:text-white uppercase tracking-[0.2em] transition-all bg-on-surface/5 py-4 rounded-2xl border border-on-surface/5 hover:bg-on-surface/10 group">
+        <button className="w-full text-[10px] font-black text-on-surface-variant flex items-center justify-center gap-3 hover:text-on-surface uppercase tracking-[0.2em] transition-all bg-on-surface/5 py-4 rounded-2xl border border-on-surface/5 hover:bg-on-surface/10 group">
           View Mesh Metadata for {city}
           <span className="material-symbols-outlined text-base group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
         </button>
@@ -170,6 +170,7 @@ const SignalSuggestions = ({ city, signals, loading }) => {
 };
 
 export default SignalSuggestions;
+
 
 
 

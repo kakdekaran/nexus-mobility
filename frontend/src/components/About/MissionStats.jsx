@@ -3,7 +3,7 @@ const MissionStats = () => {
     <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 font-body">
       <div className="md:col-span-2 bg-surface-container-low p-10 rounded-2xl space-y-8 border border-on-surface/5 shadow-2xl relative overflow-hidden group">
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-        <h3 className="text-3xl font-black font-headline tracking-tighter text-white uppercase antialiased relative z-10">Our Global Mission</h3>
+        <h3 className="text-3xl font-black font-headline tracking-tighter text-on-surface uppercase antialiased relative z-10">Our Global Mission</h3>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 relative z-10">
           <div className="space-y-4">
@@ -38,6 +38,7 @@ const MissionStats = () => {
 };
 
 export default MissionStats;
+
 
 
 

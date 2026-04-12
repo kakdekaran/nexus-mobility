@@ -14,7 +14,7 @@ const CityPulse = () => {
     >
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-black font-headline text-white uppercase tracking-tighter antialiased">City Pulse</h1>
+          <h1 className="text-3xl font-black font-headline text-on-surface uppercase tracking-tighter antialiased">City Pulse</h1>
           <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em] mt-2 opacity-80 italic italic">Real-Time Municipal Sector Intelligence</p>
         </div>
 
@@ -23,7 +23,7 @@ const CityPulse = () => {
             <select 
               value={activeCity} 
               onChange={(e) => setActiveCity(e.target.value)}
-              className="bg-on-surface/5 border border-on-surface/10 rounded-xl pl-4 pr-10 py-3 text-xs font-bold uppercase tracking-wider text-white outline-none focus:ring-2 focus:ring-primary/40 appearance-none cursor-pointer hover:border-primary/30 transition-all backdrop-blur-md"
+              className="bg-on-surface/5 border border-on-surface/10 rounded-xl pl-4 pr-10 py-3 text-xs font-bold uppercase tracking-wider text-on-surface outline-none focus:ring-2 focus:ring-primary/40 appearance-none cursor-pointer hover:border-primary/30 transition-all backdrop-blur-md"
             >
               <option className="bg-surface-container">Delhi</option>
               <option className="bg-surface-container">Mumbai</option>
@@ -45,7 +45,7 @@ const CityPulse = () => {
           
           <div className="p-8 bg-surface-container-low rounded-3xl border border-on-surface/5 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-            <h3 className="text-sm font-black font-headline text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-black font-headline text-on-surface uppercase tracking-widest mb-4 flex items-center gap-2">
               <span className="material-symbols-outlined text-sm text-primary">analytics</span>
               Trend Validation
             </h3>
@@ -60,7 +60,7 @@ const CityPulse = () => {
            <div className="bg-on-surface/5 p-8 rounded-[40px] border border-on-surface/5 relative overflow-hidden group h-full">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 className="text-2xl font-black font-headline text-white uppercase tracking-tighter antialiased">Municipal Grid</h2>
+                <h2 className="text-2xl font-black font-headline text-on-surface uppercase tracking-tighter antialiased">Municipal Grid</h2>
                 <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em] mt-2 italic">Spatial Load across metropolitan divisions</p>
               </div>
               <div className="flex gap-2">
@@ -84,6 +84,7 @@ const CityPulse = () => {
 };
 
 export default CityPulse;
+
 
 
 

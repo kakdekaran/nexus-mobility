@@ -11,7 +11,7 @@ const ExpertDirectory = () => {
       
       <div className="flex items-center gap-3">
         <span className="material-symbols-outlined text-tertiary" style={{ fontVariationSettings: "'FILL' 1" }}>groups</span>
-        <h5 className="text-[10px] font-black text-white uppercase tracking-[0.2em] antialiased">Expert Directory</h5>
+        <h5 className="text-[10px] font-black text-on-surface uppercase tracking-[0.2em] antialiased">Expert Directory</h5>
       </div>
       <p className="text-[10px] text-on-surface-variant leading-relaxed font-bold uppercase tracking-widest opacity-60">Connect with 500+ certified traffic engineers using Nexus in major metropolitan areas.</p>
       
@@ -36,6 +36,7 @@ const ExpertDirectory = () => {
 };
 
 export default ExpertDirectory;
+
 
 
 

@@ -79,10 +79,10 @@ const HotspotTable = ({ data: apiData }) => {
         <table className="w-full text-left font-body">
           <thead>
             <tr className="bg-white/[0.02] text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] opacity-40 selection:bg-transparent">
-              <th className="px-10 py-4 cursor-pointer hover:text-white" onClick={() => requestSort('name')}>Intersection Node</th>
-              <th className="px-10 py-4 cursor-pointer hover:text-white" onClick={() => requestSort('congestion')}>Avg Delay / Load</th>
-              <th className="px-10 py-4 cursor-pointer hover:text-white" onClick={() => requestSort('throughput')}>Throughput/hr</th>
-              <th className="px-10 py-4 cursor-pointer hover:text-white" onClick={() => requestSort('health')}>Signal Health</th>
+              <th className="px-10 py-4 cursor-pointer hover:text-on-surface" onClick={() => requestSort('name')}>Intersection Node</th>
+              <th className="px-10 py-4 cursor-pointer hover:text-on-surface" onClick={() => requestSort('congestion')}>Avg Delay / Load</th>
+              <th className="px-10 py-4 cursor-pointer hover:text-on-surface" onClick={() => requestSort('throughput')}>Throughput/hr</th>
+              <th className="px-10 py-4 cursor-pointer hover:text-on-surface" onClick={() => requestSort('health')}>Signal Health</th>
               <th className="px-10 py-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -93,7 +93,7 @@ const HotspotTable = ({ data: apiData }) => {
                   <div className="flex items-center gap-4">
                     <div className={`w-2.5 h-2.5 rounded-full ${spot.health === 'Degraded' ? 'bg-error animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.5)]' : spot.health === 'Optimal' ? 'bg-tertiary shadow-[0_0_10px_rgba(112,216,200,0.5)]' : 'bg-primary'}`}></div>
                     <div>
-                      <div className="font-black text-white uppercase tracking-tight">{spot.name}</div>
+                      <div className="font-black text-on-surface uppercase tracking-tight">{spot.name}</div>
                       <div className="text-[9px] text-on-surface-variant font-black uppercase tracking-widest opacity-40 mt-0.5">{spot.district}</div>
                     </div>
                   </div>
@@ -113,7 +113,7 @@ const HotspotTable = ({ data: apiData }) => {
                   <button 
                     onClick={() => handleSync(spot.name)}
                     className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm active:scale-95 border ${
-                      focused === spot.name ? 'bg-primary text-white border-primary' : 'bg-on-surface/5 text-white/40 border-on-surface/5 hover:text-white hover:border-white/20'
+                      focused === spot.name ? 'bg-primary text-on-surface border-primary' : 'bg-on-surface/5 text-on-surface/40 border-on-surface/5 hover:text-on-surface hover:border-white/20'
                     }`}
                   >
                     {focused === spot.name ? 'Synced' : 'Sync View'}
@@ -129,6 +129,7 @@ const HotspotTable = ({ data: apiData }) => {
 };
 
 export default HotspotTable;
+
 
 
 

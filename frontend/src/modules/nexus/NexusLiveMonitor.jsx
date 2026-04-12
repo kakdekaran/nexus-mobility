@@ -17,7 +17,7 @@ const NexusLiveMonitor = ({ city = "Delhi", stats }) => {
       <div className="absolute top-0 left-0 right-0 z-30 p-3 pointer-events-none flex justify-between items-start">
         <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-on-surface/5">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shrink-0" />
-          <p className="text-[9px] font-black text-white uppercase tracking-[0.2em]">Live • {city}</p>
+          <p className="text-[9px] font-black text-on-surface uppercase tracking-[0.2em]">Live • {city}</p>
         </div>
         
         <div className="bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg border border-on-surface/5">
@@ -48,7 +48,7 @@ const NexusLiveMonitor = ({ city = "Delhi", stats }) => {
           <p className="text-[8px] font-black text-on-surface-variant uppercase tracking-[0.2em] mb-1">Status</p>
           <div className="flex items-center gap-2">
             <div className={`w-1.5 h-1.5 rounded-full ${activeAlerts > 5 ? 'bg-error' : activeAlerts > 0 ? 'bg-yellow-500' : 'bg-green-500'}`} />
-            <p className="text-xs font-black text-white">
+            <p className="text-xs font-black text-on-surface">
               {activeAlerts > 5 ? 'Critical' : activeAlerts > 0 ? 'Warning' : 'Optimal'}
             </p>
           </div>
@@ -68,6 +68,7 @@ const NexusLiveMonitor = ({ city = "Delhi", stats }) => {
 };
 
 export default NexusLiveMonitor;
+
 
 
 

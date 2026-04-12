@@ -64,7 +64,7 @@ const FAQAccordion = () => {
     <div className="space-y-6 font-body">
       <div className="flex items-end justify-between mb-8 px-2">
         <div className="space-y-1">
-          <h3 className="text-2xl font-black font-headline tracking-tighter text-white uppercase antialiased">Frequently Asked Questions</h3>
+          <h3 className="text-2xl font-black font-headline tracking-tighter text-on-surface uppercase antialiased">Frequently Asked Questions</h3>
           <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Quick operational intelligence.</p>
         </div>
         <span className="text-[10px] font-black text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20 shadow-sm uppercase tracking-widest">24 New Updates</span>
@@ -80,6 +80,7 @@ const FAQAccordion = () => {
 };
 
 export default FAQAccordion;
+
 
 
 

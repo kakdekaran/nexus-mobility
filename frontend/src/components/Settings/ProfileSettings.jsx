@@ -120,7 +120,7 @@ const ProfileSettings = () => {
         <button 
           onClick={handleUpdate}
           disabled={loading}
-          className="px-6 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+          className="px-6 py-2 bg-primary text-on-surface text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
         >
           {loading ? 'Propagating...' : 'Sync Registry'}
         </button>
@@ -140,7 +140,7 @@ const ProfileSettings = () => {
             alt="Profile Avatar"
           />
           <div className="absolute inset-0 bg-surface-container/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[1px]">
-            <span className="material-symbols-outlined text-white text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
+            <span className="material-symbols-outlined text-on-surface text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
           </div>
           <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} />
         </div>
@@ -171,6 +171,7 @@ const ProfileSettings = () => {
 };
 
 export default ProfileSettings;
+
 
 
 

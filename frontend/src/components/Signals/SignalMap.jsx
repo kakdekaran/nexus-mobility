@@ -113,7 +113,7 @@ const SignalMap = ({ city, signals, loading }) => {
           >
              <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-primary text-base">analytics</span>
-                <span className="text-[11px] font-black text-white uppercase tracking-[0.25em]">Grid Telemetry</span>
+                <span className="text-[11px] font-black text-on-surface uppercase tracking-[0.25em]">Grid Telemetry</span>
              </div>
              <motion.span 
                animate={{ rotate: expandedMetrics ? 180 : 0 }}
@@ -134,7 +134,7 @@ const SignalMap = ({ city, signals, loading }) => {
                 <div className="h-px w-full bg-on-surface/5" />
                 <div className="space-y-5">
                   <div className="flex items-center justify-between group/metric text-[11px]">
-                    <div className="flex items-center gap-3 text-white uppercase tracking-[0.15em] font-black">
+                    <div className="flex items-center gap-3 text-on-surface uppercase tracking-[0.15em] font-black">
                       <div className="w-2.5 h-2.5 rounded-full bg-error shadow-[0_0_15px_rgba(255,180,171,0.5)] animate-pulse" />
                       {city} Grid Heat
                     </div>
@@ -142,7 +142,7 @@ const SignalMap = ({ city, signals, loading }) => {
                   </div>
 
                   <div className="flex items-center justify-between group/metric text-[11px]">
-                    <div className="flex items-center gap-3 text-white uppercase tracking-[0.15em] font-black">
+                    <div className="flex items-center gap-3 text-on-surface uppercase tracking-[0.15em] font-black">
                       <div className="w-2.5 h-2.5 rounded-full bg-tertiary shadow-[0_0_15px_rgba(112,216,200,0.5)]" />
                       Neural Efficiency
                     </div>
@@ -175,7 +175,7 @@ const SignalMap = ({ city, signals, loading }) => {
                     key="expanded"
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-[11px] font-black text-white uppercase tracking-[0.25em]"
+                    className="text-[11px] font-black text-on-surface uppercase tracking-[0.25em]"
                   >
                     {city.toUpperCase()}_SECTOR_ALPHA_{new Date().getFullYear()}
                   </motion.span>
@@ -193,7 +193,7 @@ const SignalMap = ({ city, signals, loading }) => {
             </div>
             <motion.span 
               animate={{ rotate: expandedMesh ? 180 : 0 }}
-              className="material-symbols-outlined text-white/20 text-base"
+              className="material-symbols-outlined text-on-surface/20 text-base"
             >
               expand_less
             </motion.span>
@@ -206,6 +206,7 @@ const SignalMap = ({ city, signals, loading }) => {
 };
 
 export default SignalMap;
+
 
 
 

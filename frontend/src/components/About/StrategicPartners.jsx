@@ -17,7 +17,7 @@ const StrategicPartners = () => {
             <span className={`material-symbols-outlined text-3xl ${partner.color} group-hover/partner:scale-125 transition-transform`}>
               {partner.icon}
             </span>
-            <span className="font-headline font-black text-2xl tracking-tighter text-white antialiased group-hover/partner:text-primary transition-colors">
+            <span className="font-headline font-black text-2xl tracking-tighter text-on-surface antialiased group-hover/partner:text-primary transition-colors">
               {partner.name}
             </span>
           </div>
@@ -28,6 +28,7 @@ const StrategicPartners = () => {
 };
 
 export default StrategicPartners;
+
 
 
 

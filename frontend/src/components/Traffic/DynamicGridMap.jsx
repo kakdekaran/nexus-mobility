@@ -66,7 +66,7 @@ const DynamicGridMap = React.memo(({
       <div className="absolute top-8 left-8 space-y-2 pointer-events-none">
         <div className="flex items-center gap-3 bg-surface-container/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-on-surface/10 ring-1 ring-white/5">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(148,204,255,1)]" />
-          <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Neural Mesh Tracking: {city.toUpperCase()}</span>
+          <span className="text-[10px] font-black text-on-surface uppercase tracking-[0.2em]">Neural Mesh Tracking: {city.toUpperCase()}</span>
         </div>
         <div className="flex items-center gap-3 bg-surface-container/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-on-surface/10 ring-1 ring-white/5 w-fit">
           <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">Resolution: 1.4m GSD</span>
@@ -74,7 +74,7 @@ const DynamicGridMap = React.memo(({
       </div>
 
       <div className="absolute top-8 right-8 text-right hidden lg:block pointer-events-none">
-        <p className="text-[10px] font-black text-white uppercase tracking-widest opacity-20 font-mono">INFRASTRUCTURE_LINK_ACTIVE</p>
+        <p className="text-[10px] font-black text-on-surface uppercase tracking-widest opacity-20 font-mono">INFRASTRUCTURE_LINK_ACTIVE</p>
         <p className="text-[10px] font-black text-primary uppercase tracking-widest font-mono mt-1">SECURED_NODE_CHANNELS: {trafficLoad > 0 ? (120 + (trafficLoad % 30)) : 142}</p>
       </div>
 
@@ -128,6 +128,7 @@ const DynamicGridMap = React.memo(({
 });
 
 export default DynamicGridMap;
+
 
 
 

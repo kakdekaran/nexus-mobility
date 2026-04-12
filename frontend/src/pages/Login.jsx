@@ -110,7 +110,7 @@ const Login = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 backdrop-blur-xl mb-3 shadow-[0_0_20px_rgba(0,188,212,0.1)]">
             <span className="material-symbols-outlined text-primary text-2xl">traffic</span>
           </div>
-          <h1 className="text-3xl font-headline font-black text-white uppercase tracking-tighter leading-none">
+          <h1 className="text-3xl font-headline font-black text-on-surface uppercase tracking-tighter leading-none">
             NEXUS <span className="text-primary italic">MOBILITY</span>
           </h1>
           <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-[0.3em] opacity-60">
@@ -136,7 +136,7 @@ const Login = () => {
                     <input 
                       type="text" 
                       required
-                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all"
+                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface placeholder:text-on-surface/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all"
                       placeholder="Enter Full Name"
                       value={formData.fullName}
                       onChange={(e) => setFormData({...formData, fullName: e.target.value})}
@@ -145,7 +145,7 @@ const Login = () => {
                   <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant ml-1">Grid Assignment</label>
                     <select 
-                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-primary/30 appearance-none cursor-pointer"
+                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface outline-none focus:ring-1 focus:ring-primary/30 appearance-none cursor-pointer"
                       value={formData.role}
                       onChange={(e) => setFormData({...formData, role: e.target.value})}
                     >
@@ -164,12 +164,12 @@ const Login = () => {
                 <input 
                   type="email" 
                   required
-                  className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                  className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-on-surface placeholder:text-on-surface/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
                   placeholder="name@nexus.gov"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
-                <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/20 text-lg">
+                <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface/20 text-lg">
                   alternate_email
                 </span>
               </div>
@@ -193,12 +193,12 @@ const Login = () => {
                   <input 
                     type="password" 
                     required
-                    className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                    className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-on-surface placeholder:text-on-surface/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
                   />
-                  <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-white/20 text-lg">
+                  <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface/20 text-lg">
                     key
                   </span>
                 </div>
@@ -243,7 +243,7 @@ const Login = () => {
                 setError(null); 
                 setNotice(null); 
               }}
-              className="text-[10px] font-bold text-on-surface-variant hover:text-white uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+              className="text-[10px] font-bold text-on-surface-variant hover:text-on-surface uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
             >
               <span className="opacity-50">{authMode === 'register' ? "Already have a node?" : "Need grid access?"}</span>
               <span className="text-primary italic font-black">{authMode === 'register' ? "Authenticate" : "Requisition"}</span>
@@ -252,7 +252,7 @@ const Login = () => {
             {authMode === 'forgot' && (
               <button 
                 onClick={() => setAuthMode('login')}
-                className="text-[10px] font-bold text-on-surface-variant hover:text-white uppercase tracking-widest"
+                className="text-[10px] font-bold text-on-surface-variant hover:text-on-surface uppercase tracking-widest"
               >
                 Return to Login
               </button>
@@ -261,14 +261,14 @@ const Login = () => {
         </div>
 
         {/* Utility Footer */}
-        <div className="mt-8 flex justify-between items-center text-white/30 font-bold px-2">
+        <div className="mt-8 flex justify-between items-center text-on-surface/30 font-bold px-2">
           <div className="flex gap-4">
             <div className="text-[7px] uppercase tracking-[0.2em] space-y-0.5">
-              <p className="text-white opacity-60">Status</p>
+              <p className="text-on-surface opacity-60">Status</p>
               <p className="text-primary">E2E Secure</p>
             </div>
             <div className="text-[7px] uppercase tracking-[0.2em] space-y-0.5">
-              <p className="text-white opacity-60">Uptime</p>
+              <p className="text-on-surface opacity-60">Uptime</p>
               <p>99.9%</p>
             </div>
           </div>
@@ -280,6 +280,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 

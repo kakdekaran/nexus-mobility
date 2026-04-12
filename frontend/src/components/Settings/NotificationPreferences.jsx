@@ -43,7 +43,7 @@ const NotificationPreferences = () => {
         {alerts.map((alert, i) => (
           <div key={i} className={`flex items-start justify-between group/item transition-opacity ${alert.disabled ? 'opacity-40' : 'opacity-100 hover:opacity-100'}`}>
             <div className="space-y-1">
-              <p className="text-sm font-black text-white uppercase tracking-tight">{alert.title}</p>
+              <p className="text-sm font-black text-on-surface uppercase tracking-tight">{alert.title}</p>
               <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest leading-relaxed opacity-60 max-w-[240px]">{alert.desc}</p>
             </div>
             <div className="relative">
@@ -64,6 +64,7 @@ const NotificationPreferences = () => {
 };
 
 export default NotificationPreferences;
+
 
 
 

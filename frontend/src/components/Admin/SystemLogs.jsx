@@ -74,7 +74,7 @@ const SystemLogs = () => {
           <button 
             onClick={() => setIsLive(!isLive)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all text-[10px] font-black uppercase tracking-widest ${
-              isLive ? 'bg-tertiary/10 border-tertiary text-tertiary shadow-[0_0_10px_rgba(112,216,200,0.2)]' : 'bg-on-surface/5 border-on-surface/10 text-on-surface-variant hover:text-white'
+              isLive ? 'bg-tertiary/10 border-tertiary text-tertiary shadow-[0_0_10px_rgba(112,216,200,0.2)]' : 'bg-on-surface/5 border-on-surface/10 text-on-surface-variant hover:text-on-surface'
             }`}
           >
             <div className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-tertiary animate-pulse' : 'bg-slate-600'}`}></div>
@@ -108,6 +108,7 @@ const SystemLogs = () => {
 };
 
 export default SystemLogs;
+
 
 
 

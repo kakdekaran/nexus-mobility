@@ -7,7 +7,7 @@ const TrafficAssistant = () => {
                     <span className="material-symbols-outlined text-primary text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
                 </div>
                 <div className="space-y-0.5 min-w-0">
-                    <p className="text-[10px] font-black text-white uppercase tracking-[0.15em]">Neural Traffic Insight</p>
+                    <p className="text-[10px] font-black text-on-surface uppercase tracking-[0.15em]">Neural Traffic Insight</p>
                     <div className="flex items-center gap-1.5">
                         <span className="w-1.5 h-1.5 rounded-full bg-tertiary shrink-0" />
                         <span className="text-[9px] font-black text-tertiary uppercase animate-pulse">Deep-Node Active</span>
@@ -23,7 +23,7 @@ const TrafficAssistant = () => {
                 <input
                   type="text"
                   placeholder="Query system intelligence..."
-                  className="w-full bg-transparent text-[10px] font-bold uppercase tracking-wide px-2 py-1.5 outline-none text-white placeholder-slate-600"
+                  className="w-full bg-transparent text-[10px] font-bold uppercase tracking-wide px-2 py-1.5 outline-none text-on-surface placeholder-slate-600"
                 />
                 <button className="bg-primary/20 px-2.5 py-1.5 rounded-lg hover:bg-primary/40 transition-all shrink-0">
                     <span className="material-symbols-outlined text-primary text-base leading-none">send</span>
@@ -34,6 +34,7 @@ const TrafficAssistant = () => {
 };
 
 export default TrafficAssistant;
+
 
 
 

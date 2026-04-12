@@ -10,7 +10,7 @@ const OnboardingGuide = () => {
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all"></div>
       
       <div className="space-y-2 relative z-10">
-        <h4 className="text-xl font-black font-headline text-white uppercase tracking-tighter antialiased">System Onboarding</h4>
+        <h4 className="text-xl font-black font-headline text-on-surface uppercase tracking-tighter antialiased">System Onboarding</h4>
         <p className="text-[10px] text-on-surface-variant uppercase font-black tracking-widest opacity-60">Master precision in under 15 minutes.</p>
       </div>
 
@@ -21,7 +21,7 @@ const OnboardingGuide = () => {
               {step.num}
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-black text-white uppercase tracking-tight group-hover/step:text-primary transition-colors">{step.title}</p>
+              <p className="text-sm font-black text-on-surface uppercase tracking-tight group-hover/step:text-primary transition-colors">{step.title}</p>
               <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest leading-relaxed opacity-60">{step.desc}</p>
             </div>
           </div>
@@ -37,6 +37,7 @@ const OnboardingGuide = () => {
 };
 
 export default OnboardingGuide;
+
 
 
 

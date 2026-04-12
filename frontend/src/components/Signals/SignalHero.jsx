@@ -54,7 +54,7 @@ const SignalHero = ({ city, onCityChange }) => {
               className={`px-6 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-500 relative group ${
                 city === c 
                   ? 'text-on-surface' 
-                  : 'text-on-surface-variant hover:text-white'
+                  : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               {city === c && (
@@ -69,7 +69,7 @@ const SignalHero = ({ city, onCityChange }) => {
           ))}
         </div>
 
-        <button className="h-16 px-10 rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-white text-xs font-black uppercase tracking-[0.2em] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(148,204,255,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl group">
+        <button className="h-16 px-10 rounded-2xl bg-gradient-to-br from-primary to-sky-600 text-on-surface text-xs font-black uppercase tracking-[0.2em] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(148,204,255,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl group">
           <span className="material-symbols-outlined text-lg group-hover:rotate-180 transition-transform duration-700">sync</span>
           Force Neural Sync
         </button>
@@ -79,6 +79,7 @@ const SignalHero = ({ city, onCityChange }) => {
 };
 
 export default SignalHero;
+
 
 
 

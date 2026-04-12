@@ -38,7 +38,7 @@ const PersonnelRow = ({ id, name, email, role, status, lastLogin, initial, color
         <div className="relative inline-block text-left">
           <button 
             onClick={() => setShowMenu(!showMenu)}
-            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-white"
+            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-on-surface"
           >
             <span className="material-symbols-outlined text-lg leading-none">more_vert</span>
           </button>
@@ -92,17 +92,17 @@ const AddUserModal = ({ onClose, onSuccess }) => {
         <form onSubmit={handleSubmit} className="space-y-4 font-body">
           <input 
             type="text" placeholder="Full Name" required
-            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:outline-none focus:border-primary transition-colors"
             value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
           />
           <input 
             type="email" placeholder="Email Address" required
-            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:outline-none focus:border-primary transition-colors"
             value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
           <input 
             type="password" placeholder="Temporary Token (Password)" required
-            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:outline-none focus:border-primary transition-colors"
             value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
           />
           <select 
@@ -117,8 +117,8 @@ const AddUserModal = ({ onClose, onSuccess }) => {
           {error && <p className="text-[10px] font-black text-error uppercase tracking-widest">{error}</p>}
 
           <div className="flex gap-3 pt-4">
-            <button type="button" onClick={onClose} className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-white transition-colors">Abort</button>
-            <button type="submit" disabled={loading} className="flex-1 py-3 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 disabled:opacity-50">
+            <button type="button" onClick={onClose} className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">Abort</button>
+            <button type="submit" disabled={loading} className="flex-1 py-3 bg-primary text-on-surface rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 disabled:opacity-50">
               {loading ? 'Propagating...' : 'Confirm Node'}
             </button>
           </div>
@@ -260,6 +260,7 @@ const PersonnelManagement = () => {
 };
 
 export default PersonnelManagement;
+
 
 
 

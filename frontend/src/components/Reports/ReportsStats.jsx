@@ -5,7 +5,7 @@ const ReportsStats = () => {
       <div className="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group border border-slate-800/50 shadow-lg">
         <div className="relative z-10">
           <span className="text-[10px] text-on-surface-variant uppercase tracking-widest font-black">Total Reports</span>
-          <div className="text-3xl font-headline font-black text-white mt-1 antialiased">1,284</div>
+          <div className="text-3xl font-headline font-black text-on-surface mt-1 antialiased">1,284</div>
           <div className="flex items-center gap-1 text-tertiary mt-2 text-[10px] font-bold uppercase tracking-widest">
             <span className="material-symbols-outlined text-xs leading-none">trending_up</span>
             <span>12% this month</span>
@@ -20,7 +20,7 @@ const ReportsStats = () => {
       <div className="bg-surface-container-low p-6 rounded-xl relative overflow-hidden group border border-slate-800/50 shadow-lg">
         <div className="relative z-10">
           <span className="text-[10px] text-on-surface-variant uppercase tracking-widest font-black">Data Accuracy</span>
-          <div className="text-3xl font-headline font-black text-white mt-1 antialiased">99.4%</div>
+          <div className="text-3xl font-headline font-black text-on-surface mt-1 antialiased">99.4%</div>
           <div className="flex items-center gap-1 text-tertiary mt-2 text-[10px] font-bold uppercase tracking-widest">
             <span className="material-symbols-outlined text-xs leading-none">verified</span>
             <span>Sensor Validated</span>
@@ -35,7 +35,7 @@ const ReportsStats = () => {
       <div className="md:col-span-2 bg-surface-container-low rounded-xl overflow-hidden flex border border-slate-800/50 shadow-lg">
         <div className="p-6 flex-1">
           <span className="text-[10px] text-on-surface-variant uppercase tracking-widest font-black">System Health</span>
-          <div className="text-xl font-headline font-black text-white mt-1 tracking-tight">Node Distribution</div>
+          <div className="text-xl font-headline font-black text-on-surface mt-1 tracking-tight">Node Distribution</div>
           <div className="mt-4 flex gap-1 h-1.5 shadow-inner bg-surface-container-high rounded-full overflow-hidden">
             <div className="w-[60%] bg-tertiary" title="Active"></div>
             <div className="w-[25%] bg-primary" title="Maintenance"></div>
@@ -65,6 +65,7 @@ const ReportsStats = () => {
 };
 
 export default ReportsStats;
+
 
 
 

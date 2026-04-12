@@ -86,7 +86,7 @@ const DataIngestion = () => {
           <p className="text-[10px] text-on-surface-variant group-hover:text-slate-300 font-black uppercase tracking-widest">
             Drag a CSV here or <span className="text-primary font-black">browse</span>
           </p>
-          <p className="text-[8px] text-slate-600 mt-2 font-bold uppercase tracking-widest">
+          <p className="text-[8px] text-on-surface mt-2 font-bold uppercase tracking-widest">
             Accepted format: CSV
           </p>
         </div>
@@ -122,6 +122,7 @@ const DataIngestion = () => {
 };
 
 export default DataIngestion;
+
 
 
 
