@@ -26,8 +26,8 @@ const Sidebar = () => {
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 bg-surface-container flex flex-col py-6 px-4 font-inter text-sm font-medium z-40 transition-all duration-200 ease-in-out border-r border-on-surface/5">
       <div className="mb-8 px-2 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg flow-gradient-primary flex items-center justify-center shadow-lg shadow-primary/20">
-          <span className="material-symbols-outlined text-on-primary text-xl">hub</span>
+        <div className="w-9 h-9 rounded-lg bg-tertiary flex items-center justify-center shadow-lg shadow-tertiary/20">
+          <span className="material-symbols-outlined text-on-tertiary text-xl">hub</span>
         </div>
         <div>
           <h1 className="text-lg font-black text-on-surface leading-tight tracking-tight">Nexus Mobility</h1>
