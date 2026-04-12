@@ -25,7 +25,7 @@ const DynamicGridMap = React.memo(({
       <svg className="absolute inset-0 w-full h-full opacity-40 pointer-events-none">
         <defs>
           <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(148,204,255,0.05)" strokeWidth="0.5" />
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--outline)" strokeWidth="0.5" opacity="0.1" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid-pattern)" />
@@ -33,7 +33,8 @@ const DynamicGridMap = React.memo(({
         {/* Connection Lines (Moving) - Linear ease for smoother performance */}
         <motion.path
           d="M 10 20 L 90 80 M 30 10 L 70 90 M 10 90 L 90 10"
-          stroke="rgba(148,204,255,0.03)"
+          stroke="var(--primary)"
+          strokeOpacity="0.05"
           strokeWidth="1"
           strokeDasharray="10 10"
           animate={{ strokeDashoffset: [0, -100] }}
