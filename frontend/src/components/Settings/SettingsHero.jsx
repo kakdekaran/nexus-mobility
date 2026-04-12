@@ -12,3 +12,5 @@ const SettingsHero = () => {
 };
 
 export default SettingsHero;
+
+

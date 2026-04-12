@@ -17,7 +17,7 @@ const OnboardingGuide = () => {
       <div className="space-y-8 relative z-10">
         {steps.map((step, i) => (
           <div key={i} className="flex gap-6 group/step cursor-pointer active:scale-95 transition-all">
-            <div className="flex-none w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-xs font-black text-on-surface-variant group-hover/step:border-primary group-hover/step:text-primary group-hover/step:bg-primary/10 transition-all font-body">
+            <div className="flex-none w-10 h-10 rounded-full border border-on-surface/5 bg-on-surface/5 flex items-center justify-center text-xs font-black text-on-surface-variant group-hover/step:border-primary group-hover/step:text-primary group-hover/step:bg-primary/10 transition-all font-body">
               {step.num}
             </div>
             <div className="space-y-1">
@@ -37,3 +37,5 @@ const OnboardingGuide = () => {
 };
 
 export default OnboardingGuide;
+
+

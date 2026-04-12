@@ -42,68 +42,68 @@ const BroadcastConsole = () => {
   };
 
   return (
-    <div className="bg-surface-container-low rounded-2xl p-6 border border-white/5 shadow-2xl font-body relative overflow-hidden group">
+    <div className="bg-surface-container-low rounded-2xl p-6 border border-on-surface/5 shadow-2xl font-body relative overflow-hidden group">
       {/* Background Glow */}
-      <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 blur-[60px] rounded-full group-hover:bg-primary/20 transition-all duration-500"></div>
+      <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/5 blur-[60px] rounded-full group-hover:bg-primary/10 transition-all duration-500"></div>
 
       <div className="flex items-center gap-3 mb-6 relative z-10">
-        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/10">
           <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>broadcast_on_home</span>
         </div>
         <div>
-          <h3 className="text-sm font-black text-white uppercase tracking-widest leading-none">Broadcast Console</h3>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 opacity-60 italic">Emergency & Policy Directives</p>
+          <h3 className="text-sm font-black text-on-surface uppercase tracking-widest leading-none">Broadcast Console</h3>
+          <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest mt-1 opacity-60 italic">Emergency & Policy Directives</p>
         </div>
       </div>
 
       <div className="space-y-4 relative z-10">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Directive Class</label>
+            <label className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest ml-1">Directive Class</label>
             <select 
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="w-full bg-slate-900/50 border border-white/5 rounded-xl px-4 py-3 text-xs font-bold text-white outline-none focus:ring-1 focus:ring-primary transition-all appearance-none cursor-pointer"
+              className="w-full bg-surface-container-highest/20 border border-on-surface/10 rounded-xl px-4 py-3 text-xs font-bold text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all appearance-none cursor-pointer"
             >
-              <option value="info">Information</option>
-              <option value="warning">Warning</option>
-              <option value="alert">Critical Alert</option>
-              <option value="success" className="text-tertiary">Operational Success</option>
+              <option value="info" className="bg-surface-container-low">Information</option>
+              <option value="warning" className="bg-surface-container-low">Warning</option>
+              <option value="alert" className="bg-surface-container-low">Critical Alert</option>
+              <option value="success" className="bg-surface-container-low text-tertiary">Operational Success</option>
             </select>
           </div>
           <div className="space-y-2">
-            <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Target Personnel</label>
+            <label className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest ml-1">Target Personnel</label>
             <select 
               value={target}
               onChange={(e) => setTarget(e.target.value)}
-              className="w-full bg-slate-900/50 border border-white/5 rounded-xl px-4 py-3 text-xs font-bold text-white outline-none focus:ring-1 focus:ring-primary transition-all appearance-none cursor-pointer"
+              className="w-full bg-surface-container-highest/20 border border-on-surface/10 rounded-xl px-4 py-3 text-xs font-bold text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all appearance-none cursor-pointer"
             >
-              <option value="User">General Users</option>
-              {role === 'Admin' && <option value="Analyst">All Analysts</option>}
-              {role === 'Admin' && <option value="all">Global Broadcast</option>}
+              <option value="User" className="bg-surface-container-low text-on-surface">General Users</option>
+              {role === 'Admin' && <option value="Analyst" className="bg-surface-container-low text-on-surface">All Analysts</option>}
+              {role === 'Admin' && <option value="all" className="bg-surface-container-low text-on-surface">Global Broadcast</option>}
             </select>
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Subject</label>
+          <label className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest ml-1">Subject</label>
           <input 
             type="text" 
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="E.g. System Maintenance, Peak Congestion..."
-            className="w-full bg-slate-900/50 border border-white/5 rounded-xl px-4 py-3 text-xs font-bold text-white outline-none focus:ring-1 focus:ring-primary transition-all placeholder:text-slate-700"
+            className="w-full bg-surface-container-highest/20 border border-on-surface/10 rounded-xl px-4 py-3 text-xs font-bold text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant/40"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Message Content</label>
+          <label className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest ml-1">Message Content</label>
           <textarea 
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Provide detailed instructions or alerts here..."
-            className="w-full bg-slate-900/50 border border-white/5 rounded-xl px-4 py-3 text-xs font-bold text-white outline-none focus:ring-1 focus:ring-primary transition-all resize-none placeholder:text-slate-700"
+            className="w-full bg-surface-container-highest/20 border border-on-surface/10 rounded-xl px-4 py-3 text-xs font-bold text-on-surface outline-none focus:ring-1 focus:ring-primary transition-all resize-none placeholder:text-on-surface-variant/40"
           ></textarea>
         </div>
 
@@ -116,7 +116,7 @@ const BroadcastConsole = () => {
         <button 
           onClick={handleBroadcast}
           disabled={loading}
-          className="w-full bg-primary hover:bg-primary/90 text-white font-black text-[10px] uppercase tracking-[0.2em] py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-primary hover:bg-primary/90 text-on-surface font-black text-[10px] uppercase tracking-[0.2em] py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {loading ? (
             <span className="material-symbols-outlined animate-spin text-sm">sync</span>
@@ -131,3 +131,5 @@ const BroadcastConsole = () => {
 };
 
 export default BroadcastConsole;
+
+

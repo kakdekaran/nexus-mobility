@@ -1,7 +1,7 @@
 
 const ThemeToggle = ({ currentTheme, onToggle }) => {
   return (
-    <section className="bg-surface-container-low rounded-xl p-8 border border-white/5 shadow-2xl font-body group relative overflow-hidden">
+    <section className="bg-surface-container-low rounded-xl p-8 border border-on-surface/5 shadow-2xl font-body group relative overflow-hidden">
       <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-tertiary/5 rounded-full blur-3xl group-hover:bg-tertiary/10 transition-all"></div>
       
       <div className="flex items-center justify-between mb-8 relative z-10">
@@ -31,11 +31,11 @@ const ThemeToggle = ({ currentTheme, onToggle }) => {
         <div 
           onClick={() => currentTheme !== 'dark' && onToggle()}
           className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col gap-3 group/dark ${
-            currentTheme === 'dark' ? 'border-primary bg-primary/5' : 'border-white/5 bg-transparent hover:bg-white/5'
+            currentTheme === 'dark' ? 'border-primary bg-primary/5' : 'border-on-surface/5 bg-transparent hover:bg-on-surface/5'
           }`}
         >
-          <div className="w-full h-16 bg-slate-900 rounded-lg border border-slate-800 overflow-hidden flex shadow-inner">
-            <div className="w-6 h-full bg-slate-800 border-r border-slate-700/50"></div>
+          <div className="w-full h-16 bg-surface-container rounded-lg border border-slate-800 overflow-hidden flex shadow-inner">
+            <div className="w-6 h-full bg-surface-container-high border-r border-slate-700/50"></div>
             <div className="flex-1 p-3 space-y-2">
               <div className="w-10 h-1.5 bg-slate-700 rounded-full"></div>
               <div className="w-16 h-1.5 bg-slate-700/50 rounded-full"></div>
@@ -52,7 +52,7 @@ const ThemeToggle = ({ currentTheme, onToggle }) => {
         <div 
           onClick={() => currentTheme !== 'light' && onToggle()}
           className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col gap-3 group/light ${
-            currentTheme === 'light' ? 'border-primary bg-primary/5' : 'border-white/5 bg-transparent hover:bg-white/5'
+            currentTheme === 'light' ? 'border-primary bg-primary/5' : 'border-on-surface/5 bg-transparent hover:bg-on-surface/5'
           }`}
         >
           <div className="w-full h-16 bg-slate-100 rounded-lg border border-slate-200 overflow-hidden flex shadow-inner">
@@ -75,3 +75,5 @@ const ThemeToggle = ({ currentTheme, onToggle }) => {
 };
 
 export default ThemeToggle;
+
+

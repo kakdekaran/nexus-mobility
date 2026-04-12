@@ -1,7 +1,7 @@
 const MissionStats = () => {
   return (
     <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 font-body">
-      <div className="md:col-span-2 bg-surface-container-low p-10 rounded-2xl space-y-8 border border-white/5 shadow-2xl relative overflow-hidden group">
+      <div className="md:col-span-2 bg-surface-container-low p-10 rounded-2xl space-y-8 border border-on-surface/5 shadow-2xl relative overflow-hidden group">
         <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
         <h3 className="text-3xl font-black font-headline tracking-tighter text-white uppercase antialiased relative z-10">Our Global Mission</h3>
         
@@ -10,14 +10,14 @@ const MissionStats = () => {
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-inner">
                <span className="material-symbols-outlined text-primary text-4xl">reduce_capacity</span>
             </div>
-            <h4 className="text-xl font-black text-white tracking-tight uppercase">Congestion Neutrality</h4>
+            <h4 className="text-xl font-black text-on-surface tracking-tight uppercase">Congestion Neutrality</h4>
             <p className="text-sm text-on-surface-variant leading-relaxed opacity-90 font-medium">Reducing idle time by 40% through real-time AI-driven signal synchronization and lane management.</p>
           </div>
           <div className="space-y-4">
             <div className="w-16 h-16 rounded-xl bg-tertiary/10 flex items-center justify-center border border-tertiary/20 shadow-inner">
                <span className="material-symbols-outlined text-tertiary text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>nature_people</span>
             </div>
-            <h4 className="text-xl font-black text-white tracking-tight uppercase">Carbon-Zero Flow</h4>
+            <h4 className="text-xl font-black text-on-surface tracking-tight uppercase">Carbon-Zero Flow</h4>
             <p className="text-sm text-on-surface-variant leading-relaxed opacity-90 font-medium">Directing mobility patterns to minimize emissions hotspots in high-density residential areas.</p>
           </div>
         </div>
@@ -38,3 +38,5 @@ const MissionStats = () => {
 };
 
 export default MissionStats;
+
+

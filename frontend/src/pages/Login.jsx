@@ -113,13 +113,13 @@ const Login = () => {
           <h1 className="text-3xl font-headline font-black text-white uppercase tracking-tighter leading-none">
             NEXUS <span className="text-primary italic">MOBILITY</span>
           </h1>
-          <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] opacity-60">
+          <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-[0.3em] opacity-60">
             Municipal Grid Command Center
           </p>
         </div>
 
         {/* Action Card */}
-        <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[2rem] border border-white/10 shadow-2xl p-6 md:p-8 relative overflow-hidden">
+        <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[2rem] border border-on-surface/10 shadow-2xl p-6 md:p-8 relative overflow-hidden">
           <div className="absolute -top-24 -left-24 w-48 h-48 bg-primary/5 rounded-full blur-[80px]" />
           
           <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
@@ -132,26 +132,26 @@ const Login = () => {
                   className="space-y-4"
                 >
                   <div className="space-y-1.5">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Identity Name</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant ml-1">Identity Name</label>
                     <input 
                       type="text" 
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all"
+                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all"
                       placeholder="Enter Full Name"
                       value={formData.fullName}
                       onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Grid Assignment</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant ml-1">Grid Assignment</label>
                     <select 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-primary/30 appearance-none cursor-pointer"
+                      className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:ring-1 focus:ring-primary/30 appearance-none cursor-pointer"
                       value={formData.role}
                       onChange={(e) => setFormData({...formData, role: e.target.value})}
                     >
-                      <option value="User" className="bg-slate-900">Citizen Terminal</option>
-                      <option value="Analyst" className="bg-slate-900">Systems Analyst</option>
-                      <option value="Admin" className="bg-slate-900">Grid Administrator</option>
+                      <option value="User" className="bg-surface-container">Citizen Terminal</option>
+                      <option value="Analyst" className="bg-surface-container">Systems Analyst</option>
+                      <option value="Admin" className="bg-surface-container">Grid Administrator</option>
                     </select>
                   </div>
                 </motion.div>
@@ -159,12 +159,12 @@ const Login = () => {
             </AnimatePresence>
 
             <div className="space-y-1.5">
-              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Email Endpoint</label>
+              <label className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant ml-1">Email Endpoint</label>
               <div className="relative">
                 <input 
                   type="email" 
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                  className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
                   placeholder="name@nexus.gov"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -178,7 +178,7 @@ const Login = () => {
             {authMode !== 'forgot' && (
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center px-1">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-slate-500">Security Key</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">Security Key</label>
                   {authMode === 'login' && (
                     <button 
                       type="button"
@@ -193,7 +193,7 @@ const Login = () => {
                   <input 
                     type="password" 
                     required
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
+                    className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white/10 outline-none focus:ring-1 focus:ring-primary/30 transition-all font-medium"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value})}
@@ -236,14 +236,14 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-white/5 text-center flex flex-col gap-3">
+          <div className="mt-6 pt-6 border-t border-on-surface/5 text-center flex flex-col gap-3">
             <button 
               onClick={() => { 
                 setAuthMode(authMode === 'register' ? 'login' : 'register'); 
                 setError(null); 
                 setNotice(null); 
               }}
-              className="text-[10px] font-bold text-slate-400 hover:text-white uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+              className="text-[10px] font-bold text-on-surface-variant hover:text-white uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
             >
               <span className="opacity-50">{authMode === 'register' ? "Already have a node?" : "Need grid access?"}</span>
               <span className="text-primary italic font-black">{authMode === 'register' ? "Authenticate" : "Requisition"}</span>
@@ -252,7 +252,7 @@ const Login = () => {
             {authMode === 'forgot' && (
               <button 
                 onClick={() => setAuthMode('login')}
-                className="text-[10px] font-bold text-slate-500 hover:text-white uppercase tracking-widest"
+                className="text-[10px] font-bold text-on-surface-variant hover:text-white uppercase tracking-widest"
               >
                 Return to Login
               </button>
@@ -280,3 +280,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

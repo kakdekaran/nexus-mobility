@@ -6,7 +6,7 @@ const ExpertDirectory = () => {
   ];
 
   return (
-    <div className="bg-surface-container-low rounded-xl overflow-hidden p-8 space-y-6 border border-white/5 shadow-2xl relative group">
+    <div className="bg-surface-container-low rounded-xl overflow-hidden p-8 space-y-6 border border-on-surface/5 shadow-2xl relative group">
       <div className="absolute -bottom-10 -right-10 w-24 h-24 bg-tertiary/10 rounded-full blur-2xl group-hover:bg-tertiary/20 transition-all opacity-0 group-hover:opacity-100"></div>
       
       <div className="flex items-center gap-3">
@@ -25,7 +25,7 @@ const ExpertDirectory = () => {
               alt={`Expert ${i}`}
             />
           ))}
-          <div className="w-10 h-10 rounded-full border-2 border-surface-container-low bg-slate-800 flex items-center justify-center text-[10px] font-black text-primary shadow-xl ring-1 ring-white/10 hover:bg-slate-700 transition-colors cursor-pointer">
+          <div className="w-10 h-10 rounded-full border-2 border-surface-container-low bg-surface-container-high flex items-center justify-center text-[10px] font-black text-primary shadow-xl ring-1 ring-white/10 hover:bg-slate-700 transition-colors cursor-pointer">
             +482
           </div>
         </div>
@@ -36,3 +36,5 @@ const ExpertDirectory = () => {
 };
 
 export default ExpertDirectory;
+
+

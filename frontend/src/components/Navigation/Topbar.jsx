@@ -101,10 +101,10 @@ const Topbar = ({ user: initialUser }) => {
     : [];
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-surface-container/90 backdrop-blur-xl flex justify-between items-center px-8 h-16 border-b border-white/5">
+    <header className="w-full sticky top-0 z-50 bg-surface-container/90 backdrop-blur-xl flex justify-between items-center px-8 h-16 border-b border-on-surface/5">
       <div className="flex items-center gap-6 w-1/2">
         <div className="relative w-full max-w-md group">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-sky-400 transition-colors pointer-events-none z-10">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-sky-400 transition-colors pointer-events-none z-10">
             search
           </span>
           <input
@@ -123,27 +123,27 @@ const Topbar = ({ user: initialUser }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute top-full left-0 right-0 mt-3 bg-slate-900 border border-white/10 rounded-2xl shadow-3xl overflow-hidden z-[100] backdrop-blur-2xl"
+                className="absolute top-full left-0 right-0 mt-3 bg-surface-container border border-on-surface/10 rounded-2xl shadow-3xl overflow-hidden z-[100] backdrop-blur-2xl"
               >
                 <div className="p-2">
                   {filteredResults.length > 0 ? filteredResults.map((node, i) => (
                     <button
                       key={i}
                       onClick={() => { navigate(node.path); setSearchTerm(''); }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all group text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-on-surface/5 rounded-xl transition-all group text-left"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <span className="material-symbols-outlined text-lg text-slate-400 group-hover:text-primary transition-colors">{node.icon}</span>
+                      <div className="w-8 h-8 rounded-lg bg-on-surface/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <span className="material-symbols-outlined text-lg text-on-surface-variant group-hover:text-primary transition-colors">{node.icon}</span>
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-bold text-on-surface leading-none">{node.title}</span>
-                        <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">{node.category}</span>
+                        <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest mt-1">{node.category}</span>
                       </div>
                       <span className="material-symbols-outlined text-sm text-slate-600 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
                     </button>
                   )) : (
                     <div className="px-4 py-6 text-center">
-                      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">No results for "{searchTerm}"</p>
+                      <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">No results for "{searchTerm}"</p>
                     </div>
                   )}
                 </div>
@@ -157,7 +157,7 @@ const Topbar = ({ user: initialUser }) => {
         <div className="relative">
           <button 
             onClick={() => { setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false); }}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors relative ${isNotifOpen ? 'bg-primary/20 text-primary' : 'text-slate-400 hover:text-sky-300 hover:bg-slate-800/50'}`}
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors relative ${isNotifOpen ? 'bg-primary/20 text-primary' : 'text-on-surface-variant hover:text-sky-300 hover:bg-surface-container-high/50'}`}
           >
             <span className="material-symbols-outlined">notifications</span>
             {unreadCount > 0 && (
@@ -173,10 +173,10 @@ const Topbar = ({ user: initialUser }) => {
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute right-0 mt-3 w-80 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-[100] backdrop-blur-xl"
+                className="absolute right-0 mt-3 w-80 bg-surface-container border border-on-surface/10 rounded-2xl shadow-2xl overflow-hidden z-[100] backdrop-blur-xl"
               >
-                <div className="p-4 bg-white/5 border-b border-white/5 flex justify-between items-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest leading-none">Notifications Center</p>
+                <div className="p-4 bg-on-surface/5 border-b border-on-surface/5 flex justify-between items-center">
+                  <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest leading-none">Notifications Center</p>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-0.5 bg-primary/20 text-primary text-[8px] font-black rounded-full uppercase tracking-widest">{unreadCount} New</span>
                   </div>
@@ -186,7 +186,7 @@ const Topbar = ({ user: initialUser }) => {
                   {unreadNotifications.length > 0 ? unreadNotifications.map((notif) => (
                     <div 
                       key={notif.id}
-                      className={`p-4 border-b border-white/5 transition-all relative group bg-indigo-500/5`}
+                      className={`p-4 border-b border-on-surface/5 transition-all relative group bg-indigo-500/5`}
                     >
                       <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
                       <div className="flex gap-3">
@@ -201,7 +201,7 @@ const Topbar = ({ user: initialUser }) => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold text-white mb-1 leading-tight">{notif.title}</p>
-                          <p className={`text-[10px] text-slate-400 leading-relaxed ${expandedNotif === notif.id ? '' : 'truncate'}`}>
+                          <p className={`text-[10px] text-on-surface-variant leading-relaxed ${expandedNotif === notif.id ? '' : 'truncate'}`}>
                             {notif.message}
                           </p>
                           <div className="flex items-center justify-between mt-3">
@@ -213,7 +213,7 @@ const Topbar = ({ user: initialUser }) => {
                              </button>
                              <button 
                                onClick={() => markRead(notif.id)}
-                               className="px-2 py-1 bg-white/5 hover:bg-primary text-[8px] text-slate-300 hover:text-white font-black uppercase tracking-widest rounded transition-all border border-white/5"
+                               className="px-2 py-1 bg-on-surface/5 hover:bg-primary text-[8px] text-slate-300 hover:text-on-surface font-black uppercase tracking-widest rounded transition-all border border-on-surface/5"
                              >
                                Archive Directive
                              </button>
@@ -224,16 +224,16 @@ const Topbar = ({ user: initialUser }) => {
                   )) : (
                     <div className="p-10 text-center">
                       <span className="material-symbols-outlined text-4xl text-slate-700 mb-4 block">mail_lock</span>
-                      <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Nexus Inbox Clean</p>
+                      <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Nexus Inbox Clean</p>
                     </div>
                   )}
                 </div>
 
-                <div className="p-3 bg-white/5 border-t border-white/5">
+                <div className="p-3 bg-on-surface/5 border-t border-on-surface/5">
                   <Link 
                     to="/inbox" 
                     onClick={() => setIsNotifOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-primary transition-all group"
+                    className="w-full flex items-center justify-center gap-2 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-all group"
                   >
                     Open Command Inbox
                     <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
@@ -244,12 +244,12 @@ const Topbar = ({ user: initialUser }) => {
           </AnimatePresence>
         </div>
         
-        <div className="h-8 w-[1px] bg-slate-800 mx-2"></div>
+        <div className="h-8 w-[1px] bg-surface-container-high mx-2"></div>
         
         <div className="relative">
           <button 
             onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center gap-3 p-1.5 pr-2 rounded-full hover:bg-white/5 transition-all outline-none border border-white/0 hover:border-white/5"
+            className="flex items-center gap-3 p-1.5 pr-2 rounded-full hover:bg-on-surface/5 transition-all outline-none border border-white/0 hover:border-on-surface/5"
           >
             <div className="text-right hidden sm:block">
               <p className="text-[11px] font-black text-on-surface leading-tight uppercase tracking-tight">{user?.name || 'Alex Rivera'}</p>
@@ -271,19 +271,19 @@ const Topbar = ({ user: initialUser }) => {
                 initial={{ opacity: 0, scale: 0.95, y: 10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute right-0 mt-3 w-56 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-[100] backdrop-blur-xl"
+                className="absolute right-0 mt-3 w-56 bg-surface-container border border-on-surface/10 rounded-2xl shadow-2xl overflow-hidden z-[100] backdrop-blur-xl"
               >
-                <div className="p-4 bg-white/5 border-b border-white/5 flex items-center gap-3">
+                <div className="p-4 bg-on-surface/5 border-b border-on-surface/5 flex items-center gap-3">
                   <div className="relative">
                     <img
                       src={avatar || user?.avatar || "https://lh3.googleusercontent.com/aida-public/AB6AXuA0AB9twQkxWvt6-lb0R_30tDec05uq8VOUaZhCarzyFQUcbGAo2QRoRezqsUKY1UEkzneKHCl8A2C832BsXGh2RxoRr0lmSoWLN_mA5DaKmk--a7INUurDbfdMiXPE1jwTFeZMotSvWRWiQRLfIxTRbtdyuBbRX04Ey8pZD9lVm-pKkl5FYod6OWKdjBjLvTBUDiAL6AEzzgeQQqAw-au8mU0RZWxrsmeaI80IMgVV7ssejI9_FZ-nq4I53xVPiRydPVQOyDIdvow"}
                       alt="User avatar"
-                      className="w-10 h-10 rounded-full border border-white/10 object-cover"
+                      className="w-10 h-10 rounded-full border border-on-surface/10 object-cover"
                     />
                     <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-tertiary rounded-full border-2 border-slate-900 shadow-sm"></div>
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest leading-none mb-1">Command Control</p>
+                    <p className="text-[9px] text-on-surface-variant font-black uppercase tracking-widest leading-none mb-1">Command Control</p>
                     <p className="text-xs text-on-surface font-bold truncate">{user?.name || 'Alex Rivera'}</p>
                     <p className="text-[9px] text-sky-400 font-bold uppercase tracking-widest opacity-60 mt-0.5">{user?.role || 'User'}</p>
                   </div>
@@ -293,29 +293,29 @@ const Topbar = ({ user: initialUser }) => {
                   <Link 
                     to="/settings" 
                     onClick={() => setIsProfileOpen(false)}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-on-surface/5 rounded-xl transition-all group"
                   >
                     <span className="material-symbols-outlined text-xl group-hover:text-primary">account_circle</span>
                     <div className="flex flex-col">
                       <span className="font-bold leading-tight">Profile Settings</span>
-                      <span className="text-[9px] text-slate-500 uppercase font-black mt-0.5">Edit username & avatar</span>
+                      <span className="text-[9px] text-on-surface-variant uppercase font-black mt-0.5">Edit username & avatar</span>
                     </div>
                   </Link>
                   
                   <Link 
                     to="/settings" 
                     onClick={() => setIsProfileOpen(false)}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-on-surface/5 rounded-xl transition-all group"
                   >
                     <span className="material-symbols-outlined text-xl group-hover:text-tertiary">lock</span>
                     <div className="flex flex-col">
                       <span className="font-bold leading-tight">Security & Access</span>
-                      <span className="text-[9px] text-slate-500 uppercase font-black mt-0.5">Change pass-codes</span>
+                      <span className="text-[9px] text-on-surface-variant uppercase font-black mt-0.5">Change pass-codes</span>
                     </div>
                   </Link>
                 </div>
 
-                <div className="p-2 border-t border-white/5">
+                <div className="p-2 border-t border-on-surface/5">
                   <button 
                     onClick={handleLogout}
                     className="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error/70 hover:text-error hover:bg-error/5 rounded-xl transition-all font-bold"
@@ -334,3 +334,5 @@ const Topbar = ({ user: initialUser }) => {
 };
 
 export default Topbar;
+
+

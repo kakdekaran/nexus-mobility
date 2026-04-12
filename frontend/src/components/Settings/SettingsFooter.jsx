@@ -16,7 +16,7 @@ const SettingsFooter = ({ onSave, onCancel }) => {
       <div className="flex items-center gap-4 w-full md:w-auto">
         <button 
           onClick={onCancel}
-          className="flex-1 md:flex-none px-10 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-on-surface hover:bg-surface-container-highest/50 transition-all rounded-full border border-white/5 active:scale-95"
+          className="flex-1 md:flex-none px-10 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-on-surface hover:bg-surface-container-highest/50 transition-all rounded-full border border-on-surface/5 active:scale-95"
         >
           Cancel Changes
         </button>
@@ -32,3 +32,5 @@ const SettingsFooter = ({ onSave, onCancel }) => {
 };
 
 export default SettingsFooter;
+
+

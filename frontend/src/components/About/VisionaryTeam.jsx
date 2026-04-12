@@ -1,7 +1,7 @@
 const TeamMember = ({ role, name, image, color }) => {
   return (
     <div className="space-y-4 group">
-      <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-surface-container-high relative border border-white/5 shadow-2xl">
+      <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-surface-container-high relative border border-on-surface/5 shadow-2xl">
         <img 
           className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
           src={image} 
@@ -11,7 +11,7 @@ const TeamMember = ({ role, name, image, color }) => {
       </div>
       <div>
         <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${color}`}>{role}</p>
-        <h4 className="text-xl font-black text-white font-headline antialiased group-hover:text-primary transition-colors tracking-tight">{name}</h4>
+        <h4 className="text-xl font-black text-on-surface font-headline antialiased group-hover:text-primary transition-colors tracking-tight">{name}</h4>
       </div>
     </div>
   );
@@ -62,3 +62,5 @@ const VisionaryTeam = () => {
 };
 
 export default VisionaryTeam;
+
+

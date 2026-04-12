@@ -96,7 +96,7 @@ const PollutionInsights = () => {
             Atmospheric Telemetry Sync: Active
           </motion.div>
           
-          <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tighter leading-tight mb-4">
+          <h2 className="text-3xl lg:text-4xl font-black text-on-surface tracking-tighter leading-tight mb-4">
             Pollution <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-tertiary to-sky-400">Insights Panel</span>
           </h2>
@@ -109,15 +109,15 @@ const PollutionInsights = () => {
 
         <div className="flex flex-wrap items-center gap-6">
           {/* City Selector */}
-          <div className="flex bg-white/5 backdrop-blur-xl p-1 rounded-2xl border border-white/10 shadow-2xl flex-wrap">
+          <div className="flex bg-surface-container-highest/20 backdrop-blur-xl p-1 rounded-2xl border border-on-surface/10 shadow-2xl flex-wrap">
             {cities.map((city) => (
               <button 
                 key={city}
                 onClick={() => setFilters({ ...filters, city })}
                 className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${
                   filters.city === city 
-                    ? 'bg-tertiary text-white shadow-lg shadow-tertiary/20' 
-                    : 'text-on-surface-variant hover:text-white hover:bg-white/5'
+                    ? 'bg-tertiary text-on-tertiary shadow-lg shadow-tertiary/20' 
+                    : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
                 }`}
               >
                 {city}
@@ -126,15 +126,15 @@ const PollutionInsights = () => {
           </div>
 
           <div className="flex flex-wrap gap-3 items-center">
-            <div className="flex bg-white/5 backdrop-blur-xl p-1 rounded-xl border border-white/10 shadow-2xl">
+            <div className="flex bg-surface-container-highest/20 backdrop-blur-xl p-1 rounded-xl border border-on-surface/10 shadow-2xl">
               {ranges.map((r) => (
                 <button 
                   key={r.id}
                   onClick={() => setFilters({ ...filters, range: r.id })}
                   className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300 ${
                     filters.range === r.id 
-                      ? 'bg-slate-700 text-white shadow-lg shadow-black/20' 
-                      : 'text-on-surface-variant hover:text-white'
+                      ? 'bg-tertiary-container text-on-tertiary-container shadow-lg shadow-black/20' 
+                      : 'text-on-surface-variant hover:text-on-surface'
                   }`}
                 >
                   {r.label}
@@ -173,7 +173,7 @@ const PollutionInsights = () => {
         </motion.div>
       </AnimatePresence>
 
-      <footer className="mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] opacity-40">
+      <footer className="mt-24 pt-10 border-t border-on-surface/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] opacity-40">
         <div>© 2026 Nexus Environmental Protocol • V7.2.0-Alpha</div>
         <div className="flex items-center gap-10">
           <a className="hover:text-tertiary transition-colors cursor-pointer" href="#compliance">Regulatory Compliance</a>
@@ -186,3 +186,5 @@ const PollutionInsights = () => {
 };
 
 export default PollutionInsights;
+
+

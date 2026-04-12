@@ -5,13 +5,13 @@ const SignalFlowScale = () => {
         <span className="text-xs font-black font-headline uppercase tracking-widest text-on-surface-variant">System Flow Gradient</span>
         <span className="text-xs text-tertiary font-black uppercase tracking-tighter">Current State: Optimizing</span>
       </div>
-      <div className="h-2 w-full rounded-full overflow-hidden bg-slate-800 flex shadow-inner">
+      <div className="h-2 w-full rounded-full overflow-hidden bg-surface-container-high flex shadow-inner">
         <div className="h-full w-1/3 bg-tertiary"></div>
         <div className="h-full w-1/4 bg-primary-container"></div>
         <div className="h-full w-1/6 bg-primary"></div>
         <div className="h-full w-1/4 bg-error"></div>
       </div>
-      <div className="flex justify-between text-[10px] text-slate-500 font-black uppercase tracking-widest leading-none">
+      <div className="flex justify-between text-[10px] text-on-surface-variant font-black uppercase tracking-widest leading-none">
         <span>Free Flow</span>
         <span>Moderate</span>
         <span>Saturated</span>
@@ -22,3 +22,5 @@ const SignalFlowScale = () => {
 };
 
 export default SignalFlowScale;
+
+

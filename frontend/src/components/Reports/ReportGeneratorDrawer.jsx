@@ -54,7 +54,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-surface-container-lowest/60 backdrop-blur-sm z-[60]"
           />
 
           <motion.aside
@@ -62,7 +62,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-screen w-[420px] bg-surface-container-high shadow-2xl z-[70] border-l border-white/5 p-8 overflow-y-auto font-body"
+            className="fixed right-0 top-0 h-screen w-[420px] bg-surface-container-high shadow-2xl z-[70] border-l border-on-surface/5 p-8 overflow-y-auto font-body"
           >
             <div className="flex items-center justify-between mb-10">
               <h3 className="text-2xl font-headline font-black text-white tracking-tight leading-none uppercase">Generate Report</h3>
@@ -80,7 +80,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
                       key={item}
                       onClick={() => setCity(item)}
                       className={`rounded-xl border px-4 py-3 text-[10px] font-black uppercase tracking-widest transition-all ${
-                        city === item ? 'border-primary bg-primary/10 text-primary' : 'border-white/5 bg-surface-container-highest text-on-surface-variant'
+                        city === item ? 'border-primary bg-primary/10 text-primary' : 'border-on-surface/5 bg-surface-container-highest text-on-surface-variant'
                       }`}
                     >
                       {item}
@@ -117,7 +117,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
                 />
               </div>
 
-              <div className="rounded-2xl border border-white/5 bg-surface-container-highest p-5">
+              <div className="rounded-2xl border border-on-surface/5 bg-surface-container-highest p-5">
                 <p className="text-[10px] font-black uppercase tracking-widest text-white">Export format</p>
                 <p className="mt-2 text-sm font-bold text-on-surface-variant">
                   CSV report with congestion, pollution, weather, and hourly trend columns.
@@ -153,3 +153,5 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
 };
 
 export default ReportGeneratorDrawer;
+
+

@@ -5,16 +5,16 @@ const FAQItem = ({ question, answer, icon, color }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-surface-container-low rounded-xl border border-white/5 shadow-2xl relative overflow-hidden group">
+    <div className="bg-surface-container-low rounded-xl border border-on-surface/5 shadow-2xl relative overflow-hidden group">
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-6 text-left group/btn"
       >
         <div className="flex items-center gap-5">
-          <div className={`w-10 h-10 rounded-xl bg-opacity-10 flex items-center justify-center border border-white/5 transition-transform group-hover/btn:scale-110 ${color}`}>
+          <div className={`w-10 h-10 rounded-xl bg-opacity-10 flex items-center justify-center border border-on-surface/5 transition-transform group-hover/btn:scale-110 ${color}`}>
             <span className="material-symbols-outlined text-xl">{icon}</span>
           </div>
-          <span className="font-headline font-black text-white tracking-tighter uppercase antialiased group-hover/btn:text-primary transition-colors text-sm">
+          <span className="font-headline font-black text-on-surface tracking-tighter uppercase antialiased group-hover/btn:text-primary transition-colors text-sm">
             {question}
           </span>
         </div>
@@ -80,3 +80,5 @@ const FAQAccordion = () => {
 };
 
 export default FAQAccordion;
+
+

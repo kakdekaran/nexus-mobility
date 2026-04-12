@@ -31,7 +31,7 @@ const Sidebar = () => {
         </div>
         <div>
           <h1 className="text-lg font-black text-on-surface leading-tight tracking-tight">Nexus Mobility</h1>
-          <p className="text-[9px] text-slate-400 uppercase tracking-widest font-bold mt-0.5">City Planning Division</p>
+          <p className="text-[9px] text-on-surface-variant uppercase tracking-widest font-bold mt-0.5">City Planning Division</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ const Sidebar = () => {
             logout();
             window.location.href = '/login';
           }}
-          className="w-full flex items-center gap-3 px-3 py-2.5 text-slate-400 hover:bg-error/10 hover:text-error transition-all text-left rounded-lg font-semibold"
+          className="w-full flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-error/10 hover:text-error transition-all text-left rounded-lg font-semibold"
         >
           <span className="material-symbols-outlined text-xl">logout</span>
           <span className="text-sm">Logout</span>
@@ -87,3 +87,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+

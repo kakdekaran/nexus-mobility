@@ -59,16 +59,16 @@ const HotspotTable = ({ data: apiData }) => {
   };
 
   return (
-    <div className="col-span-12 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/5 font-body">
-      <div className="px-10 py-8 flex items-center justify-between border-b border-white/5">
+    <div className="col-span-12 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] overflow-hidden shadow-2xl border border-on-surface/5 font-body">
+      <div className="px-10 py-8 flex items-center justify-between border-b border-on-surface/5">
         <div>
-          <h3 className="text-xl font-black text-white uppercase tracking-tight leading-none">Active Congestion Hotspots</h3>
+          <h3 className="text-xl font-black text-on-surface uppercase tracking-tight leading-none">Active Congestion Hotspots</h3>
           <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest mt-2 opacity-60">Prioritized intersections requiring optimization</p>
         </div>
         <button 
           onClick={handleExport}
           disabled={exporting}
-          className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-primary transition-all border border-white/5 active:scale-95 disabled:opacity-50"
+          className="flex items-center gap-2 px-6 py-3 bg-on-surface/5 hover:bg-on-surface/10 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-primary transition-all border border-on-surface/5 active:scale-95 disabled:opacity-50"
         >
           <span className="material-symbols-outlined text-lg">{exporting ? 'sync' : 'ios_share'}</span>
           {exporting ? 'Generating...' : 'Export Full Dataset'}
@@ -101,7 +101,7 @@ const HotspotTable = ({ data: apiData }) => {
                 <td className={`px-10 py-6 font-black tabular-nums ${spot.delay.startsWith('+') ? 'text-error' : 'text-tertiary'}`}>
                   {spot.delay} <span className="text-[8px] opacity-40 ml-1">({spot.congestion}%)</span>
                 </td>
-                <td className="px-10 py-6 text-white font-black tabular-nums opacity-80">{spot.throughput} <span className="text-[10px] opacity-40 ml-1">VPH</span></td>
+                <td className="px-10 py-6 text-on-surface font-black tabular-nums opacity-80">{spot.throughput} <span className="text-[10px] opacity-40 ml-1">VPH</span></td>
                 <td className="px-10 py-6">
                   <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
                     spot.health === 'Degraded' ? 'bg-error/10 text-error' : spot.health === 'Optimal' ? 'bg-tertiary/10 text-tertiary' : 'bg-primary/10 text-primary'
@@ -113,7 +113,7 @@ const HotspotTable = ({ data: apiData }) => {
                   <button 
                     onClick={() => handleSync(spot.name)}
                     className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm active:scale-95 border ${
-                      focused === spot.name ? 'bg-primary text-white border-primary' : 'bg-white/5 text-white/40 border-white/5 hover:text-white hover:border-white/20'
+                      focused === spot.name ? 'bg-primary text-white border-primary' : 'bg-on-surface/5 text-white/40 border-on-surface/5 hover:text-white hover:border-white/20'
                     }`}
                   >
                     {focused === spot.name ? 'Synced' : 'Sync View'}
@@ -129,3 +129,5 @@ const HotspotTable = ({ data: apiData }) => {
 };
 
 export default HotspotTable;
+
+

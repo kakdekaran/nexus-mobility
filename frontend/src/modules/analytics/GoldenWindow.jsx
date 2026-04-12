@@ -36,7 +36,7 @@ const GoldenWindow = ({ city }) => {
       <div className="space-y-4">
         <div className="space-y-1">
           <h3 className="text-xs font-black text-primary uppercase tracking-[0.2em]">Efficiency Protocol</h3>
-          <h2 className="text-xl font-black text-white uppercase tracking-tighter antialiased">Golden Window</h2>
+          <h2 className="text-xl font-black text-on-surface uppercase tracking-tighter antialiased">Golden Window</h2>
         </div>
 
         {loading ? (
@@ -47,21 +47,21 @@ const GoldenWindow = ({ city }) => {
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Optimal Transit</p>
-                <p className="text-2xl font-black text-white">{goldenHour.hour}</p>
+                <p className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">Optimal Transit</p>
+                <p className="text-2xl font-black text-on-surface">{goldenHour.hour}</p>
               </div>
               <div className="space-y-1">
-                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Saturation</p>
+                <p className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">Saturation</p>
                 <p className="text-2xl font-black text-tertiary">{Math.round(goldenHour.load)}%</p>
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-[8px] font-black text-slate-400 uppercase tracking-widest">
+              <div className="flex justify-between text-[8px] font-black text-on-surface-variant uppercase tracking-widest">
                 <span>Load Profile</span>
                 <span>24H Cycle</span>
               </div>
-              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden flex gap-0.5">
+              <div className="h-1.5 bg-on-surface/5 rounded-full overflow-hidden flex gap-0.5">
                 {trends.slice(0, 12).map((t, i) => (
                   <div 
                     key={i}
@@ -78,7 +78,7 @@ const GoldenWindow = ({ city }) => {
           </div>
         )}
 
-        <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-primary/30 rounded-xl text-[9px] font-black text-white uppercase tracking-[0.2em] transition-all">
+        <button className="w-full py-3 bg-on-surface/5 hover:bg-on-surface/10 border border-on-surface/5 hover:border-primary/30 rounded-xl text-[9px] font-black text-white uppercase tracking-[0.2em] transition-all">
           Generate Full Forecast
         </button>
       </div>
@@ -87,3 +87,5 @@ const GoldenWindow = ({ city }) => {
 };
 
 export default GoldenWindow;
+
+

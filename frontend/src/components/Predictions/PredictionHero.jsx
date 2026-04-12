@@ -3,7 +3,7 @@ const PredictionHero = () => {
     { label: 'Prediction Accuracy', value: '98.4%', icon: 'verified', color: 'text-sky-400' },
     { label: 'Active Sensors', value: '1,204', icon: 'sensors', color: 'text-primary' },
     { label: 'Emission Reduction', value: '-14.2%', icon: 'eco', color: 'text-tertiary' },
-    { label: 'Last Update', value: '0.4s ago', icon: 'update', color: 'text-slate-500' },
+    { label: 'Last Update', value: '0.4s ago', icon: 'update', color: 'text-on-surface-variant' },
   ];
 
   return (
@@ -16,16 +16,16 @@ const PredictionHero = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-white/5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-on-surface/5">
         {stats.map((stat, i) => (
           <div key={i} className="space-y-2 group">
             <div className="flex items-center gap-2 mb-1">
               <span className={`material-symbols-outlined text-base ${stat.color} opacity-70 group-hover:opacity-100 transition-opacity`}>
                 {stat.icon}
               </span>
-              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{stat.label}</span>
+              <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">{stat.label}</span>
             </div>
-            <p className="text-2xl font-headline font-black text-white tracking-tighter group-hover:text-sky-300 transition-colors">
+            <p className="text-2xl font-headline font-black text-on-surface tracking-tighter group-hover:text-sky-300 transition-colors">
               {stat.value}
             </p>
           </div>
@@ -36,3 +36,5 @@ const PredictionHero = () => {
 };
 
 export default PredictionHero;
+
+

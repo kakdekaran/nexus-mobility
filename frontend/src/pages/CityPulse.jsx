@@ -23,15 +23,15 @@ const CityPulse = () => {
             <select 
               value={activeCity} 
               onChange={(e) => setActiveCity(e.target.value)}
-              className="bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-xs font-bold uppercase tracking-wider text-white outline-none focus:ring-2 focus:ring-primary/40 appearance-none cursor-pointer hover:border-primary/30 transition-all backdrop-blur-md"
+              className="bg-on-surface/5 border border-on-surface/10 rounded-xl pl-4 pr-10 py-3 text-xs font-bold uppercase tracking-wider text-white outline-none focus:ring-2 focus:ring-primary/40 appearance-none cursor-pointer hover:border-primary/30 transition-all backdrop-blur-md"
             >
-              <option className="bg-slate-900">Delhi</option>
-              <option className="bg-slate-900">Mumbai</option>
-              <option className="bg-slate-900">Bangalore</option>
-              <option className="bg-slate-900">Chennai</option>
-              <option className="bg-slate-900">Hyderabad</option>
+              <option className="bg-surface-container">Delhi</option>
+              <option className="bg-surface-container">Mumbai</option>
+              <option className="bg-surface-container">Bangalore</option>
+              <option className="bg-surface-container">Chennai</option>
+              <option className="bg-surface-container">Hyderabad</option>
             </select>
-            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-hover:text-primary transition-colors text-sm">
+            <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none group-hover:text-primary transition-colors text-sm">
               expand_more
             </span>
           </div>
@@ -43,13 +43,13 @@ const CityPulse = () => {
         <div className="lg:col-span-4 space-y-8 h-full">
           <GoldenWindow city={activeCity} />
           
-          <div className="p-8 bg-surface-container-low rounded-3xl border border-white/5 relative overflow-hidden group">
+          <div className="p-8 bg-surface-container-low rounded-3xl border border-on-surface/5 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
             <h3 className="text-sm font-black font-headline text-white uppercase tracking-widest mb-4 flex items-center gap-2">
               <span className="material-symbols-outlined text-sm text-primary">analytics</span>
               Trend Validation
             </h3>
-            <p className="text-xs text-slate-500 leading-relaxed font-medium">
+            <p className="text-xs text-on-surface-variant leading-relaxed font-medium">
               Municipal intelligence is aggregated every 60 minutes. All predictions are derived directly from physical transit sensors deployed across {activeCity}.
             </p>
           </div>
@@ -57,11 +57,11 @@ const CityPulse = () => {
 
         {/* Right Column: Location Grid */}
         <div className="lg:col-span-8 space-y-8">
-           <div className="bg-white/5 p-8 rounded-[40px] border border-white/5 relative overflow-hidden group h-full">
+           <div className="bg-on-surface/5 p-8 rounded-[40px] border border-on-surface/5 relative overflow-hidden group h-full">
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 className="text-2xl font-black font-headline text-white uppercase tracking-tighter antialiased">Municipal Grid</h2>
-                <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em] mt-2 italic">Spatial Load across metropolitan divisions</p>
+                <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em] mt-2 italic">Spatial Load across metropolitan divisions</p>
               </div>
               <div className="flex gap-2">
                  <div className="flex items-center gap-1.5 bg-green-500/10 px-3 py-1.5 rounded-full border border-green-500/20">
@@ -84,3 +84,5 @@ const CityPulse = () => {
 };
 
 export default CityPulse;
+
+

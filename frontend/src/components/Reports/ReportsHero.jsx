@@ -29,3 +29,5 @@ const ReportsHero = ({ onGenerate }) => {
 };
 
 export default ReportsHero;
+
+

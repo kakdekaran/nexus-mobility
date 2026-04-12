@@ -26,7 +26,7 @@ const NotificationPreferences = () => {
   };
 
   return (
-    <section className="bg-surface-container-low rounded-xl p-8 space-y-8 border border-white/5 shadow-2xl font-body relative overflow-hidden group">
+    <section className="bg-surface-container-low rounded-xl p-8 space-y-8 border border-on-surface/5 shadow-2xl font-body relative overflow-hidden group">
       <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all"></div>
       
       <div className="flex items-center gap-3 relative z-10">
@@ -51,7 +51,7 @@ const NotificationPreferences = () => {
                 checked={alert.checked} 
                 disabled={alert.disabled}
                 onChange={() => handleToggle(alert.id)}
-                className="w-5 h-5 rounded border-white/10 bg-surface-container-highest text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer appearance-none checked:bg-primary transition-all ring-1 ring-white/5"
+                className="w-5 h-5 rounded border-on-surface/10 bg-surface-container-highest text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer appearance-none checked:bg-primary transition-all ring-1 ring-white/5"
                 type="checkbox"
               />
               {alert.checked && <span className="material-symbols-outlined absolute inset-0 text-[16px] text-on-primary pointer-events-none flex items-center justify-center font-black">check</span>}
@@ -64,3 +64,5 @@ const NotificationPreferences = () => {
 };
 
 export default NotificationPreferences;
+
+

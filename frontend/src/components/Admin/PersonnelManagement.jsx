@@ -6,7 +6,7 @@ const PersonnelRow = ({ id, name, email, role, status, lastLogin, initial, color
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <tr className="hover:bg-slate-800/30 transition-colors group font-body relative">
+    <tr className="hover:bg-surface-container-high/30 transition-colors group font-body relative">
       <td className="px-6 py-4">
         <div className="flex items-center gap-3 min-w-[160px]">
           <div className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-black text-[11px] shadow-sm ${color}`}>
@@ -20,7 +20,7 @@ const PersonnelRow = ({ id, name, email, role, status, lastLogin, initial, color
         <select 
           value={role}
           onChange={(e) => onUpdate(id, { role: e.target.value })}
-          className="bg-transparent text-[10px] font-black uppercase tracking-widest text-primary border border-white/5 rounded-md px-2 py-1 outline-none hover:border-primary/50 transition-colors focus:ring-1 focus:ring-primary cursor-pointer"
+          className="bg-transparent text-[10px] font-black uppercase tracking-widest text-primary border border-on-surface/5 rounded-md px-2 py-1 outline-none hover:border-primary/50 transition-colors focus:ring-1 focus:ring-primary cursor-pointer"
         >
           <option value="Admin">Admin</option>
           <option value="Analyst">Analyst</option>
@@ -30,21 +30,21 @@ const PersonnelRow = ({ id, name, email, role, status, lastLogin, initial, color
       <td className="px-6 py-4">
         <div className="flex items-center gap-2">
           <div className={`w-1.5 h-1.5 rounded-full ${status === 'Active' ? 'bg-tertiary animate-pulse shadow-[0_0_8px_rgba(112,216,200,0.5)]' : 'bg-slate-600'}`}></div>
-          <span className={`text-[10px] font-black uppercase tracking-widest ${status === 'Active' ? 'text-tertiary' : 'text-slate-500'}`}>{status}</span>
+          <span className={`text-[10px] font-black uppercase tracking-widest ${status === 'Active' ? 'text-tertiary' : 'text-on-surface-variant'}`}>{status}</span>
         </div>
       </td>
-      <td className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">{lastLogin}</td>
+      <td className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">{lastLogin}</td>
       <td className="px-6 py-4 text-right">
         <div className="relative inline-block text-left">
           <button 
             onClick={() => setShowMenu(!showMenu)}
-            className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-white"
+            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-white"
           >
             <span className="material-symbols-outlined text-lg leading-none">more_vert</span>
           </button>
           
           {showMenu && (
-            <div className="absolute right-0 mt-2 w-32 rounded-lg bg-slate-900 border border-white/10 shadow-2xl z-50 overflow-hidden">
+            <div className="absolute right-0 mt-2 w-32 rounded-lg bg-surface-container border border-on-surface/10 shadow-2xl z-50 overflow-hidden">
               <button 
                 onClick={() => { onDelete(id); setShowMenu(false); }}
                 className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase tracking-widest text-error hover:bg-error/5 transition-colors flex items-center gap-2"
@@ -86,38 +86,38 @@ const AddUserModal = ({ onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md">
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-slate-900 border border-white/10 rounded-3xl p-8 w-full max-w-md shadow-3xl">
-        <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-6">Initialize New Personnel</h3>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-surface-container-lowest/80 backdrop-blur-md">
+      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-surface-container border border-on-surface/10 rounded-3xl p-8 w-full max-w-md shadow-3xl">
+        <h3 className="text-xl font-black text-on-surface uppercase tracking-tighter mb-6">Initialize New Personnel</h3>
         <form onSubmit={handleSubmit} className="space-y-4 font-body">
           <input 
             type="text" placeholder="Full Name" required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
             value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
           />
           <input 
             type="email" placeholder="Email Address" required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
             value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
           <input 
             type="password" placeholder="Temporary Token (Password)" required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
             value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
           />
           <select 
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary transition-colors"
+            className="w-full bg-on-surface/5 border border-on-surface/10 rounded-xl px-4 py-3 text-sm text-on-surface focus:outline-none focus:border-primary transition-colors"
             value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })}
           >
-            <option value="User" className="bg-slate-900">User</option>
-            <option value="Analyst" className="bg-slate-900">Analyst</option>
-            <option value="Admin" className="bg-slate-900">Admin</option>
+            <option value="User" className="bg-surface-container text-on-surface">User</option>
+            <option value="Analyst" className="bg-surface-container text-on-surface">Analyst</option>
+            <option value="Admin" className="bg-surface-container text-on-surface">Admin</option>
           </select>
 
           {error && <p className="text-[10px] font-black text-error uppercase tracking-widest">{error}</p>}
 
           <div className="flex gap-3 pt-4">
-            <button type="button" onClick={onClose} className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Abort</button>
+            <button type="button" onClick={onClose} className="flex-1 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant hover:text-white transition-colors">Abort</button>
             <button type="submit" disabled={loading} className="flex-1 py-3 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 disabled:opacity-50">
               {loading ? 'Propagating...' : 'Confirm Node'}
             </button>
@@ -186,24 +186,24 @@ const PersonnelManagement = () => {
   }, []);
 
   return (
-    <div className="bg-surface-container-low rounded-xl p-6 shadow-2xl relative overflow-hidden border border-slate-800/50">
+    <div className="bg-surface-container-low rounded-xl p-6 shadow-2xl relative overflow-hidden border border-on-surface/10">
       <div className="absolute top-0 right-0 p-8 opacity-5">
-        <span className="material-symbols-outlined text-9xl">group</span>
+        <span className="material-symbols-outlined text-9xl text-on-surface">group</span>
       </div>
       <div className="flex justify-between items-end mb-8 relative z-10 font-body">
         <div>
-          <h3 className="text-xl font-black font-headline text-white mb-1 uppercase tracking-tighter">Personnel Management</h3>
+          <h3 className="text-xl font-black font-headline text-on-surface mb-1 uppercase tracking-tighter">Personnel Management</h3>
           <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest">Manage active operators and system delegates</p>
         </div>
         <div className="flex gap-3 shrink-0">
           <button 
             onClick={() => setShowAddModal(true)}
-            className="px-6 py-2.5 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+            className="px-6 py-2.5 rounded-full bg-primary text-on-primary text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
           >
             <span className="material-symbols-outlined text-lg leading-none">person_add</span>
             Add Personnel
           </button>
-          <span className="px-5 py-2.5 rounded-full bg-surface-container-highest text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-md whitespace-nowrap">
+          <span className="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-md whitespace-nowrap">
             <span className="material-symbols-outlined text-lg leading-none">groups</span>
             {personnel.length} users
           </span>
@@ -214,20 +214,20 @@ const PersonnelManagement = () => {
           {error}
         </div>
       )}
-      <div className="overflow-x-auto rounded-lg bg-surface-container-lowest border border-white/5 font-body relative min-h-[200px]">
+      <div className="overflow-x-auto rounded-lg bg-surface-container-lowest border border-on-surface/5 font-body relative min-h-[200px]">
         {loading && (
-          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-surface-container/40 backdrop-blur-[2px] z-10 flex items-center justify-center">
             <span className="material-symbols-outlined animate-spin text-primary text-3xl">sync</span>
           </div>
         )}
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-surface-container-high/30">
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Name</th>
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Email</th>
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Role</th>
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
-              <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">Last Login</th>
+              <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Name</th>
+              <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Email</th>
+              <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Role</th>
+              <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Status</th>
+              <th className="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Last Login</th>
               <th className="px-6 py-4"></th>
             </tr>
           </thead>
@@ -243,7 +243,7 @@ const PersonnelManagement = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-slate-500 uppercase text-[10px] font-black tracking-widest">
+                <td colSpan={6} className="px-6 py-12 text-center text-on-surface-variant uppercase text-[10px] font-black tracking-widest">
                   No active personnel nodes identified
                 </td>
               </tr>
@@ -260,3 +260,5 @@ const PersonnelManagement = () => {
 };
 
 export default PersonnelManagement;
+
+

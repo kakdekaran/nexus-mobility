@@ -20,7 +20,7 @@ const DynamicGridMap = React.memo(({
   }, []);
 
   return (
-    <div className="w-full aspect-[21/9] bg-slate-950 rounded-[2.5rem] overflow-hidden relative font-body border border-white/5 shadow-2xl group transform-gpu">
+    <div className="w-full aspect-[21/9] bg-surface-container-lowest rounded-[2.5rem] overflow-hidden relative font-body border border-on-surface/5 shadow-2xl group transform-gpu">
       {/* Neural Mesh Background (SVG) */}
       <svg className="absolute inset-0 w-full h-full opacity-40 pointer-events-none">
         <defs>
@@ -64,11 +64,11 @@ const DynamicGridMap = React.memo(({
       </svg>
       {/* Floating Meta-Data Overlays */}
       <div className="absolute top-8 left-8 space-y-2 pointer-events-none">
-        <div className="flex items-center gap-3 bg-slate-900/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-white/10 ring-1 ring-white/5">
+        <div className="flex items-center gap-3 bg-surface-container/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-on-surface/10 ring-1 ring-white/5">
           <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(148,204,255,1)]" />
           <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Neural Mesh Tracking: {city.toUpperCase()}</span>
         </div>
-        <div className="flex items-center gap-3 bg-slate-900/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-white/10 ring-1 ring-white/5 w-fit">
+        <div className="flex items-center gap-3 bg-surface-container/40 backdrop-blur-3xl px-4 py-2 rounded-full border border-on-surface/10 ring-1 ring-white/5 w-fit">
           <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">Resolution: 1.4m GSD</span>
         </div>
       </div>
@@ -82,16 +82,16 @@ const DynamicGridMap = React.memo(({
       <div className="absolute bottom-8 left-8 right-8 flex flex-col md:flex-row items-center justify-center gap-4">
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-slate-950/80 backdrop-blur-2xl px-6 py-5 rounded-[1.5rem] border border-white/10 shadow-3xl min-w-[180px] ring-1 ring-white/5 cursor-default"
+          className="bg-surface-container-lowest/80 backdrop-blur-2xl px-6 py-5 rounded-[1.5rem] border border-on-surface/10 shadow-3xl min-w-[180px] ring-1 ring-white/5 cursor-default"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Metropolitan Load</span>
+            <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">Metropolitan Load</span>
             <span className="material-symbols-outlined text-sm text-primary">analytics</span>
           </div>
-          <div className="text-3xl font-black text-white tracking-tighter tabular-nums flex items-baseline gap-1">
+          <div className="text-3xl font-black text-on-surface tracking-tighter tabular-nums flex items-baseline gap-1">
             {trafficLoad}<span className="text-xs text-primary font-bold">%</span>
           </div>
-          <div className="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div className="mt-3 h-1 w-full bg-on-surface/5 rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(trafficLoad, 100)}%` }}
@@ -102,16 +102,16 @@ const DynamicGridMap = React.memo(({
 
         <motion.div 
           whileHover={{ y: -5 }}
-          className="bg-slate-950/80 backdrop-blur-2xl px-6 py-5 rounded-[1.5rem] border border-white/10 shadow-3xl min-w-[180px] ring-1 ring-white/5 cursor-default"
+          className="bg-surface-container-lowest/80 backdrop-blur-2xl px-6 py-5 rounded-[1.5rem] border border-on-surface/10 shadow-3xl min-w-[180px] ring-1 ring-white/5 cursor-default"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Active Anomalies</span>
+            <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest">Active Anomalies</span>
             <span className="material-symbols-outlined text-sm text-error">warning</span>
           </div>
-          <div className={`text-3xl font-black tracking-tighter tabular-nums ${activeAlerts > 5 ? 'text-error' : 'text-white'}`}>
+          <div className={`text-3xl font-black tracking-tighter tabular-nums ${activeAlerts > 5 ? 'text-error' : 'text-on-surface'}`}>
             {activeAlerts.toString().padStart(2, '0')}
           </div>
-          <div className="mt-3 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+          <div className="mt-3 h-1 w-full bg-on-surface/5 rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${Math.min((activeAlerts / 15) * 100, 100)}%` }}
@@ -128,3 +128,5 @@ const DynamicGridMap = React.memo(({
 });
 
 export default DynamicGridMap;
+
+

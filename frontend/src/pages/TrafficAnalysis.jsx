@@ -93,7 +93,7 @@ const TrafficAnalysis = () => {
 
       <div className="grid grid-cols-12 gap-8 relative">
         {recalculating && (
-          <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-[1px] z-20 pointer-events-none transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-surface-container/10 backdrop-blur-[1px] z-20 pointer-events-none transition-opacity duration-300" />
         )}
         <CongestionMetrics data={trafficData?.trends} />
         <DistrictHeatmap data={trafficData} />
@@ -115,7 +115,7 @@ const TrafficAnalysis = () => {
         <span className={`material-symbols-outlined text-2xl ${recalculating ? 'animate-spin' : ''}`} style={{ fontVariationSettings: "'FILL' 1" }}>
           {recalculating ? 'sync' : 'bolt'}
         </span>
-        <span className="absolute right-16 bg-slate-900/95 text-white px-4 py-2 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10 shadow-xl">
+        <span className="absolute right-16 bg-surface-container/95 text-white px-4 py-2 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-on-surface/10 shadow-xl">
           {recalculating ? 'Refreshing telemetry...' : 'Refresh telemetry'}
         </span>
       </button>
@@ -124,3 +124,5 @@ const TrafficAnalysis = () => {
 };
 
 export default TrafficAnalysis;
+
+

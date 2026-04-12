@@ -44,7 +44,7 @@ const HelpCenter = () => {
         <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>chat_bubble</span>
       </button>
 
-      <footer className="mt-12 pt-8 border-t border-slate-800/50 flex justify-between items-center text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] opacity-60">
+      <footer className="mt-12 pt-8 border-t border-slate-800/50 flex justify-between items-center text-on-surface-variant text-[10px] font-black uppercase tracking-[0.2em] opacity-60">
         <span>© 2026 Nexus Mobility Support • Protocol 9.1</span>
         <div className="flex gap-6">
           <a className="hover:text-primary transition-colors" href="#">Service SLA</a>
@@ -57,3 +57,5 @@ const HelpCenter = () => {
 };
 
 export default HelpCenter;
+
+

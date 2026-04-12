@@ -63,7 +63,7 @@ const Predictions = () => {
           ) : predictionResult ? (
             <PredictionResultCard result={predictionResult} />
           ) : (
-            <div className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-12 text-center border border-dashed border-white/10">
+            <div className="bg-on-surface/5 backdrop-blur-xl rounded-[2rem] p-12 text-center border border-dashed border-on-surface/10">
               <span className="material-symbols-outlined text-4xl text-on-surface-variant mb-4 opacity-30">query_stats</span>
               <p className="text-on-surface-variant font-black uppercase tracking-widest text-[10px] opacity-40">Awaiting Neural Sequence Parameters</p>
             </div>
@@ -82,7 +82,7 @@ const Predictions = () => {
           <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-surface-container-highest text-white shadow-lg transition-all active:scale-95">
             {currentRole} Access
           </button>
-          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 transition-all">
+          <button className="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-on-surface-variant transition-all">
             Backend verified
           </button>
         </div>
@@ -92,3 +92,5 @@ const Predictions = () => {
 };
 
 export default Predictions;
+
+

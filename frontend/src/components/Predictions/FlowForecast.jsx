@@ -26,7 +26,7 @@ const FlowForecast = ({ city = 'Delhi', aqi = 50 }) => {
   if (loading) {
     return (
       <div className="bg-surface-container-low rounded-xl p-6 h-64 flex items-center justify-center animate-pulse">
-        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Calculating Future Flow...</span>
+        <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Calculating Future Flow...</span>
       </div>
     );
   }
@@ -66,7 +66,7 @@ const FlowForecast = ({ city = 'Delhi', aqi = 50 }) => {
         </ResponsiveContainer>
       </div>
 
-      <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
+      <p className="text-[9px] text-on-surface-variant font-bold uppercase tracking-widest leading-relaxed">
         Anticipated metropolitan density shift based on atmospheric and historical neural weights.
       </p>
     </div>
@@ -74,3 +74,5 @@ const FlowForecast = ({ city = 'Delhi', aqi = 50 }) => {
 };
 
 export default FlowForecast;
+
+

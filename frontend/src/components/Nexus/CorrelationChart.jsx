@@ -16,10 +16,10 @@ const CorrelationChart = ({ data: apiData, city = 'Delhi' }) => {
   ];
 
   return (
-    <div className="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-10 font-body border border-white/5 shadow-2xl hover:bg-white/[0.04] transition-all">
+    <div className="bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-10 font-body border border-on-surface/5 shadow-2xl hover:bg-white/[0.04] transition-all">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
         <div>
-          <h3 className="text-2xl font-black text-white uppercase tracking-tight">
+          <h3 className="text-2xl font-black text-on-surface uppercase tracking-tight">
             Traffic vs. Pollution Correlation
           </h3>
           <p className="text-[10px] text-on-surface-variant mt-2 font-black uppercase tracking-[0.2em] opacity-60">
@@ -97,3 +97,5 @@ const CorrelationChart = ({ data: apiData, city = 'Delhi' }) => {
 };
 
 export default CorrelationChart;
+
+

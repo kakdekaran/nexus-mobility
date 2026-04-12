@@ -22,14 +22,14 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className={`bg-white/[0.03] backdrop-blur-3xl rounded-[2.2rem] p-6 border border-white/10 space-y-6 cursor-pointer group shadow-2xl transition-all duration-500 relative overflow-hidden ring-1 ring-white/5`}
+      className={`bg-white/[0.03] backdrop-blur-3xl rounded-[2.2rem] p-6 border border-on-surface/10 space-y-6 cursor-pointer group shadow-2xl transition-all duration-500 relative overflow-hidden ring-1 ring-white/5`}
     >
       <div className="flex justify-between items-start relative z-10">
         <div className="space-y-1.5 flex-1 min-w-0">
           <h4 className="text-base font-black text-white uppercase tracking-tight truncate group-hover:text-primary transition-colors">{title}</h4>
           <p className="text-[11px] text-on-surface-variant font-black uppercase tracking-[0.2em] mt-1 opacity-50">ID_NODE: {id.slice(-8).toUpperCase()} • {status}</p>
         </div>
-        <div className={`p-2.5 rounded-2xl bg-slate-900 border border-white/10 ${colorClass.split(' ')[0]} shadow-xl`}>
+        <div className={`p-2.5 rounded-2xl bg-surface-container border border-on-surface/10 ${colorClass.split(' ')[0]} shadow-xl`}>
            <span className="material-symbols-outlined text-xl leading-none">
              {type === 'error' ? 'priority_high' : type === 'primary' ? 'neurology' : 'check_circle'}
            </span>
@@ -38,10 +38,10 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
 
       <div className="grid grid-cols-2 gap-4 relative z-10">
         <div className="space-y-1.5">
-          <span className="text-[10px] text-slate-500 uppercase font-black tracking-[0.2em] opacity-40">Current Cycle</span>
+          <span className="text-[10px] text-on-surface-variant uppercase font-black tracking-[0.2em] opacity-40">Current Cycle</span>
           <div className="text-xl font-black text-slate-300 tabular-nums">{current}s</div>
         </div>
-        <div className="space-y-1.5 pl-4 border-l border-white/10">
+        <div className="space-y-1.5 pl-4 border-l border-on-surface/10">
           <span className="text-[10px] text-primary uppercase font-black tracking-[0.2em] opacity-70">Proposed</span>
           <div className="text-xl font-black text-primary tabular-nums drop-shadow-[0_0_15px_rgba(148,204,255,0.4)]">{recommended}s</div>
         </div>
@@ -55,7 +55,7 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
             disabled={applying}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: 10 }}
-            className="w-full h-12 bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white rounded-xl hover:bg-primary transition-all shadow-xl disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative group/btn"
+            className="w-full h-12 bg-on-surface/5 border border-on-surface/10 text-[10px] font-black uppercase tracking-[0.2em] text-white rounded-xl hover:bg-primary transition-all shadow-xl disabled:opacity-50 active:scale-95 flex items-center justify-center gap-2 overflow-hidden relative group/btn"
           >
             {applying ? (
               <>
@@ -101,7 +101,7 @@ const SuggestionCard = ({ title, id, status, current, recommended, type }) => {
 
 const SignalSuggestions = ({ city, signals, loading }) => {
   return (
-    <div className="bg-slate-900/30 backdrop-blur-3xl rounded-[3.5rem] p-8 h-full font-body border border-white/5 shadow-2xl relative overflow-hidden flex flex-col">
+    <div className="bg-surface-container/30 backdrop-blur-3xl rounded-[3.5rem] p-8 h-full font-body border border-on-surface/5 shadow-2xl relative overflow-hidden flex flex-col">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       
       <div className="flex items-center justify-between mb-8">
@@ -160,7 +160,7 @@ const SignalSuggestions = ({ city, signals, loading }) => {
       </div>
 
       <div className="mt-10">
-        <button className="w-full text-[10px] font-black text-on-surface-variant flex items-center justify-center gap-3 hover:text-white uppercase tracking-[0.2em] transition-all bg-white/5 py-4 rounded-2xl border border-white/5 hover:bg-white/10 group">
+        <button className="w-full text-[10px] font-black text-on-surface-variant flex items-center justify-center gap-3 hover:text-white uppercase tracking-[0.2em] transition-all bg-on-surface/5 py-4 rounded-2xl border border-on-surface/5 hover:bg-on-surface/10 group">
           View Mesh Metadata for {city}
           <span className="material-symbols-outlined text-base group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
         </button>
@@ -170,4 +170,6 @@ const SignalSuggestions = ({ city, signals, loading }) => {
 };
 
 export default SignalSuggestions;
+
+
 

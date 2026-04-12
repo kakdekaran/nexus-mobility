@@ -46,14 +46,14 @@ const SignalHero = ({ city, onCityChange }) => {
         transition={{ delay: 0.3 }}
         className="flex flex-wrap items-center gap-6"
       >
-        <div className="flex bg-white/[0.03] backdrop-blur-2xl p-1.5 rounded-[1.5rem] border border-white/10 shadow-2xl overflow-hidden">
+        <div className="flex bg-white/[0.03] backdrop-blur-2xl p-1.5 rounded-[1.5rem] border border-on-surface/10 shadow-2xl overflow-hidden">
           {cities.map((c) => (
             <button 
               key={c}
               onClick={() => onCityChange(c)}
               className={`px-6 py-3 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-500 relative group ${
                 city === c 
-                  ? 'text-white' 
+                  ? 'text-on-surface' 
                   : 'text-on-surface-variant hover:text-white'
               }`}
             >
@@ -79,4 +79,6 @@ const SignalHero = ({ city, onCityChange }) => {
 };
 
 export default SignalHero;
+
+
 

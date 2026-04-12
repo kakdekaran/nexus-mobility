@@ -1,7 +1,7 @@
 
 const TrafficAssistant = () => {
     return (
-        <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-5 border border-white/5 space-y-4 shrink-0">
+        <div className="bg-on-surface/5 backdrop-blur-xl rounded-2xl p-5 border border-on-surface/5 space-y-4 shrink-0">
             <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center border border-primary/20 shrink-0">
                     <span className="material-symbols-outlined text-primary text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
@@ -15,11 +15,11 @@ const TrafficAssistant = () => {
                 </div>
             </div>
 
-            <p className="text-[10px] leading-relaxed text-slate-400 font-medium">
+            <p className="text-[10px] leading-relaxed text-on-surface-variant font-medium">
                 Pattern detection indicates a bottleneck at Sector 07. Heavy industrial load (+18%) correlated with local events. Neural routing distributed to all nodes.
             </p>
 
-            <div className="flex gap-2 p-1.5 bg-black/40 rounded-xl border border-white/5">
+            <div className="flex gap-2 p-1.5 bg-black/40 rounded-xl border border-on-surface/5">
                 <input
                   type="text"
                   placeholder="Query system intelligence..."
@@ -34,3 +34,5 @@ const TrafficAssistant = () => {
 };
 
 export default TrafficAssistant;
+
+

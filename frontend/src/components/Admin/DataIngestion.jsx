@@ -52,14 +52,14 @@ const DataIngestion = () => {
         <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 ring-1 ring-primary/20 shadow-lg group-hover:scale-110 transition-transform">
           <span className="material-symbols-outlined text-4xl text-primary leading-none">cloud_upload</span>
         </div>
-        <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tighter antialiased">Ingest Data</h3>
+        <h3 className="text-xl font-black text-on-surface mb-2 uppercase tracking-tighter antialiased">Ingest Data</h3>
         <p className="text-on-surface-variant text-xs mb-8 px-4 font-bold uppercase tracking-widest leading-relaxed opacity-60">
           Upload a validated CSV dataset for backend review and archival.
         </p>
 
         <div
           className={`w-full border-2 border-dashed rounded-xl p-8 mb-4 transition-all cursor-pointer flex flex-col items-center justify-center ${
-            dragActive ? 'border-primary bg-primary/5' : 'border-slate-700 bg-slate-900/50 hover:border-primary/50'
+            dragActive ? 'border-primary bg-primary/5' : 'border-slate-700 bg-surface-container/50 hover:border-primary/50'
           }`}
           onClick={() => inputRef.current?.click()}
           onDragOver={(e) => {
@@ -80,10 +80,10 @@ const DataIngestion = () => {
             className="hidden"
             onChange={(e) => updateSelectedFile(e.target.files)}
           />
-          <span className="material-symbols-outlined text-slate-500 group-hover:text-primary transition-colors text-3xl mb-2 leading-none">
+          <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-3xl mb-2 leading-none">
             upload_file
           </span>
-          <p className="text-[10px] text-slate-500 group-hover:text-slate-300 font-black uppercase tracking-widest">
+          <p className="text-[10px] text-on-surface-variant group-hover:text-slate-300 font-black uppercase tracking-widest">
             Drag a CSV here or <span className="text-primary font-black">browse</span>
           </p>
           <p className="text-[8px] text-slate-600 mt-2 font-bold uppercase tracking-widest">
@@ -122,3 +122,5 @@ const DataIngestion = () => {
 };
 
 export default DataIngestion;
+
+

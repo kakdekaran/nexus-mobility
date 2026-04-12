@@ -20,7 +20,7 @@ const Contact = () => {
       {/* Bento Grid Layout */}
       <div className="grid grid-cols-12 gap-6 items-start">
         {/* Contact Form Container */}
-        <section className="col-span-12 lg:col-span-7 bg-surface-container-low p-8 rounded-xl relative overflow-hidden border border-white/5 shadow-2xl">
+        <section className="col-span-12 lg:col-span-7 bg-surface-container-low p-8 rounded-xl relative overflow-hidden border border-on-surface/5 shadow-2xl">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16"></div>
           
           {submitted ? (
@@ -53,7 +53,7 @@ const Contact = () => {
                   <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Full Name</label>
                   <input 
                     required
-                    className="w-full bg-surface-container-highest border border-white/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
+                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
                     placeholder="Alex Rivera" 
                     type="text"
                   />
@@ -62,7 +62,7 @@ const Contact = () => {
                   <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Institutional Email</label>
                   <input 
                     required
-                    className="w-full bg-surface-container-highest border border-white/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
+                    className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all text-sm font-medium" 
                     placeholder="a.rivera@city.gov" 
                     type="email"
                   />
@@ -70,7 +70,7 @@ const Contact = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Subject Category</label>
-                <select className="w-full bg-surface-container-highest border border-white/5 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/40 outline-none transition-all appearance-none cursor-pointer text-sm font-medium">
+                <select className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/40 outline-none transition-all appearance-none cursor-pointer text-sm font-medium">
                   <option className="bg-surface-dim">System Performance Degradation</option>
                   <option className="bg-surface-dim">Traffic Sensor Latency</option>
                   <option className="bg-surface-dim">API Authentication Error</option>
@@ -83,7 +83,7 @@ const Contact = () => {
                 <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] block px-1 opacity-80">Detailed Message</label>
                 <textarea 
                   required
-                  className="w-full bg-surface-container-highest border border-white/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all resize-none text-sm font-medium" 
+                  className="w-full bg-surface-container-highest border border-on-surface/5 rounded-lg p-4 text-on-surface placeholder:text-slate-600 focus:ring-2 focus:ring-primary/40 outline-none transition-all resize-none text-sm font-medium" 
                   placeholder="Please provide specific timestamps, sensor IDs, or error codes..." 
                   rows={6}
                 ></textarea>
@@ -113,7 +113,7 @@ const Contact = () => {
                 <span className="material-symbols-outlined text-tertiary text-2xl">speed</span>
               </div>
               <div>
-                <h4 className="text-white font-black text-xs uppercase tracking-[0.2em] mb-2 opacity-60">Average Response Time</h4>
+                <h4 className="text-on-surface font-black text-xs uppercase tracking-[0.2em] mb-2 opacity-60">Average Response Time</h4>
                 <p className="text-4xl font-headline font-black text-tertiary tracking-tighter">14 Minutes</p>
                 <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest mt-3 leading-relaxed">
                   Active engineers are currently monitoring the dispatch queue.
@@ -123,11 +123,11 @@ const Contact = () => {
           </div>
 
           {/* Direct Contact Channels */}
-          <div className="bg-surface-container-low p-8 rounded-xl space-y-8 border border-white/5 shadow-2xl">
+          <div className="bg-surface-container-low p-8 rounded-xl space-y-8 border border-on-surface/5 shadow-2xl">
             <h4 className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Global Support Nodes</h4>
             <div className="space-y-6">
               <div className="flex items-center gap-5 group cursor-pointer">
-                <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center border border-white/5 group-hover:bg-primary/20 group-hover:border-primary/20 transition-all group-hover:scale-110">
+                <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center border border-on-surface/5 group-hover:bg-primary/20 group-hover:border-primary/20 transition-all group-hover:scale-110">
                   <span className="material-symbols-outlined text-primary text-xl">mail</span>
                 </div>
                 <div>
@@ -136,7 +136,7 @@ const Contact = () => {
                 </div>
               </div>
               <div className="flex items-center gap-5 group cursor-pointer">
-                <div className="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center border border-white/5 group-hover:bg-primary/20 group-hover:border-primary/20 transition-all group-hover:scale-110">
+                <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center border border-on-surface/5 group-hover:bg-primary/20 group-hover:border-primary/20 transition-all group-hover:scale-110">
                   <span className="material-symbols-outlined text-primary text-xl">forum</span>
                 </div>
                 <div>
@@ -148,7 +148,7 @@ const Contact = () => {
           </div>
 
           {/* Status Indicator */}
-          <div className="bg-slate-900/50 p-6 rounded-xl flex items-center justify-between border border-white/5">
+          <div className="bg-surface-container/50 p-6 rounded-xl flex items-center justify-between border border-on-surface/5">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
@@ -162,7 +162,7 @@ const Contact = () => {
           </div>
 
           {/* Mini Map Visual */}
-          <div className="h-56 w-full rounded-xl overflow-hidden relative grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-700 cursor-crosshair border border-white/5 shadow-2xl">
+          <div className="h-56 w-full rounded-xl overflow-hidden relative grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-700 cursor-crosshair border border-on-surface/5 shadow-2xl">
             <img 
               className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" 
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNOzSkI1cYfJxIurY3_nooxiHkd8mebgahy1TUosSpCiFsxEUMzoLMxyBpqMKpqp6hCh54XNf6NV9ujJusk_lduFBsCD2XTDLxBkls4D_mNxgoR8sNALFMpRnogVQMSQSQ0tLlFU_qlatqROJ3kGOMjEtXBRJK5N-OtTo0_yJO0DBMKyBQQdC_IRomMcBMaxbFfg7YWE7M3IUlRApzlzleW_avYHJ0U9AWNp1Fj4O-ECXbD1ubEtZavMumwBjpSuMfEvR5la-foW4"
@@ -170,7 +170,7 @@ const Contact = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent"></div>
             <div className="absolute bottom-6 left-6">
-              <p className="text-white font-black text-xs uppercase tracking-tight">Main Engineering Hub</p>
+              <p className="text-on-surface font-black text-xs uppercase tracking-tight">Main Engineering Hub</p>
               <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-widest opacity-60">Mission District, San Francisco</p>
             </div>
           </div>
@@ -179,7 +179,7 @@ const Contact = () => {
 
       {/* Role Specific Badge */}
       <div className="mt-16 flex justify-center">
-        <span className="bg-surface-container-highest/20 px-6 py-2 rounded-full border border-white/5 text-[10px] text-on-surface-variant uppercase tracking-[0.3em] font-black opacity-60">
+        <span className="bg-surface-container-highest/20 px-6 py-2 rounded-full border border-on-surface/5 text-[10px] text-on-surface-variant uppercase tracking-[0.3em] font-black opacity-60">
           Internal Support Terminal • V 4.2.1-Beta
         </span>
       </div>
@@ -188,3 +188,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
+

@@ -9,7 +9,7 @@ const CategoryGrid = () => {
   ];
 
   return (
-    <section className="space-y-8 pt-12 border-t border-white/5 font-body">
+    <section className="space-y-8 pt-12 border-t border-on-surface/5 font-body">
       <h3 className="text-xl font-black font-headline text-white px-2 tracking-tighter uppercase antialiased leading-none">Browse by Category</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {categories.map((cat, i) => (
@@ -31,3 +31,5 @@ const CategoryGrid = () => {
 };
 
 export default CategoryGrid;
+
+

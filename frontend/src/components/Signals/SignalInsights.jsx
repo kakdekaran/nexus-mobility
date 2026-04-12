@@ -8,7 +8,7 @@ const InsightCard = ({ title, value, sub, icon, color, delay }) => (
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-    className="bg-slate-900/40 backdrop-blur-3xl p-10 rounded-[3rem] relative overflow-hidden group border border-white/5 shadow-2xl hover:bg-white/[0.05] transition-all duration-700 ring-1 ring-white/5 h-full"
+    className="bg-surface-container/40 backdrop-blur-3xl p-10 rounded-[3rem] relative overflow-hidden group border border-on-surface/5 shadow-2xl hover:bg-white/[0.05] transition-all duration-700 ring-1 ring-white/5 h-full"
   >
     <div className="absolute -top-6 -right-6 p-10 opacity-[0.02] group-hover:opacity-10 transition-opacity rotate-12 group-hover:rotate-0 duration-1000">
       <span className={`material-symbols-outlined text-[10rem] leading-none ${color}`}>{icon}</span>
@@ -22,7 +22,7 @@ const InsightCard = ({ title, value, sub, icon, color, delay }) => (
       
       <div className="space-y-1.5">
         <h4 className={`text-5xl font-black tracking-tighter ${color} tabular-nums group-hover:scale-105 transition-transform origin-left duration-500`}>{value}</h4>
-        <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{sub}</p>
+        <p className="text-[11px] text-on-surface-variant font-bold uppercase tracking-[0.2em] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{sub}</p>
       </div>
     </div>
     
@@ -52,7 +52,7 @@ const SignalInsights = ({ city }) => {
   if (loading || !data) return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
       {[...Array(3)].map((_, i) => (
-        <div key={i} className="h-64 bg-white/5 rounded-[3rem] animate-pulse" />
+        <div key={i} className="h-64 bg-on-surface/5 rounded-[3rem] animate-pulse" />
       ))}
     </div>
   );
@@ -80,7 +80,7 @@ const SignalInsights = ({ city }) => {
         value={data.reliability} 
         sub={`Active sensor health across ${data.total_nodes} metropolitan nodes`} 
         icon="hub" 
-        color="text-white" 
+        color="text-on-surface" 
         delay={0.3}
       />
     </div>
@@ -88,4 +88,6 @@ const SignalInsights = ({ city }) => {
 };
 
 export default SignalInsights;
+
+
 

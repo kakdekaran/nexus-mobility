@@ -68,7 +68,7 @@ const ReportRow = ({ title, date, author, authorInitial, status, size, type, cit
           {authorInitial ? (
             <div className="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-[10px] font-black text-on-primary-container leading-none shadow-sm">{authorInitial}</div>
           ) : (
-            <span className="material-symbols-outlined text-sm text-slate-500 leading-none">robot_2</span>
+            <span className="material-symbols-outlined text-sm text-on-surface-variant leading-none">robot_2</span>
           )}
           <span className="text-[10px] font-black font-headline text-on-surface uppercase tracking-widest leading-none">{author}</span>
         </div>
@@ -134,7 +134,7 @@ const ReportsArchive = () => {
 
   return (
     <section className="bg-surface-container-low rounded-xl shadow-2xl border border-slate-800/50">
-      <div className="px-8 py-6 flex items-center justify-between border-b border-white/5">
+      <div className="px-8 py-6 flex items-center justify-between border-b border-on-surface/5">
         <div className="flex items-center gap-6">
           <h3 className="text-lg font-headline font-black text-white uppercase tracking-tighter antialiased">Reports Archive</h3>
           <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">
@@ -143,7 +143,7 @@ const ReportsArchive = () => {
             <button className="hover:text-white pb-1 transition-colors">Starred</button>
           </div>
         </div>
-        <div className="flex items-center gap-4 bg-slate-900/40 px-4 py-2 rounded-xl border border-white/5">
+        <div className="flex items-center gap-4 bg-surface-container/40 px-4 py-2 rounded-xl border border-on-surface/5">
           <span className="material-symbols-outlined text-sm text-on-surface-variant">search</span>
           <input 
             type="text" 
@@ -187,8 +187,8 @@ const ReportsArchive = () => {
           </tbody>
         </table>
       </div>
-      <div className="px-8 py-6 flex items-center justify-between border-t border-white/5 font-body">
-        <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Showing <span className="text-white font-black">{page === 1 ? '1 - 4' : '5 - 7'}</span> of 1,284 results</p>
+      <div className="px-8 py-6 flex items-center justify-between border-t border-on-surface/5 font-body">
+        <p className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Showing <span className="text-on-surface font-black">{page === 1 ? '1 - 4' : '5 - 7'}</span> of 1,284 results</p>
         <div className="flex items-center gap-1">
           <button 
             disabled={page === 1}
@@ -222,3 +222,5 @@ const ReportsArchive = () => {
 };
 
 export default ReportsArchive;
+
+

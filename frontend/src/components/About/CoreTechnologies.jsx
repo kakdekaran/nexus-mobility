@@ -46,7 +46,7 @@ const CoreTechnologies = () => {
         {techs.map((tech, i) => (
           <div 
             key={i} 
-            className={`${tech.grid || 'lg:col-span-1'} bg-surface-container-high/50 p-8 rounded-2xl border border-white/5 shadow-2xl relative overflow-hidden group hover:border-primary/20 transition-all duration-700`}
+            className={`${tech.grid || 'lg:col-span-1'} bg-surface-container-high/50 p-8 rounded-2xl border border-on-surface/5 shadow-2xl relative overflow-hidden group hover:border-primary/20 transition-all duration-700`}
           >
             <div className="flex justify-between items-start mb-8 relative z-20">
               <div className="p-3 bg-primary/10 rounded-xl text-primary border border-primary/20 transition-transform group-hover:scale-110">
@@ -55,7 +55,7 @@ const CoreTechnologies = () => {
               <span className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest opacity-50">{tech.category}</span>
             </div>
             
-            <h4 className="text-2xl font-black text-white font-headline tracking-tighter mb-4 antialiased relative z-20">{tech.title}</h4>
+            <h4 className="text-2xl font-black text-on-surface font-headline tracking-tighter mb-4 antialiased relative z-20">{tech.title}</h4>
             <p className="text-sm text-on-surface-variant leading-relaxed font-medium opacity-90 relative z-20">{tech.desc}</p>
             
             {tech.title === 'Cloud-Edge Hybrid' && (
@@ -73,3 +73,5 @@ const CoreTechnologies = () => {
 };
 
 export default CoreTechnologies;
+
+

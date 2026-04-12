@@ -26,10 +26,10 @@ const AboutHero = () => {
             alt="City Digital Grid"
           />
         </div>
-        <div className="absolute -bottom-8 -left-8 bg-surface-container-high/95 backdrop-blur-2xl p-6 rounded-2xl border border-white/10 shadow-2xl max-w-[260px] z-10">
+        <div className="absolute -bottom-8 -left-8 bg-surface-container-high/95 backdrop-blur-2xl p-6 rounded-2xl border border-on-surface/10 shadow-2xl max-w-[260px] z-10">
           <p className="text-primary font-black text-4xl font-headline tracking-tighter mb-2">99.8%</p>
           <p className="text-[10px] text-on-surface-variant uppercase font-black tracking-widest opacity-80">Prediction Accuracy</p>
-          <div className="mt-4 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+          <div className="mt-4 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
              <div className="h-full bg-primary w-[99.8%] shadow-[0_0_8px_rgba(148,204,255,0.4)]"></div>
           </div>
         </div>
@@ -39,3 +39,5 @@ const AboutHero = () => {
 };
 
 export default AboutHero;
+
+

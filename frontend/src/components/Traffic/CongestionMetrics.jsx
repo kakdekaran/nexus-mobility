@@ -16,10 +16,10 @@ const CongestionMetrics = ({ data: apiData }) => {
   // For simplicity, we'll just use the isForecast flag to style the Area.
 
   return (
-    <div className="col-span-12 lg:col-span-8 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-8 flex flex-col font-body border border-white/5 shadow-2xl hover:bg-white/[0.04] transition-all">
+    <div className="col-span-12 lg:col-span-8 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-8 flex flex-col font-body border border-on-surface/5 shadow-2xl hover:bg-white/[0.04] transition-all">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h3 className="text-xl font-black text-white uppercase tracking-tight">Congestion Flow Metrics</h3>
+          <h3 className="text-xl font-black text-on-surface uppercase tracking-tight">Congestion Flow Metrics</h3>
           <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-[0.2em] opacity-60">Comparative analysis: Arterial vs. Secondary Routes</p>
         </div>
         <div className="flex gap-6">
@@ -102,3 +102,5 @@ const CongestionMetrics = ({ data: apiData }) => {
 };
 
 export default CongestionMetrics;
+
+

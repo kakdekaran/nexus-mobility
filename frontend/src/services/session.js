@@ -75,3 +75,5 @@ export const hasRoleAccess = (role, allowedRoles) => {
   if (!allowedRoles || allowedRoles.length === 0) return true;
   return allowedRoles.includes(role);
 };
+
+

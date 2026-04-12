@@ -29,7 +29,7 @@ const AQICard = ({ label, value, subValue, icon, color, progress }) => {
       
       <div className="relative z-10 w-full flex flex-col items-center">
         <div className="flex flex-col items-center gap-2 mb-6">
-          <div className={`p-3 rounded-xl bg-white/5 border border-white/10 ${colorMap[color].split(' ')[0]} shadow-xl mb-1`}>
+          <div className={`p-3 rounded-xl bg-on-surface/5 border border-on-surface/10 ${colorMap[color].split(' ')[0]} shadow-xl mb-1`}>
              <span className="material-symbols-outlined text-xl leading-none">{icon}</span>
           </div>
           <p className="text-[9px] font-black uppercase tracking-[0.4em] opacity-50">{label}</p>
@@ -45,7 +45,7 @@ const AQICard = ({ label, value, subValue, icon, color, progress }) => {
             <span>Intensity</span>
             <span>{progress}%</span>
           </div>
-          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden shadow-inner p-[1px]">
+          <div className="h-2 w-full bg-on-surface/5 rounded-full overflow-hidden shadow-inner p-[1px]">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -93,3 +93,5 @@ const PollutionHero = ({ metrics }) => {
 };
 
 export default PollutionHero;
+
+

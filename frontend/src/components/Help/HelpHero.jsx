@@ -7,7 +7,7 @@ const HelpHero = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-surface-container-low p-12 border border-white/5 shadow-2xl font-body group">
+    <section className="relative overflow-hidden rounded-2xl bg-surface-container-low p-12 border border-on-surface/5 shadow-2xl font-body group">
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none grayscale brightness-50 group-hover:scale-105 transition-transform duration-[5000ms]" 
         style={{ 
@@ -29,7 +29,7 @@ const HelpHero = () => {
           {quickLinks.map((link, i) => (
             <div 
               key={i} 
-              className={`p-6 bg-slate-900/50 backdrop-blur-xl rounded-xl border-b-2 transition-all cursor-pointer group/link hover:bg-slate-800 ${
+              className={`p-6 bg-surface-container/50 backdrop-blur-xl rounded-xl border-b-2 transition-all cursor-pointer group/link hover:bg-surface-container-high ${
                 link.active ? 'border-primary' : 'border-transparent hover:border-primary/50'
               }`}
             >
@@ -48,3 +48,5 @@ const HelpHero = () => {
 };
 
 export default HelpHero;
+
+

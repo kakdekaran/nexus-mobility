@@ -27,8 +27,8 @@ const SignalIndicator = ({ x, y, label, color, pulse, delay = 0, congestion }) =
     </div>
 
     {/* Connection lines (Subtle) */}
-    <div className="absolute top-1/2 left-1/2 w-[200%] h-[1px] bg-white/5 -rotate-45 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-    <div className="absolute top-1/2 left-1/2 w-[200%] h-[1px] bg-white/5 rotate-45 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <div className="absolute top-1/2 left-1/2 w-[200%] h-[1px] bg-on-surface/5 -rotate-45 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <div className="absolute top-1/2 left-1/2 w-[200%] h-[1px] bg-on-surface/5 rotate-45 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
   </motion.div>
 );
 
@@ -37,7 +37,7 @@ const SignalMap = ({ city, signals, loading }) => {
   const [expandedMesh, setExpandedMesh] = useState(false);
 
   return (
-    <div className="bg-slate-950 rounded-[3.5rem] overflow-hidden relative group aspect-video shadow-2xl border border-white/5 ring-1 ring-white/5">
+    <div className="bg-surface-container-lowest rounded-[3.5rem] overflow-hidden relative group aspect-video shadow-2xl border border-on-surface/5 ring-1 ring-white/5">
       {/* Neural Grid Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
@@ -105,7 +105,7 @@ const SignalMap = ({ city, signals, loading }) => {
           layout
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-slate-900/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/10 shadow-2xl ring-1 ring-white/5 group/panel transition-all hover:bg-slate-900/50"
+          className="bg-surface-container/40 backdrop-blur-3xl rounded-[2.5rem] border border-on-surface/10 shadow-2xl ring-1 ring-white/5 group/panel transition-all hover:bg-surface-container/50"
         >
           <div 
             onClick={() => setExpandedMetrics(!expandedMetrics)}
@@ -131,7 +131,7 @@ const SignalMap = ({ city, signals, loading }) => {
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden px-6 pb-6 space-y-5 min-w-[280px]"
               >
-                <div className="h-px w-full bg-white/5" />
+                <div className="h-px w-full bg-on-surface/5" />
                 <div className="space-y-5">
                   <div className="flex items-center justify-between group/metric text-[11px]">
                     <div className="flex items-center gap-3 text-white uppercase tracking-[0.15em] font-black">
@@ -161,7 +161,7 @@ const SignalMap = ({ city, signals, loading }) => {
           layout
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-slate-900/40 backdrop-blur-3xl rounded-2xl border border-white/10 shadow-xl ring-1 ring-white/5 group/panel transition-all hover:bg-slate-900/50"
+          className="bg-surface-container/40 backdrop-blur-3xl rounded-2xl border border-on-surface/10 shadow-xl ring-1 ring-white/5 group/panel transition-all hover:bg-surface-container/50"
         >
           <div 
             onClick={() => setExpandedMesh(!expandedMesh)}
@@ -206,5 +206,7 @@ const SignalMap = ({ city, signals, loading }) => {
 };
 
 export default SignalMap;
+
+
 
 

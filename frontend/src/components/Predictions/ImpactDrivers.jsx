@@ -34,7 +34,7 @@ const ImpactDrivers = ({ city = "Delhi", congestion = 50 }) => {
   }, [city, congestion]);
 
   return (
-    <div className="bg-white/[0.03] backdrop-blur-xl rounded-[2rem] p-8 space-y-6 border border-white/5 shadow-2xl font-body min-h-[350px]">
+    <div className="bg-white/[0.03] backdrop-blur-xl rounded-[2rem] p-8 space-y-6 border border-on-surface/5 shadow-2xl font-body min-h-[350px]">
       <div className="flex items-center justify-between">
         <h5 className="text-[10px] font-black text-white uppercase tracking-[0.3em] leading-none opacity-60">Impact Drivers: {city}</h5>
         <span className="material-symbols-outlined text-primary text-sm">psychology</span>
@@ -44,7 +44,7 @@ const ImpactDrivers = ({ city = "Delhi", congestion = 50 }) => {
         {drivers.map((driver, i) => (
           <li key={i} className="flex items-center justify-between group cursor-pointer transition-all duration-300 hover:translate-x-3 py-2 border-b border-white/[0.03] last:border-0 pb-4 last:pb-0">
             <div className="flex items-center gap-6">
-              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 shadow-xl group-hover:bg-white/10 transition-all duration-500">
+              <div className="w-14 h-14 rounded-2xl bg-on-surface/5 flex items-center justify-center border border-on-surface/10 shadow-xl group-hover:bg-on-surface/10 transition-all duration-500">
                 <span className={`material-symbols-outlined ${driver.color} text-2xl leading-none`}>{driver.icon}</span>
               </div>
               <div className="space-y-1.5">
@@ -54,7 +54,7 @@ const ImpactDrivers = ({ city = "Delhi", congestion = 50 }) => {
             </div>
             <div className="text-right flex flex-col items-end">
               <span className={`${driver.color} text-sm font-black tracking-widest block leading-none mb-1.5`}>{driver.val}</span>
-              <div className="bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
+              <div className="bg-on-surface/5 px-2 py-0.5 rounded-full border border-on-surface/5">
                 <p className="text-[7px] text-on-surface-variant font-black uppercase tracking-tighter opacity-60">Neural Impact</p>
               </div>
             </div>
@@ -66,3 +66,5 @@ const ImpactDrivers = ({ city = "Delhi", congestion = 50 }) => {
 };
 
 export default ImpactDrivers;
+
+

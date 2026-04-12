@@ -86,18 +86,18 @@ const Dashboard = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-3">
-            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Sector</span>
+          <div className="bg-surface-container-highest/20 border border-on-surface/10 rounded-xl px-4 py-2 flex items-center gap-3">
+            <span className="text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Active Sector</span>
             <select 
               value={activeCity}
               onChange={(e) => setActiveCity(e.target.value)}
               className="bg-transparent text-xs font-black text-on-surface uppercase tracking-wider outline-none cursor-pointer"
             >
-              <option value="Delhi" className="bg-slate-900">Delhi Sector</option>
-              <option value="Mumbai" className="bg-slate-900">Mumbai Sector</option>
-              <option value="Bengaluru" className="bg-slate-900">Bengaluru Sector</option>
-              <option value="Chennai" className="bg-slate-900">Chennai Sector</option>
-              <option value="Hyderabad" className="bg-slate-900">Hyderabad Sector</option>
+              <option value="Delhi" className="bg-surface-container-highest text-on-surface">Delhi Sector</option>
+              <option value="Mumbai" className="bg-surface-container-highest text-on-surface">Mumbai Sector</option>
+              <option value="Bengaluru" className="bg-surface-container-highest text-on-surface">Bengaluru Sector</option>
+              <option value="Chennai" className="bg-surface-container-highest text-on-surface">Chennai Sector</option>
+              <option value="Hyderabad" className="bg-surface-container-highest text-on-surface">Hyderabad Sector</option>
             </select>
           </div>
 
@@ -109,7 +109,7 @@ const Dashboard = () => {
             className={`flex items-center gap-3 px-5 py-2.5 rounded-[1.2rem] border transition-all duration-500 group relative overflow-hidden backdrop-blur-xl ${
               refreshing 
               ? 'bg-primary/20 border-primary/40 text-primary' 
-              : 'bg-white/5 border-white/10 text-white hover:border-primary/50 hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)]'
+              : 'bg-surface-container-highest/20 border-on-surface/10 text-on-surface hover:border-primary/50 hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)]'
             }`}
           >
             {/* Animated Shine Effect */}
@@ -158,3 +158,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+

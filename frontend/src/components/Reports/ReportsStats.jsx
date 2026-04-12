@@ -36,7 +36,7 @@ const ReportsStats = () => {
         <div className="p-6 flex-1">
           <span className="text-[10px] text-on-surface-variant uppercase tracking-widest font-black">System Health</span>
           <div className="text-xl font-headline font-black text-white mt-1 tracking-tight">Node Distribution</div>
-          <div className="mt-4 flex gap-1 h-1.5 shadow-inner bg-slate-800 rounded-full overflow-hidden">
+          <div className="mt-4 flex gap-1 h-1.5 shadow-inner bg-surface-container-high rounded-full overflow-hidden">
             <div className="w-[60%] bg-tertiary" title="Active"></div>
             <div className="w-[25%] bg-primary" title="Maintenance"></div>
             <div className="w-[15%] bg-error" title="Error"></div>
@@ -56,7 +56,7 @@ const ReportsStats = () => {
             </div>
           </div>
         </div>
-        <div className="w-32 bg-surface-container-high/50 flex items-center justify-center border-l border-white/5">
+        <div className="w-32 bg-surface-container-high/50 flex items-center justify-center border-l border-on-surface/5">
           <span className="material-symbols-outlined text-4xl text-on-surface-variant/30 font-light">hub</span>
         </div>
       </div>
@@ -65,3 +65,5 @@ const ReportsStats = () => {
 };
 
 export default ReportsStats;
+
+

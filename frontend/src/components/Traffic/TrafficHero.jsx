@@ -18,7 +18,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/5 backdrop-blur-md text-primary rounded-full text-[10px] font-black tracking-[0.2em] uppercase border border-white/10 shadow-xl"
+          className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-on-surface/5 backdrop-blur-md text-primary rounded-full text-[10px] font-black tracking-[0.2em] uppercase border border-on-surface/10 shadow-xl"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -27,7 +27,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
           Global Mobility Telemetry
         </motion.div>
         
-        <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tighter mb-4 leading-tight">
+        <h2 className="text-3xl lg:text-4xl font-black text-on-surface tracking-tighter mb-4 leading-tight">
           Metropolitan <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-sky-400">Traffic Analysis</span>
         </h2>
@@ -39,7 +39,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
-        <div className="flex bg-white/5 backdrop-blur-md p-1.5 rounded-2xl border border-white/10 shadow-2xl">
+        <div className="flex bg-on-surface/5 backdrop-blur-md p-1.5 rounded-2xl border border-on-surface/10 shadow-2xl">
           {ranges.map((r) => (
             <button 
               key={r.id}
@@ -47,7 +47,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
               className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-500 ${
                 filters.range === r.id 
                   ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105' 
-                  : 'text-on-surface-variant hover:text-white hover:bg-white/5'
+                  : 'text-on-surface-variant hover:text-white hover:bg-on-surface/5'
               }`}
             >
               {r.label}
@@ -57,7 +57,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
 
         <button 
           onClick={() => setShowFilters(true)}
-          className="flex items-center gap-3 bg-white/5 backdrop-blur-xl border border-white/10 text-white px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all active:scale-95 shadow-2xl"
+          className="flex items-center gap-3 bg-surface-container-highest/20 backdrop-blur-xl border border-on-surface/10 text-on-surface px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-surface-container-highest/30 transition-all active:scale-95 shadow-2xl"
         >
           <span className="material-symbols-outlined text-lg text-primary">tune</span>
           Advanced Filters
@@ -73,14 +73,14 @@ const TrafficHero = ({ data, filters, setFilters }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowFilters(false)}
-              className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
+              className="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-md"
             />
             
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-xl bg-slate-900 border border-white/10 rounded-[2.5rem] p-10 shadow-3xl overflow-hidden"
+              className="relative w-full max-w-xl bg-surface-container border border-on-surface/10 rounded-[2.5rem] p-10 shadow-3xl overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8">
                 <button onClick={() => setShowFilters(false)} className="text-white/40 hover:text-white transition-colors">
@@ -89,7 +89,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
               </div>
 
               <div className="mb-10">
-                <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">Sensor Configuration</h3>
+                <h3 className="text-2xl font-black text-on-surface uppercase tracking-tighter mb-2">Sensor Configuration</h3>
                 <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Adjust regional telemetry parameters</p>
               </div>
 
@@ -103,8 +103,8 @@ const TrafficHero = ({ data, filters, setFilters }) => {
                         onClick={() => setFilters({ ...filters, city })}
                         className={`px-4 py-3 rounded-xl border text-[11px] font-black uppercase tracking-widest transition-all ${
                           filters.city === city 
-                            ? 'bg-primary border-primary text-white shadow-lg' 
-                            : 'bg-white/5 border-white/5 text-white/60 hover:border-white/20'
+                            ? 'bg-primary border-primary text-on-primary shadow-lg' 
+                            : 'bg-on-surface/5 border-on-surface/5 text-on-surface/60 hover:border-on-surface/20 hover:bg-on-surface/10'
                         }`}
                       >
                         {city}
@@ -121,7 +121,7 @@ const TrafficHero = ({ data, filters, setFilters }) => {
                     max="100" 
                     value={filters.minCongestion}
                     onChange={(e) => setFilters({ ...filters, minCongestion: parseInt(e.target.value) })}
-                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary"
+                    className="w-full h-1.5 bg-on-surface/10 rounded-lg appearance-none cursor-pointer accent-primary"
                   />
                   <div className="flex justify-between mt-2 text-[10px] font-black text-white/20 uppercase tracking-widest">
                     <span>Optimal</span>
@@ -145,3 +145,5 @@ const TrafficHero = ({ data, filters, setFilters }) => {
 };
 
 export default TrafficHero;
+
+

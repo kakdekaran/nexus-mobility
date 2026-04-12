@@ -15,9 +15,9 @@ const DistrictHeatmap = ({ data: apiData }) => {
   ];
 
   return (
-    <div className="col-span-12 lg:col-span-4 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-8 font-body shadow-2xl border border-white/5 hover:bg-white/[0.04] transition-all">
+    <div className="col-span-12 lg:col-span-4 bg-white/[0.03] backdrop-blur-md rounded-[2.5rem] p-8 font-body shadow-2xl border border-on-surface/5 hover:bg-white/[0.04] transition-all">
       <div className="mb-10">
-        <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2">District Saturation</h3>
+        <h3 className="text-xl font-black text-on-surface uppercase tracking-tight mb-2">District Saturation</h3>
         <p className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-60">Intensity heatmap per sector 24h average</p>
       </div>
       
@@ -33,7 +33,7 @@ const DistrictHeatmap = ({ data: apiData }) => {
                 ? 'bg-error-container/40 border-error/20 text-error shadow-[0_0_15px_rgba(239,68,68,0.2)]' 
                 : sector.val > 50
                   ? 'bg-secondary-container/20 border-secondary/20 text-secondary'
-                  : 'bg-white/5 border-white/5 text-white/40'
+                  : 'bg-on-surface/5 border-on-surface/5 text-white/40'
             }`}
           >
             {sector.alert ? (
@@ -43,7 +43,7 @@ const DistrictHeatmap = ({ data: apiData }) => {
             )}
             
             {/* Tooltip Simulation */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-slate-900 border border-white/10 rounded-lg text-[9px] font-black text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-2xl">
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-surface-container border border-on-surface/10 rounded-lg text-[9px] font-black text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 shadow-2xl">
               Sector {sector.id}% Load
             </div>
           </motion.div>
@@ -53,9 +53,9 @@ const DistrictHeatmap = ({ data: apiData }) => {
       <div className="mt-10 flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest opacity-40">Load Gradient</span>
-          <span className="text-[9px] font-black text-white uppercase tracking-widest px-2 py-0.5 bg-white/5 rounded-full border border-white/5">0% → 100%</span>
+          <span className="text-[9px] font-black text-white uppercase tracking-widest px-2 py-0.5 bg-on-surface/5 rounded-full border border-on-surface/5">0% → 100%</span>
         </div>
-        <div className="h-1.5 w-full rounded-full overflow-hidden bg-white/5 relative">
+        <div className="h-1.5 w-full rounded-full overflow-hidden bg-on-surface/5 relative">
            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/40 to-error/60"></div>
            <div className="absolute top-0 right-0 h-full w-1/4 bg-error shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div>
         </div>
@@ -65,3 +65,5 @@ const DistrictHeatmap = ({ data: apiData }) => {
 };
 
 export default DistrictHeatmap;
+
+

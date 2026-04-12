@@ -22,8 +22,8 @@ const LocationGrid = ({ city }) => {
   }, [city]);
 
   if (loading) return (
-    <div className="h-[300px] flex items-center justify-center bg-white/5 rounded-3xl border border-white/5 animate-pulse">
-      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Mapping City Sectors...</p>
+    <div className="h-[300px] flex items-center justify-center bg-on-surface/5 rounded-3xl border border-on-surface/5 animate-pulse">
+      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant">Mapping City Sectors...</p>
     </div>
   );
 
@@ -65,3 +65,5 @@ const LocationGrid = ({ city }) => {
 };
 
 export default LocationGrid;
+
+

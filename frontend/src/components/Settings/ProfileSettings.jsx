@@ -109,7 +109,7 @@ const ProfileSettings = () => {
   };
 
   return (
-    <section className="bg-surface-container-low rounded-xl p-8 space-y-8 border border-white/5 shadow-2xl font-body relative overflow-hidden group">
+    <section className="bg-surface-container-low rounded-xl p-8 space-y-8 border border-on-surface/5 shadow-2xl font-body relative overflow-hidden group">
       <div className="flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
@@ -139,7 +139,7 @@ const ProfileSettings = () => {
             src={avatar || "https://lh3.googleusercontent.com/aida-public/AB6AXuDI-goRpbTbotQIddwvjf5CLejCVFSPHbDPknglStdEgmU1heHGVagJ4Yn0ejRZE4THGHmwxrruFqaaV4ZLJDcQp1rP0Oa4d_Fs2h7z5OhrARNVEAhXdb9zNsj_984XkX_B2QWf8jAJHujqm_3oLqW-NJIM_zeSrtSVBgbOxKPw2J3NfOntXwSnhCKdjoKriPRlq_2OEpu5Lmw6uyIrAWUPBaLDBQyJf2pB1jRkSr9z0KDq-_ANma9q-mxfEp37e3121WBYsUAOBUk"} 
             alt="Profile Avatar"
           />
-          <div className="absolute inset-0 bg-slate-900/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[1px]">
+          <div className="absolute inset-0 bg-surface-container/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[1px]">
             <span className="material-symbols-outlined text-white text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
           </div>
           <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} />
@@ -149,7 +149,7 @@ const ProfileSettings = () => {
           <div className="space-y-2">
             <label className="text-[10px] font-black text-on-surface-variant tracking-widest uppercase opacity-60">Full Operator Name</label>
             <input 
-              className="w-full bg-surface-container-highest/50 border border-white/5 rounded-lg px-4 py-4 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none font-bold"
+              className="w-full bg-surface-container-highest/50 border border-on-surface/5 rounded-lg px-4 py-4 text-sm text-on-surface focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none font-bold"
               type="text" 
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -158,7 +158,7 @@ const ProfileSettings = () => {
           <div className="space-y-2">
             <label className="text-[10px] font-black text-on-surface-variant tracking-widest uppercase opacity-60">Permanent Identifier (Email)</label>
             <input 
-              className="w-full bg-surface-container-highest/50 border border-white/5 rounded-lg px-4 py-4 text-sm text-slate-500 cursor-not-allowed opacity-80 outline-none"
+              className="w-full bg-surface-container-highest/50 border border-on-surface/5 rounded-lg px-4 py-4 text-sm text-on-surface-variant cursor-not-allowed opacity-80 outline-none"
               type="email" 
               value={email}
               readOnly
@@ -171,3 +171,5 @@ const ProfileSettings = () => {
 };
 
 export default ProfileSettings;
+
+
