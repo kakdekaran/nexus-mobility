@@ -1,9 +1,10 @@
+import io
 import os
 import uuid
 from datetime import datetime
 
 import pandas as pd
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from pydantic import BaseModel, Field
 
 from services.auth_handler import get_current_analyst_or_admin, get_current_user
@@ -83,6 +84,144 @@ def predict(data: PredictionRequest, current_user: dict = Depends(get_current_us
         "predicted_congestion": prediction,
         "suggestion": "Increase green time by 10-15 seconds on inbound corridors" if prediction >= 70 else "Maintain standard signal cycle with regular monitoring",
         "confidence": 0.88 if prediction >= 70 else 0.82,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+
+CSV_MAX_BYTES = 5 * 1024 * 1024  # 5 MB
+CSV_REQUIRED_COLUMNS = {"hour_of_day", "pollution_aqi", "weather_condition", "city"}
+VALID_CITIES = {"Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "Hyderabad"}
+
+
+def _validate_and_predict_csv_row(row_index: int, row: dict) -> dict:
+    """Validate a single CSV row and return a prediction result or an error dict."""
+    errors = []
+
+    # hour_of_day
+    try:
+        hour = int(row["hour_of_day"])
+        if not (0 <= hour <= 23):
+            errors.append("hour_of_day must be between 0 and 23")
+    except (ValueError, TypeError):
+        errors.append("hour_of_day must be an integer")
+        hour = None
+
+    # pollution_aqi
+    try:
+        aqi = float(row["pollution_aqi"])
+        if not (0 <= aqi <= 500):
+            errors.append("pollution_aqi must be between 0 and 500")
+    except (ValueError, TypeError):
+        errors.append("pollution_aqi must be a number")
+        aqi = None
+
+    # weather_condition
+    try:
+        weather = int(row["weather_condition"])
+        if weather not in (0, 1, 2):
+            errors.append("weather_condition must be 0 (Clear), 1 (Rainy), or 2 (Overcast)")
+    except (ValueError, TypeError):
+        errors.append("weather_condition must be an integer (0, 1, or 2)")
+        weather = None
+
+    # city
+    raw_city = str(row.get("city", "")).strip()
+    city = canonical_city(raw_city)
+    if city not in VALID_CITIES:
+        errors.append(f"city '{raw_city}' is not recognised; valid cities: Delhi, Mumbai, Bangalore, Chennai, Hyderabad")
+
+    if errors:
+        return {
+            "row": row_index,
+            "status": "error",
+            "errors": errors,
+            "input": {k: row.get(k) for k in CSV_REQUIRED_COLUMNS},
+        }
+
+    precipitation = 0.5 if weather == 1 else (0.1 if weather == 2 else 0.0)
+    prediction = predict_congestion(hour=hour, pm2_5=aqi, precipitation=precipitation, city=city)
+
+    return {
+        "row": row_index,
+        "status": "success",
+        "input": {
+            "hour_of_day": hour,
+            "pollution_aqi": aqi,
+            "weather_condition": weather,
+            "city": city,
+        },
+        "predicted_congestion": prediction,
+        "suggestion": (
+            "Increase green time by 10-15 seconds on inbound corridors"
+            if prediction >= 70
+            else "Maintain standard signal cycle with regular monitoring"
+        ),
+        "confidence": 0.88 if prediction >= 70 else 0.82,
+    }
+
+
+@router.post("/upload-csv")
+async def upload_csv(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user),
+):
+    # Validate file type
+    if not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
+
+    # Read and size-check
+    content = await file.read()
+    if len(content) > CSV_MAX_BYTES:
+        raise HTTPException(status_code=413, detail="File exceeds the 5 MB size limit.")
+
+    # Parse CSV
+    try:
+        df = pd.read_csv(io.BytesIO(content))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Could not parse CSV file. Ensure it is a valid CSV.")
+
+    # Validate required columns
+    missing = CSV_REQUIRED_COLUMNS - set(df.columns.str.strip().str.lower())
+    if missing:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Missing required columns: {', '.join(sorted(missing))}. "
+                   f"Expected: hour_of_day, pollution_aqi, weather_condition, city",
+        )
+
+    # Normalise column names to lowercase
+    df.columns = df.columns.str.strip().str.lower()
+
+    results = []
+    errors = []
+
+    for idx, row in df.iterrows():
+        result = _validate_and_predict_csv_row(int(idx) + 1, row.to_dict())
+        if result["status"] == "error":
+            errors.append(result)
+        else:
+            results.append(result)
+
+    log_activity(
+        {
+            "id": str(uuid.uuid4()),
+            "timestamp": datetime.utcnow().isoformat(),
+            "user_email": current_user["sub"],
+            "action": "csv_upload",
+            "details": (
+                f"File: {file.filename}, Rows: {len(df)}, "
+                f"Valid: {len(results)}, Errors: {len(errors)}"
+            ),
+        }
+    )
+
+    return {
+        "filename": file.filename,
+        "total_rows": len(df),
+        "processed": len(results),
+        "failed": len(errors),
+        "predictions": results,
+        "errors": errors,
         "timestamp": datetime.utcnow().isoformat(),
     }
 
