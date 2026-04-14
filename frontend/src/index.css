@@ -119,6 +119,15 @@
     background-color: var(--surface-container-low);
     transition: all 0.4s ease-in-out;
   }
+
+  .cta-gradient {
+    background: linear-gradient(135deg, var(--primary), #0284c7);
+    transition: all 0.3s ease;
+  }
+
+  .cta-gradient:hover {
+    background: linear-gradient(135deg, #0284c7, var(--primary));
+  }
 }
 
 @keyframes pulse-soft {

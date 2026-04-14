@@ -8,7 +8,7 @@ import AboutFooter from '../components/About/AboutFooter';
 
 const Home = () => {
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-background tonal-transition overflow-y-auto">
+    <div className="flex-1 flex flex-col min-h-screen bg-surface-container-lowest tonal-transition overflow-y-auto">
       {/* Public Landing TopBar */}
       <header className="sticky top-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl flex justify-between items-center px-6 md:px-8 h-20 w-full border-b border-on-surface/5 font-manrope">
         <div className="flex items-center gap-8 md:gap-12">
