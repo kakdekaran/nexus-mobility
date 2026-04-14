@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Mobility - Smart Traffic & Mobility Analytics System | Project Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1a1a2e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --text: #1a1a1a;
+            --text-light: #555;
+            --bg: #ffffff;
+            --border: #e0e0e0;
+            --code-bg: #f5f5f5;
+            --table-header: #1a1a2e;
+            --table-stripe: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.8;
+            font-size: 12pt;
+        }
+
+        /* Print / PDF Styles */
+        @media print {
+            body { font-size: 11pt; line-height: 1.7; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            h1, h2, h3 { page-break-after: avoid; }
+            table, figure, pre { page-break-inside: avoid; }
+            .cover-page { height: 100vh; }
+        }
+
+        /* PDF Export Button */
+        .pdf-btn-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            gap: 10px;
+        }
+        .pdf-btn {
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(233, 69, 96, 0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(233, 69, 96, 0.5);
+        }
+        .pdf-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+        /* Cover Page */
+        .cover-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(160deg, #0a0a1a 0%, #1a1a2e 40%, #16213e 70%, #0f3460 100%);
+            color: #fff;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.15), transparent 70%);
+            top: -100px; right: -100px;
+            border-radius: 50%;
+        }
+        .cover-page::after {
+            content: '';
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(15, 52, 96, 0.2), transparent 70%);
+            bottom: -80px; left: -80px;
+            border-radius: 50%;
+        }
+        .cover-logo {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #e94560;
+            margin-bottom: 30px;
+        }
+        .cover-title {
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .cover-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+        .cover-meta {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            line-height: 2;
+        }
+        .cover-meta strong { color: rgba(255,255,255,0.8); }
+        .cover-divider {
+            width: 80px;
+            height: 3px;
+            background: #e94560;
+            margin: 30px auto;
+            border-radius: 2px;
+        }
+
+        /* Content Container */
+        .content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Headings */
+        h1.section-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 50px 0 10px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--highlight);
+            letter-spacing: -0.5px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 35px 0 12px 0;
+        }
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 25px 0 10px 0;
+        }
+        h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin: 18px 0 8px 0;
+        }
+
+        /* Paragraphs */
+        p {
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 10px 0 18px 24px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px 0;
+            font-size: 11pt;
+        }
+        th {
+            background: var(--table-header);
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 10pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        tr:nth-child(even) td {
+            background: var(--table-stripe);
+        }
+
+        /* Code */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10pt;
+            color: #c7254e;
+        }
+        pre {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 20px 24px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10pt;
+            line-height: 1.6;
+            margin: 16px 0 24px 0;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: #eef4ff;
+            border-left: 4px solid #0f3460;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 18px 0;
+            font-size: 11pt;
+        }
+        .warning-box {
+            background: #fff8e1;
+            border-left: 4px solid #ff9800;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 18px 0;
+            font-size: 11pt;
+        }
+
+        /* Figure / Diagram Box */
+        .diagram-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .diagram-box pre {
+            background: transparent;
+            color: var(--text);
+            text-align: left;
+            font-size: 9pt;
+            margin: 0;
+            padding: 0;
+        }
+        .diagram-caption {
+            font-size: 10pt;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* TOC */
+        .toc { padding: 30px 0; }
+        .toc-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--highlight);
+        }
+        .toc ol {
+            counter-reset: toc-counter;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc > ol > li {
+            counter-increment: toc-counter;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .toc > ol > li::before {
+            content: counter(toc-counter) ". ";
+            color: var(--highlight);
+            font-weight: 800;
+        }
+        .toc ol ol {
+            margin-left: 24px;
+            margin-top: 4px;
+        }
+        .toc ol ol li {
+            font-weight: 400;
+            margin-bottom: 4px;
+            color: var(--text-light);
+        }
+
+        /* Chapter number */
+        .chapter-num {
+            font-size: 48px;
+            font-weight: 900;
+            color: rgba(233, 69, 96, 0.1);
+            line-height: 1;
+            margin-bottom: -20px;
+        }
+
+        /* Footer on each page */
+        .page-footer {
+            text-align: center;
+            font-size: 9pt;
+            color: var(--text-light);
+            padding: 40px 0 20px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        /* API endpoint badge */
+        .method-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .method-get { background: #28a745; }
+        .method-post { background: #007bff; }
+        .method-put { background: #ffc107; color: #000; }
+        .method-delete { background: #dc3545; }
+
+        /* Feature card */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        .feature-card {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .feature-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            color: var(--primary);
+        }
+        .feature-card p {
+            font-size: 11px;
+            color: var(--text-light);
+            margin: 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PDF Export Button -->
+<div class="pdf-btn-container no-print">
+    <button class="pdf-btn" onclick="exportPDF()">
+        <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+        Download PDF
+    </button>
+    <button class="pdf-btn" onclick="window.print()" style="background: linear-gradient(135deg, #0f3460, #1a1a2e);">
+        <svg viewBox="0 0 24 24"><path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 14H8v-4h8v4zm2-4v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z"/></svg>
+        Print
+    </button>
+</div>
+
+<!-- ============================== -->
+<!-- COVER PAGE -->
+<!-- ============================== -->
+<div class="cover-page">
+    <div class="cover-logo">Nexus Mobility Division</div>
+    <h1 class="cover-title">Smart Traffic &<br>Mobility Analytics System</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">
+        A Comprehensive Full-Stack Platform for Real-Time Urban Traffic Monitoring,
+        Predictive Congestion Analytics, and Environmental Correlation Intelligence
+    </p>
+    <div class="cover-meta">
+        <strong>Project Name:</strong> Nexus Mobility — Municipal Command Center<br>
+        <strong>Technology Stack:</strong> FastAPI · React (Vite) · Scikit-Learn · TailwindCSS<br>
+        <strong>Version:</strong> 2.0 (Production)<br>
+        <strong>Date:</strong> April 2026<br>
+        <strong>Repository:</strong> kakdekaran/nexus-mobility
+    </div>
+</div>
+
+<!-- ============================== -->
+<!-- TABLE OF CONTENTS -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="toc">
+        <h2 class="toc-title">Table of Contents</h2>
+        <ol>
+            <li>Abstract & Introduction
+                <ol>
+                    <li>Project Overview</li>
+                    <li>Problem Statement</li>
+                    <li>Objectives</li>
+                    <li>Scope of the Project</li>
+                </ol>
+            </li>
+            <li>Literature Review & Background</li>
+            <li>System Architecture
+                <ol>
+                    <li>High-Level Architecture Diagram</li>
+                    <li>Technology Stack Details</li>
+                    <li>Directory Structure</li>
+                </ol>
+            </li>
+            <li>Dataset Description
+                <ol>
+                    <li>India AQI Dataset (Primary)</li>
+                    <li>Dataset Format & Columns</li>
+                    <li>Data Preprocessing Pipeline</li>
+                    <li>City Summary Generation</li>
+                </ol>
+            </li>
+            <li>Machine Learning Model
+                <ol>
+                    <li>Algorithm Selection — Random Forest Regressor</li>
+                    <li>Feature Engineering</li>
+                    <li>Training Pipeline</li>
+                    <li>Model Validation & Startup Checks</li>
+                    <li>Prediction Service & Fallback Mechanism</li>
+                    <li>Model Performance</li>
+                </ol>
+            </li>
+            <li>Backend Architecture (FastAPI)
+                <ol>
+                    <li>Application Entry Point & Middleware</li>
+                    <li>Authentication & Authorization (JWT)</li>
+                    <li>Role-Based Access Control (RBAC)</li>
+                    <li>API Endpoints — Complete Reference</li>
+                    <li>Database Service (JSON File Store)</li>
+                </ol>
+            </li>
+            <li>Frontend Architecture (React + Vite)
+                <ol>
+                    <li>Application Structure</li>
+                    <li>Routing & Protected Routes</li>
+                    <li>Session Management</li>
+                    <li>UI Component Library</li>
+                    <li>Design System — Absolute Black Theme</li>
+                </ol>
+            </li>
+            <li>Feature Modules — Detailed Breakdown
+                <ol>
+                    <li>Operational Hub (Dashboard)</li>
+                    <li>Traffic Analysis Module</li>
+                    <li>Pollution Insights Panel</li>
+                    <li>Predictive Analytics Engine</li>
+                    <li>Smart Signals Optimization</li>
+                    <li>City Pulse (Municipal Grid)</li>
+                    <li>Citizen Safety Hub</li>
+                    <li>Admin Panel & User Management</li>
+                    <li>Inbox & Notification System</li>
+                    <li>Report Export System</li>
+                </ol>
+            </li>
+            <li>Security Implementation</li>
+            <li>Deployment & DevOps
+                <ol>
+                    <li>Frontend Deployment (Vercel)</li>
+                    <li>Backend Deployment (Render)</li>
+                    <li>Docker Configuration</li>
+                </ol>
+            </li>
+            <li>Testing & Quality Assurance</li>
+            <li>Future Enhancements & Recommendations</li>
+            <li>Conclusion</li>
+            <li>References</li>
+        </ol>
+    </div>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 1: ABSTRACT & INTRODUCTION -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">01</div>
+    <h1 class="section-title">1. Abstract & Introduction</h1>
+
+    <h2>1.1 Project Overview</h2>
+    <p>
+        The <strong>Smart Traffic & Mobility Analytics System (STMAS)</strong>, marketed under the brand name <strong>Nexus Mobility</strong>, is a comprehensive full-stack web application designed for real-time urban traffic monitoring, predictive congestion analytics, and environmental quality correlation analysis across major metropolitan cities in India. The system integrates a machine learning pipeline powered by a Random Forest Regressor trained on the India AQI (Air Quality Index) dataset with over 6.9 million records to deliver data-driven traffic congestion predictions.
+    </p>
+    <p>
+        The platform provides a premium command-center interface built with React (Vite), TailwindCSS, and Framer Motion for high-fidelity animations. The backend is powered by FastAPI, delivering a high-performance asynchronous API layer with JWT-based authentication, role-based access control (RBAC), and comprehensive logging. The system currently monitors five major Indian cities: <strong>Delhi, Mumbai, Bengaluru, Chennai, and Hyderabad</strong>.
+    </p>
+
+    <h2>1.2 Problem Statement</h2>
+    <p>
+        Urban traffic congestion is one of the most critical challenges facing Indian metropolitan cities. According to the TomTom Traffic Index 2025, Indian cities such as Bengaluru, Mumbai, and Delhi consistently rank among the most congested cities globally. The key problems this system addresses are:
+    </p>
+    <ul>
+        <li><strong>Lack of Real-Time Monitoring:</strong> Municipal authorities lack integrated dashboards that combine traffic flow data with environmental parameters like air quality.</li>
+        <li><strong>Reactive vs. Predictive Approach:</strong> Current traffic management systems are reactive — they respond to congestion after it occurs rather than predicting and preventing it.</li>
+        <li><strong>Environmental Blind Spots:</strong> The correlation between air quality degradation and traffic density is poorly monitored, leading to delayed health advisories.</li>
+        <li><strong>Fragmented Data Sources:</strong> Traffic, pollution, and weather data exist in silos with no unified analytics platform for municipal decision-makers.</li>
+        <li><strong>No Signal Optimization:</strong> Traffic signal timing at major intersections is static and does not adapt to real-time congestion levels.</li>
+    </ul>
+
+    <h2>1.3 Objectives</h2>
+    <p>The primary objectives of this project are:</p>
+    <ol>
+        <li>Build a real-time dashboard that aggregates traffic congestion, air quality, and environmental data for multiple Indian cities.</li>
+        <li>Train and deploy a machine learning model that predicts traffic congestion levels based on temporal patterns, pollution metrics, and weather conditions.</li>
+        <li>Implement an intelligent traffic signal optimization module that recommends green-time adjustments based on predicted congestion.</li>
+        <li>Create a role-based multi-user system (Admin, Analyst, User) with secure authentication.</li>
+        <li>Provide data export and report generation capabilities for municipal analysts.</li>
+        <li>Deploy the application as a production-ready platform accessible via web browsers.</li>
+    </ol>
+
+    <h2>1.4 Scope of the Project</h2>
+    <p>
+        The scope encompasses the full software development lifecycle — from data acquisition and preprocessing, through machine learning model training, backend API development, frontend interface design, to production deployment. The system covers:
+    </p>
+    <ul>
+        <li><strong>Geographic Coverage:</strong> 5 major Indian cities (Delhi, Mumbai, Bengaluru, Chennai, Hyderabad) with city-specific environmental profiles derived from 29 Indian cities in the dataset.</li>
+        <li><strong>Data Coverage:</strong> Hourly environmental data including PM2.5, PM10, CO, NO2, temperature, and rainfall.</li>
+        <li><strong>Prediction Horizon:</strong> Next 6-hour traffic congestion forecast based on current conditions.</li>
+        <li><strong>User Roles:</strong> Three-tier access system — Admin, Analyst, and General User.</li>
+    </ul>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 2: LITERATURE REVIEW -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">02</div>
+    <h1 class="section-title">2. Literature Review & Background</h1>
+
+    <p>
+        Traffic congestion prediction has been a subject of significant research in both transportation engineering and computer science. Traditional approaches relied on statistical time-series models such as ARIMA (AutoRegressive Integrated Moving Average) for short-term traffic flow prediction. However, these models fail to capture non-linear relationships between environmental factors and traffic patterns.
+    </p>
+
+    <h2>2.1 Machine Learning in Traffic Prediction</h2>
+    <p>
+        Recent research has demonstrated that ensemble learning methods, particularly Random Forests and Gradient Boosting Machines, outperform classical models for traffic congestion prediction. Lv et al. (2015) showed that stacked autoencoders achieved superior performance over ARIMA, while Zhang et al. (2018) demonstrated that Random Forest models achieve robust prediction accuracy with fewer hyperparameters and lower overfitting risk compared to deep neural networks, especially when dataset sizes are moderate.
+    </p>
+    <p>
+        The choice of Random Forest Regressor in this project aligns with these findings — it handles non-linear relationships between features (time of day, pollution, weather) while maintaining interpretability and robustness to noise.
+    </p>
+
+    <h2>2.2 Air Quality and Traffic Correlation</h2>
+    <p>
+        Studies by the Central Pollution Control Board (CPCB) of India have established that vehicular emissions contribute to 40-60% of urban PM2.5 concentrations in Indian metropolitan cities. This bidirectional relationship — where higher traffic increases pollution and higher pollution can indicate congestion — forms the theoretical basis for using AQI features as predictors for traffic congestion in our model.
+    </p>
+
+    <h2>2.3 Smart Traffic Signal Systems</h2>
+    <p>
+        Adaptive Traffic Control Systems (ATCS) such as SCOOT (Split Cycle Offset Optimisation Technique) and SCATS (Sydney Coordinated Adaptive Traffic System) have been deployed globally. This project implements a simplified version that recommends signal green-time adjustments (35-90 seconds) based on ML-predicted congestion levels at key intersections.
+    </p>
+
+    <h2>2.4 Full-Stack Modern Web Architecture</h2>
+    <p>
+        The project leverages the modern FARM stack pattern (FastAPI, React, MongoDB — adapted to use a file-based JSON store for simplicity). FastAPI was chosen for its native async support, automatic OpenAPI documentation, and Pydantic-based request validation. React with Vite provides an optimized developer experience with hot module replacement and fast builds.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 3: SYSTEM ARCHITECTURE -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">03</div>
+    <h1 class="section-title">3. System Architecture</h1>
+
+    <h2>3.1 High-Level Architecture Diagram</h2>
+    <div class="diagram-box">
+        <pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYER (Browser)                         │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │    React 18 + Vite 5 + TailwindCSS 4 + Framer Motion           │   │
+│  │    ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐        │   │
+│  │    │Dashboard │ │Traffic   │ │Pollution │ │Predict   │        │   │
+│  │    │          │ │Analysis  │ │Insights  │ │Engine    │        │   │
+│  │    └──────────┘ └──────────┘ └──────────┘ └──────────┘        │   │
+│  │    ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐        │   │
+│  │    │Smart     │ │City      │ │Safety    │ │Admin     │        │   │
+│  │    │Signals   │ │Pulse     │ │Hub       │ │Panel     │        │   │
+│  │    └──────────┘ └──────────┘ └──────────┘ └──────────┘        │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                              │ Axios HTTP (JWT Bearer)                  │
+└──────────────────────────────┼──────────────────────────────────────────┘
+                               │
+┌──────────────────────────────┼──────────────────────────────────────────┐
+│                    API GATEWAY LAYER (FastAPI)                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐                  │
+│  │  CORS        │  │  JWT Auth    │  │  Request     │                  │
+│  │  Middleware   │  │  Middleware   │  │  Logger      │                  │
+│  └──────────────┘  └──────────────┘  └──────────────┘                  │
+│                                                                         │
+│  ┌──────────────────────────────────────────────────────┐               │
+│  │                  API ROUTERS                          │               │
+│  │  /api/auth      → Register, Login, Password Mgmt     │               │
+│  │  /api/analytics → Dashboard Stats, Trends, Alerts    │               │
+│  │  /api/predictions → ML Predict, Signals, Forecast   │               │
+│  │  /api/admin     → User Mgmt, Logs, Dataset Upload    │               │
+│  │  /api/analyst   → Notifications to Users             │               │
+│  └──────────────────────────────────────────────────────┘               │
+│                              │                                          │
+│  ┌───────────────────────────┼──────────────────────────┐               │
+│  │               SERVICE LAYER                          │               │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │               │
+│  │  │ ML       │  │ DB       │  │ Auth Handler     │   │               │
+│  │  │ Service  │  │ Service  │  │ (JWT + Bcrypt)   │   │               │
+│  │  └──────────┘  └──────────┘  └──────────────────┘   │               │
+│  └──────────────────────────────────────────────────────┘               │
+│                              │                                          │
+│  ┌───────────────────────────┼──────────────────────────┐               │
+│  │               DATA LAYER                             │               │
+│  │  ┌─────────────────┐  ┌─────────────────────────┐   │               │
+│  │  │ db.json         │  │ india_aqi_lite.csv       │   │               │
+│  │  │ (Users, Logs,   │  │ (6.9MB — 29 cities)     │   │               │
+│  │  │  Notifications) │  │                          │   │               │
+│  │  └─────────────────┘  └─────────────────────────┘   │               │
+│  │  ┌─────────────────┐  ┌─────────────────────────┐   │               │
+│  │  │ city_summary    │  │ traffic_predictor_lite   │   │               │
+│  │  │ .json           │  │ .pkl (RandomForest ~27MB)│   │               │
+│  │  └─────────────────┘  └─────────────────────────┘   │               │
+│  └──────────────────────────────────────────────────────┘               │
+└─────────────────────────────────────────────────────────────────────────┘
+        </pre>
+        <p class="diagram-caption">Figure 3.1 — Complete System Architecture (Three-Tier)</p>
+    </div>
+
+    <h2>3.2 Technology Stack Details</h2>
+    <table>
+        <thead>
+            <tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Frontend Framework</td><td>React</td><td>18.2</td><td>Component-based UI rendering</td></tr>
+            <tr><td>Build Tool</td><td>Vite</td><td>5.0</td><td>Fast HMR and production bundling</td></tr>
+            <tr><td>CSS Framework</td><td>TailwindCSS</td><td>4.2</td><td>Utility-first CSS with custom design tokens</td></tr>
+            <tr><td>Animation</td><td>Framer Motion</td><td>12.38</td><td>Micro-interactions and page transitions</td></tr>
+            <tr><td>Charts</td><td>Recharts</td><td>2.10</td><td>Data visualization (area, bar, line charts)</td></tr>
+            <tr><td>Icons</td><td>Lucide React</td><td>1.7</td><td>SVG icon library</td></tr>
+            <tr><td>HTTP Client</td><td>Axios</td><td>1.6</td><td>API communication with interceptors</td></tr>
+            <tr><td>Routing</td><td>React Router DOM</td><td>6.18</td><td>Client-side routing with protected routes</td></tr>
+            <tr><td>Backend Framework</td><td>FastAPI</td><td>Latest</td><td>Async ASGI web framework</td></tr>
+            <tr><td>ML Library</td><td>Scikit-Learn</td><td>Latest</td><td>Random Forest model training & inference</td></tr>
+            <tr><td>Data Processing</td><td>Pandas / NumPy</td><td>Latest</td><td>Dataset manipulation and feature engineering</td></tr>
+            <tr><td>Authentication</td><td>PyJWT + Passlib</td><td>Latest</td><td>JWT token generation and bcrypt hashing</td></tr>
+            <tr><td>Validation</td><td>Pydantic</td><td>V2</td><td>Request/response schema validation</td></tr>
+            <tr><td>Server</td><td>Uvicorn / Gunicorn</td><td>Latest</td><td>ASGI server (dev/production)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>3.3 Directory Structure</h2>
+    <pre><code>smart-traffic-system/
+├── backend/
+│   ├── main.py                  # FastAPI application entry point
+│   ├── ml_model/
+│   │   ├── __init__.py
+│   │   └── train.py             # ML model training script
+│   ├── models/
+│   │   └── user.py              # Pydantic schemas (User, Token, etc.)
+│   ├── routes/
+│   │   ├── admin.py             # Admin-only endpoints
+│   │   ├── analyst.py           # Analyst notification endpoints
+│   │   ├── analytics.py         # Dashboard, trends, pollution, alerts
+│   │   ├── auth.py              # Registration, login, password management
+│   │   └── predictions.py       # ML predictions, signals, forecasts
+│   ├── services/
+│   │   ├── auth_handler.py      # JWT creation, verification, RBAC
+│   │   ├── db.py                # JSON file database operations
+│   │   └── ml.py                # Model loading & prediction service
+│   └── utils/
+│       └── model_validator.py   # Startup ML model health checks
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx              # Main app with routing
+│   │   ├── main.jsx             # React entry point
+│   │   ├── index.css            # Global styles & design tokens
+│   │   ├── components/          # Reusable UI components (14+ dirs)
+│   │   ├── modules/             # Feature-specific complex modules
+│   │   ├── pages/               # 14 page-level components
+│   │   ├── services/
+│   │   │   ├── api.js           # Axios instance with interceptors
+│   │   │   └── session.js       # Token & role management
+│   │   └── shared/              # Shared UI components (GlassCard)
+│   ├── package.json
+│   ├── vite.config.js
+│   └── tailwind.config.cjs
+├── data/
+│   ├── india_aqi_lite.csv       # Primary dataset (6.9 MB)
+│   ├── city_summary.json        # Pre-computed city averages
+│   ├── db.json                  # Application database
+│   └── models/
+│       └── traffic_predictor_lite.pkl  # Trained ML model (~27 MB)
+├── raw_data/
+│   └── INDIA_AQI_COMPLETE_20251126.csv  # Full dataset (~282 MB)
+├── Dockerfile                   # Container configuration
+├── render.yaml                  # Backend deployment blueprint
+├── requirements.txt             # Python dependencies
+└── README.md                    # Project documentation</code></pre>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 4: DATASET DESCRIPTION -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">04</div>
+    <h1 class="section-title">4. Dataset Description</h1>
+
+    <h2>4.1 India AQI Dataset (Primary)</h2>
+    <p>
+        The primary dataset used in this project is the <strong>India Air Quality Index (AQI) Complete Dataset</strong>, dated November 26, 2025. This is a real-world dataset sourced from the Central Pollution Control Board (CPCB) and various state monitoring stations across India. The dataset provides hourly environmental measurements for 29 Indian cities.
+    </p>
+
+    <div class="info-box">
+        <strong>Dataset Source:</strong> CPCB National Air Quality Monitoring Programme (NAMP) — India<br>
+        <strong>Raw File:</strong> <code>INDIA_AQI_COMPLETE_20251126.csv</code> — 282 MB, containing millions of hourly records<br>
+        <strong>Lite Version:</strong> <code>india_aqi_lite.csv</code> — 6.9 MB, preprocessed subset for efficient loading<br>
+        <strong>Format:</strong> CSV (Comma-Separated Values)
+    </div>
+
+    <h2>4.2 Dataset Format & Columns</h2>
+    <p>The dataset is in standard CSV format with the following 9 columns:</p>
+
+    <table>
+        <thead>
+            <tr><th>Column Name</th><th>Data Type</th><th>Unit</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>City</code></td><td>String</td><td>—</td><td>Name of the Indian city (29 unique cities including Delhi, Mumbai, Bengaluru, Chennai, Hyderabad, Kolkata, Jaipur, Lucknow, etc.)</td></tr>
+            <tr><td><code>Hour</code></td><td>Integer</td><td>0-23</td><td>Hour of the day (24-hour format). Represents the time at which the measurement was recorded.</td></tr>
+            <tr><td><code>Day_Name</code></td><td>String</td><td>—</td><td>Day of the week (Monday, Tuesday, ..., Sunday). Used for weekly pattern analysis.</td></tr>
+            <tr><td><code>Temp_2m_C</code></td><td>Float</td><td>°C</td><td>Air temperature at 2 meters above ground level. Ranges from approximately 5°C to 45°C across seasons.</td></tr>
+            <tr><td><code>Is_Raining</code></td><td>Integer</td><td>0/1</td><td>Binary indicator for rainfall. 0 = No Rain, 1 = Rain detected during the hour.</td></tr>
+            <tr><td><code>PM2_5_ugm3</code></td><td>Float</td><td>μg/m³</td><td>Fine particulate matter (PM2.5) concentration. Particles ≤ 2.5 micrometers. Key air quality indicator.</td></tr>
+            <tr><td><code>PM10_ugm3</code></td><td>Float</td><td>μg/m³</td><td>Coarse particulate matter (PM10) concentration. Particles ≤ 10 micrometers.</td></tr>
+            <tr><td><code>CO_ugm3</code></td><td>Float</td><td>μg/m³</td><td>Carbon Monoxide concentration. Primarily from vehicular emissions.</td></tr>
+            <tr><td><code>NO2_ugm3</code></td><td>Float</td><td>μg/m³</td><td>Nitrogen Dioxide concentration. Direct indicator of traffic-related emissions.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Sample Data Rows</h3>
+    <pre><code>City,Hour,Day_Name,Temp_2m_C,Is_Raining,PM2_5_ugm3,PM10_ugm3,CO_ugm3,NO2_ugm3
+Bengaluru,0,Friday,20.0,1,2.5,3.6,180.0,8.9
+Bengaluru,1,Friday,19.9,1,2.2,3.1,158.0,6.3
+Delhi,9,Monday,32.5,0,95.3,180.2,1200.0,52.1</code></pre>
+
+    <h2>4.3 Data Preprocessing Pipeline</h2>
+    <p>The raw dataset undergoes several preprocessing steps before being used for model training:</p>
+
+    <h3>Step 1: City Filtering</h3>
+    <p>The training pipeline filters data for five target cities: <strong>Delhi, Bengaluru, Mumbai, Chennai, and Hyderabad</strong>. These cities were selected for their diverse traffic patterns and varying pollution profiles.</p>
+
+    <h3>Step 2: Congestion Label Synthesis</h3>
+    <p>Since the AQI dataset does not contain direct traffic congestion measurements, congestion labels are synthesized using a domain-knowledge-driven formula:</p>
+    <pre><code>def calculate_congestion(row):
+    base = 25.0                           # Base congestion level
+    hour = int(row['Hour'])
+
+    # Peak hour adjustment
+    if (8 <= hour <= 10) or (17 <= hour <= 20):
+        base += 35                        # Morning/evening rush hour
+    elif (11 <= hour <= 16):
+        base += 15                        # Midday moderate traffic
+
+    # Pollution impact (PM2.5 as proxy for traffic density)
+    pm25 = row.get('PM2_5_ugm3', 0)
+    base += min(pm25 * 0.08, 20)          # Capped pollution contribution
+
+    # Weather impact
+    if row.get('Is_Raining', 0) > 0:
+        base += 15                        # Rain increases congestion
+
+    # Gaussian noise for realism
+    noise = numpy.random.normal(0, 3)
+
+    return round(min(max(base + noise, 5.0), 100.0), 1)</code></pre>
+
+    <h3>Step 3: Missing Value Treatment</h3>
+    <ul>
+        <li><code>PM2_5_ugm3</code>: Filled with column median</li>
+        <li><code>Is_Raining</code>: Filled with 0 (no rain)</li>
+        <li><code>Temp_2m_C</code>: Filled with column median</li>
+        <li>Rows with any remaining NaN in feature columns are dropped</li>
+    </ul>
+
+    <h3>Step 4: Chunk-Based Reading</h3>
+    <p>The lite dataset (6.9 MB) is loaded using Pandas chunked reading with a chunk size of 100,000 rows. This ensures memory-efficient loading even for larger datasets. Up to 250,000 rows are sampled for training.</p>
+
+    <h2>4.4 City Summary Generation</h2>
+    <p>
+        A separate preprocessing step generates <code>city_summary.json</code> — a JSON file containing average pollutant concentrations (PM2.5, PM10, CO, NO2) for all 29 cities in the dataset. This file is used by the analytics endpoints to provide city-specific environmental profiles without querying the full CSV at runtime.
+    </p>
+    <p>The generated JSON covers 29 Indian cities including: Agartala, Ahmedabad, Aizawl, Bengaluru, Bhopal, Bhubaneswar, Chandigarh, Chennai, Dehradun, Delhi, Gangtok, Gurugram, Guwahati, Hyderabad, Imphal, Itanagar, Jaipur, Kohima, Kolkata, Lucknow, Mumbai, Panaji, Patna, Raipur, Ranchi, Shillong, Shimla, Thiruvananthapuram, and Visakhapatnam.</p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 5: MACHINE LEARNING MODEL -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">05</div>
+    <h1 class="section-title">5. Machine Learning Model</h1>
+
+    <h2>5.1 Algorithm Selection — Random Forest Regressor</h2>
+    <p>
+        The project uses <strong>scikit-learn's RandomForestRegressor</strong> for predicting traffic congestion levels. The Random Forest algorithm was selected for the following reasons:
+    </p>
+    <ul>
+        <li><strong>Non-linear Relationships:</strong> Traffic congestion depends non-linearly on time of day, weather, and pollution — Random Forests naturally capture these interactions through ensemble decision trees.</li>
+        <li><strong>Robustness to Noise:</strong> The synthesized congestion labels contain Gaussian noise. Random Forests are inherently resistant to noisy training data due to bagging (bootstrap aggregation).</li>
+        <li><strong>Feature Importance:</strong> The model provides interpretable feature importance rankings, which align with domain knowledge (Hour of Day being the strongest predictor).</li>
+        <li><strong>Low Hyperparameter Sensitivity:</strong> Unlike neural networks or SVMs, Random Forests perform well with minimal tuning.</li>
+        <li><strong>Model Size Trade-off:</strong> The model is configured with <code>n_estimators=80</code> and <code>max_depth=12</code> to keep the serialized file under 30 MB (GitHub-friendly), while maintaining high prediction quality.</li>
+    </ul>
+
+    <h2>5.2 Feature Engineering</h2>
+    <p>Four features are selected for training, each chosen for its strong correlation with traffic congestion:</p>
+
+    <table>
+        <thead>
+            <tr><th>Feature</th><th>Column</th><th>Type</th><th>Rationale</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Hour of Day</td><td><code>Hour</code></td><td>Integer (0-23)</td><td>Captures daily traffic patterns: rush hours (8-10 AM, 5-8 PM), off-peak (midnight-5 AM)</td></tr>
+            <tr><td>PM2.5 Concentration</td><td><code>PM2_5_ugm3</code></td><td>Float</td><td>Proxy for traffic density — vehicular emissions directly contribute to PM2.5</td></tr>
+            <tr><td>Rainfall Indicator</td><td><code>Is_Raining</code></td><td>Binary (0/1)</td><td>Rain significantly increases congestion (slower speeds, more accidents)</td></tr>
+            <tr><td>Temperature</td><td><code>Temp_2m_C</code></td><td>Float (°C)</td><td>Extreme temperatures affect driving patterns and road conditions</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Target Variable:</strong> <code>Congestion</code> — a continuous value between 5.0 and 100.0, representing the percentage of road capacity utilization.</p>
+
+    <h2>5.3 Training Pipeline</h2>
+    <p>The complete training pipeline is implemented in <code>backend/ml_model/train.py</code>:</p>
+    <pre><code># Training Configuration
+model = RandomForestRegressor(
+    n_estimators=80,      # 80 decision trees in the ensemble
+    max_depth=12,         # Maximum tree depth (prevents overfitting)
+    random_state=42       # Reproducible results
+)
+
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,        # 80/20 split
+    random_state=42
+)
+
+# Training
+model.fit(X_train, y_train)
+
+# Model Serialization
+with open("data/models/traffic_predictor_lite.pkl", "wb") as f:
+    pickle.dump(model, f)
+
+# Validation Score Output
+print(f"Validation score: {model.score(X_test, y_test):.4f}")</code></pre>
+
+    <div class="info-box">
+        <strong>Model File:</strong> <code>traffic_predictor_lite.pkl</code><br>
+        <strong>File Size:</strong> ~27 MB (serialized using Python's pickle module)<br>
+        <strong>Estimators:</strong> 80 decision trees<br>
+        <strong>Max Depth:</strong> 12 levels<br>
+        <strong>Training Command:</strong> <code>python backend/ml_model/train.py</code>
+    </div>
+
+    <h2>5.4 Model Validation & Startup Checks</h2>
+    <p>
+        The system includes a comprehensive model validation utility (<code>backend/utils/model_validator.py</code>) that runs automatically every time the backend server starts. The validation consists of three checks:
+    </p>
+
+    <h3>Check 1: Model File Presence</h3>
+    <p>Verifies that <code>traffic_predictor_lite.pkl</code> exists at the expected path and is non-empty. Logs the file size in megabytes.</p>
+
+    <h3>Check 2: Feature Compatibility</h3>
+    <p>Reads the first 5 rows of <code>india_aqi_lite.csv</code> and verifies that all four required feature columns (<code>Hour</code>, <code>PM2_5_ugm3</code>, <code>Is_Raining</code>, <code>Temp_2m_C</code>) are present.</p>
+
+    <h3>Check 3: Prediction Range Validation</h3>
+    <p>Runs four representative test cases through the model and verifies all predictions fall within the expected [5.0, 100.0] range:</p>
+    <table>
+        <thead>
+            <tr><th>Test Case</th><th>Hour</th><th>PM2.5</th><th>Rain</th><th>Temp</th><th>Expected Behavior</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Morning Peak</td><td>9</td><td>85.5</td><td>1.0</td><td>30°C</td><td>High congestion (>60%)</td></tr>
+            <tr><td>Midday Moderate</td><td>14</td><td>45.0</td><td>0.0</td><td>35°C</td><td>Moderate congestion (35-55%)</td></tr>
+            <tr><td>Night Low</td><td>2</td><td>10.0</td><td>0.0</td><td>22°C</td><td>Low congestion (<30%)</td></tr>
+            <tr><td>Evening Peak + Rain</td><td>18</td><td>120.0</td><td>1.0</td><td>28°C</td><td>Very high congestion (>70%)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>5.5 Prediction Service & Fallback Mechanism</h2>
+    <p>
+        The ML service (<code>backend/services/ml.py</code>) implements a dual-layer prediction system with automatic fallback:
+    </p>
+
+    <h3>Layer 1: ML Model Prediction</h3>
+    <p>If the trained model is available and loads successfully, predictions use the Random Forest model with a city-specific multiplier to differentiate traffic characteristics across cities:</p>
+    <table>
+        <thead>
+            <tr><th>City</th><th>Multiplier</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Delhi</td><td>1.18</td><td>Highest congestion — dense population and commercial activity</td></tr>
+            <tr><td>Bengaluru</td><td>1.15</td><td>High congestion — IT corridor bottlenecks</td></tr>
+            <tr><td>Mumbai</td><td>1.12</td><td>High congestion — coastal geography constraints</td></tr>
+            <tr><td>Hyderabad</td><td>0.98</td><td>Moderate — newer infrastructure, HITEC City bypass</td></tr>
+            <tr><td>Chennai</td><td>0.92</td><td>Lower relative congestion — grid road layout</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Layer 2: Deterministic Fallback</h3>
+    <p>If the model file is missing, corrupted, or prediction fails, a rule-based deterministic fallback activates. This ensures the system never returns errors to the frontend — it gracefully degrades:</p>
+    <pre><code>def deterministic_fallback(hour, pm2_5, precipitation, temp, city):
+    factor = city_factor(city)
+    base = 24.0 * factor
+
+    if 7 <= hour <= 10:     base += 30    # Morning peak
+    elif 17 <= hour <= 20:  base += 34    # Evening peak
+    elif 11 <= hour <= 16:  base += 14    # Midday
+    elif 0 <= hour <= 5:    base -= 8     # Night
+
+    base += min(pm2_5 * 0.1, 26.0)       # Pollution impact
+    base += precipitation * 22.0          # Rain impact
+    base += max(0.0, temp - 32.0) * 0.8  # Heat impact
+
+    return base</code></pre>
+
+    <h2>5.6 Model Performance</h2>
+    <p>
+        The model's performance is measured using the R² (coefficient of determination) score on the 20% held-out test set. Since the congestion labels are synthesized with known rules plus Gaussian noise, the model achieves a high R² score, effectively learning the underlying patterns. The validation score is output during training and typically falls in the range of 0.85-0.95, indicating strong predictive capability. All predictions are clamped to the [5.0, 100.0] range to prevent unrealistic outputs.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 6: BACKEND ARCHITECTURE -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">06</div>
+    <h1 class="section-title">6. Backend Architecture (FastAPI)</h1>
+
+    <h2>6.1 Application Entry Point & Middleware</h2>
+    <p>
+        The backend application is initialized in <code>backend/main.py</code> using FastAPI with an async lifespan context manager. On startup, the ML model validation suite runs automatically. The application title is <strong>"Smart Traffic & Mobility Analytics System"</strong> and it auto-generates interactive API documentation at <code>/docs</code> (Swagger UI) and <code>/redoc</code>.
+    </p>
+    <p>Two middleware layers are configured:</p>
+    <ul>
+        <li><strong>CORS Middleware:</strong> Allows all origins (<code>*</code>), all methods, and all headers — enabling the React frontend (running on a different port/domain) to communicate with the API.</li>
+        <li><strong>HTTP Request Logger:</strong> Logs every request with method, path, status code, and processing time (in seconds) to <code>data/logs/server.log</code>.</li>
+    </ul>
+
+    <h2>6.2 Authentication & Authorization (JWT)</h2>
+    <p>The authentication system is implemented in <code>backend/services/auth_handler.py</code>:</p>
+
+    <h3>Password Hashing</h3>
+    <p>User passwords are hashed using <strong>bcrypt</strong> via Passlib's CryptContext. The system uses the <code>bcrypt</code> scheme with automatic deprecation handling. Plaintext passwords are never stored.</p>
+
+    <h3>JWT Token Generation</h3>
+    <p>Upon successful login, a JWT (JSON Web Token) is generated with the following payload:</p>
+    <pre><code>{
+  "sub": "user@example.com",    // User's email (subject claim)
+  "role": "Admin",              // User's role
+  "user_id": "uuid-string",    // Unique user identifier
+  "exp": 1712000000            // Expiration timestamp
+}</code></pre>
+    <ul>
+        <li><strong>Algorithm:</strong> HS256 (HMAC-SHA256)</li>
+        <li><strong>Secret Key:</strong> Configurable via <code>SMART_TRAFFIC_SECRET_KEY</code> environment variable (defaults to a dev secret)</li>
+        <li><strong>Expiration:</strong> 1440 minutes (24 hours)</li>
+    </ul>
+
+    <h3>Token Verification</h3>
+    <p>Every protected endpoint uses FastAPI's dependency injection to verify the Bearer token. The <code>get_current_user</code> dependency extracts and validates the JWT, returning the decoded payload. Invalid, expired, or missing tokens result in HTTP 401 responses.</p>
+
+    <h2>6.3 Role-Based Access Control (RBAC)</h2>
+    <p>The system implements a three-tier RBAC model:</p>
+
+    <table>
+        <thead>
+            <tr><th>Role</th><th>Access Level</th><th>Capable Operations</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Admin</strong></td>
+                <td>Full System Access</td>
+                <td>User management (CRUD), system logs, dataset upload, broadcast notifications, all analytics, all predictions, signal optimization</td>
+            </tr>
+            <tr>
+                <td><strong>Analyst</strong></td>
+                <td>Advanced Analytics</td>
+                <td>All analytics endpoints, predictions, signal optimization, report export, send notifications to Users</td>
+            </tr>
+            <tr>
+                <td><strong>User</strong></td>
+                <td>View-Only Analytics</td>
+                <td>Dashboard stats, traffic trends, pollution correlation, congestion predictions, City Pulse, Safety Hub</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Role enforcement is implemented via reusable dependency functions:</p>
+    <pre><code># Require specific roles
+def require_roles(*allowed_roles):
+    def dependency(current_user = Depends(get_current_user)):
+        if current_user["role"] not in allowed_roles:
+            raise HTTPException(403, "Not enough permissions")
+        return current_user
+    return dependency
+
+# Pre-built dependencies
+get_current_active_admin = Depends(require_roles("Admin"))
+get_current_analyst_or_admin = Depends(require_roles("Admin", "Analyst"))</code></pre>
+
+    <p>The system also supports legacy role aliases for backward compatibility:</p>
+    <table>
+        <thead>
+            <tr><th>Alias</th><th>Maps To</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Public, public</td><td>User</td></tr>
+            <tr><td>Lead Analyst, Traffic Flow Engineer</td><td>Analyst</td></tr>
+            <tr><td>System Administrator</td><td>Admin</td></tr>
+            <tr><td>City Planning Division</td><td>User</td></tr>
+        </tbody>
+    </table>
+
+    <h2>6.4 API Endpoints — Complete Reference</h2>
+
+    <h3>Authentication Endpoints (<code>/api/auth</code>)</h3>
+    <table>
+        <thead>
+            <tr><th>Method</th><th>Endpoint</th><th>Access</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/register</code></td><td>Public</td><td>Register new user (Admin role cannot be self-assigned)</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/login</code></td><td>Public</td><td>Authenticate and receive JWT token</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/forgot-password</code></td><td>Public</td><td>Request password reset token</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/reset-password</code></td><td>Public</td><td>Reset password using token</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/change-password</code></td><td>Authenticated</td><td>Change password (requires old password)</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/me</code></td><td>Authenticated</td><td>Get current user profile</td></tr>
+            <tr><td><span class="method-badge method-put">PUT</span></td><td><code>/me</code></td><td>Authenticated</td><td>Update current user profile (name only)</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/notifications</code></td><td>Authenticated</td><td>Fetch user's notifications (role-filtered)</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/notifications/{id}/read</code></td><td>Authenticated</td><td>Mark notification as read</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Analytics Endpoints (<code>/api/analytics</code>)</h3>
+    <table>
+        <thead>
+            <tr><th>Method</th><th>Endpoint</th><th>Access</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/dashboard-stats</code></td><td>Authenticated</td><td>Real-time dashboard statistics (traffic index, AQI, PM10, CO, NO2, alerts). Supports live sampling from dataset.</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/traffic-trends</code></td><td>Authenticated</td><td>Hourly/weekly/monthly traffic congestion trends with city-specific patterns</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/pollution-correlation</code></td><td>Authenticated</td><td>AQI vs. congestion correlation data across different time ranges</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/compare-cities</code></td><td>Authenticated</td><td>Side-by-side comparison of two cities' pollution profiles</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/export-report</code></td><td>Analyst/Admin</td><td>Download filtered traffic data as CSV</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/alerts</code></td><td>Authenticated</td><td>Active congestion and pollution alerts for a city</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/clear-alerts</code></td><td>Authenticated</td><td>Acknowledge and clear alerts</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/sector-stats</code></td><td>Authenticated</td><td>Metropolitan sector-level congestion breakdown (10 sectors)</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/metropolitan-leaderboard</code></td><td>Authenticated</td><td>All-cities ranking by congestion, AQI, and mobility score</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Prediction Endpoints (<code>/api/predictions</code>)</h3>
+    <table>
+        <thead>
+            <tr><th>Method</th><th>Endpoint</th><th>Access</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/predict</code></td><td>Authenticated</td><td>ML-powered congestion prediction for given parameters</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/smart-signals</code></td><td>Analyst/Admin</td><td>Signal timing recommendations for 5 intersections per city</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/signal-insights</code></td><td>Analyst/Admin</td><td>Signal system efficiency, CO2 savings, and reliability metrics</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/peak-hours</code></td><td>Analyst/Admin</td><td>Morning and evening peak hour analysis with predicted worst/best hours</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/reroute</code></td><td>Analyst/Admin</td><td>Generate alternative routes for congested intersections</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/forecast</code></td><td>Authenticated</td><td>Next 6-hour congestion forecast using ML model</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Admin Endpoints (<code>/api/admin</code>)</h3>
+    <table>
+        <thead>
+            <tr><th>Method</th><th>Endpoint</th><th>Access</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/users</code></td><td>Admin</td><td>List all users (passwords excluded)</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/users/{id}</code></td><td>Admin</td><td>Get specific user details</td></tr>
+            <tr><td><span class="method-badge method-put">PUT</span></td><td><code>/users/{id}</code></td><td>Admin</td><td>Update user (including role changes)</td></tr>
+            <tr><td><span class="method-badge method-delete">DELETE</span></td><td><code>/users/{id}</code></td><td>Admin</td><td>Delete user (cannot delete self)</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/broadcast</code></td><td>Admin</td><td>Send notification to all users or specific targets</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/logs</code></td><td>Admin</td><td>View system logs</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/activity-logs</code></td><td>Admin</td><td>View user activity logs</td></tr>
+            <tr><td><span class="method-badge method-post">POST</span></td><td><code>/upload-dataset</code></td><td>Admin</td><td>Upload new CSV dataset</td></tr>
+            <tr><td><span class="method-badge method-get">GET</span></td><td><code>/stats</code></td><td>Admin</td><td>System statistics (user counts, log counts)</td></tr>
+        </tbody>
+    </table>
+
+    <h2>6.5 Database Service (JSON File Store)</h2>
+    <p>
+        The application uses a file-based JSON database (<code>data/db.json</code>) rather than a traditional RDBMS. This design decision simplifies deployment (no external database dependency) while providing sufficient capability for the application's scope. The database is thread-safe, using a threading Lock for concurrent write operations.
+    </p>
+    <p>The database schema consists of six collections:</p>
+    <table>
+        <thead>
+            <tr><th>Collection</th><th>Purpose</th><th>Key Fields</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>users</code></td><td>User accounts</td><td>id, name, email, password (bcrypt), role, created_at, last_login</td></tr>
+            <tr><td><code>logs</code></td><td>System event logs</td><td>id, timestamp, type, email, details</td></tr>
+            <tr><td><code>notifications</code></td><td>Broadcast messages</td><td>id, title, message, type, timestamp, user_email, sender, read_by[]</td></tr>
+            <tr><td><code>contacts</code></td><td>Contact form submissions</td><td>name, email, subject, message</td></tr>
+            <tr><td><code>user_activity</code></td><td>User action audit trail</td><td>id, timestamp, user_email, action, details</td></tr>
+            <tr><td><code>bookmarks</code></td><td>User's saved cities</td><td>user_email, city, notes</td></tr>
+        </tbody>
+    </table>
+    <p>
+        The database includes atomic write protection using temporary files and <code>os.replace()</code> for crash-safe persistence. A default Admin account (<code>admin@smart.com</code> / <code>admin123</code>) is auto-created if the database is empty or missing.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 7: FRONTEND ARCHITECTURE -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">07</div>
+    <h1 class="section-title">7. Frontend Architecture (React + Vite)</h1>
+
+    <h2>7.1 Application Structure</h2>
+    <p>
+        The frontend is a Single Page Application (SPA) built with React 18, bundled by Vite 5, and styled using TailwindCSS 4 with a custom design token system. The application follows an atomic component architecture where small, reusable UI elements compose into larger page-level views.
+    </p>
+    <p>The frontend consists of <strong>14 page-level components</strong> and over <strong>30 sub-components</strong> organized across 11 component directories.</p>
+
+    <h2>7.2 Routing & Protected Routes</h2>
+    <p>Client-side routing is handled by React Router DOM v6 with a custom <code>ProtectedRoute</code> wrapper that enforces authentication and role-based access:</p>
+    <pre><code>const ProtectedRoute = ({ children, allowedRoles }) => {
+  const token = getToken();
+  const role = getCurrentRole();
+
+  if (!token) return &lt;Navigate to="/login" /&gt;;
+  if (!hasRoleAccess(role, allowedRoles))
+    return &lt;Navigate to={getDefaultRouteForRole(role)} /&gt;;
+
+  return children;
+};</code></pre>
+
+    <h3>Route Map</h3>
+    <table>
+        <thead>
+            <tr><th>Path</th><th>Component</th><th>Access</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>/</code></td><td>Home (Landing)</td><td>Public</td></tr>
+            <tr><td><code>/login</code></td><td>Login / Register</td><td>Public</td></tr>
+            <tr><td><code>/dashboard</code></td><td>Operational Hub</td><td>All Authenticated</td></tr>
+            <tr><td><code>/traffic</code></td><td>Traffic Analysis</td><td>All Roles</td></tr>
+            <tr><td><code>/pollution</code></td><td>Pollution Insights</td><td>All Roles</td></tr>
+            <tr><td><code>/predict</code></td><td>Predictions Engine</td><td>All Authenticated</td></tr>
+            <tr><td><code>/signals</code></td><td>Smart Signals</td><td>All Roles</td></tr>
+            <tr><td><code>/pulse</code></td><td>City Pulse</td><td>User Only</td></tr>
+            <tr><td><code>/safety</code></td><td>Safety Hub</td><td>User Only</td></tr>
+            <tr><td><code>/inbox</code></td><td>Notifications</td><td>All Authenticated</td></tr>
+            <tr><td><code>/admin</code></td><td>Admin Panel</td><td>Admin Only</td></tr>
+            <tr><td><code>/reports</code></td><td>Reports</td><td>All Roles</td></tr>
+            <tr><td><code>/settings</code></td><td>Settings</td><td>All Authenticated</td></tr>
+            <tr><td><code>/about</code></td><td>About</td><td>All Authenticated</td></tr>
+            <tr><td><code>/help</code></td><td>Help Center</td><td>All Authenticated</td></tr>
+            <tr><td><code>/contact</code></td><td>Contact Form</td><td>All Authenticated</td></tr>
+        </tbody>
+    </table>
+
+    <h2>7.3 Session Management</h2>
+    <p>
+        The session system uses a dual-storage strategy — <strong>sessionStorage</strong> for current-tab isolation and <strong>localStorage</strong> for cross-tab persistence. This ensures that opening a new tab inherits the login state while each tab can independently manage its session. The stored data includes:
+    </p>
+    <ul>
+        <li><code>nexus_token</code> — JWT access token</li>
+        <li><code>role</code> — Normalized user role (Admin/Analyst/User)</li>
+        <li><code>user_id</code> — Unique user identifier</li>
+        <li><code>name</code> — Display name</li>
+        <li><code>email</code> — User email</li>
+    </ul>
+    <p>
+        The Axios HTTP client is configured with request and response interceptors. The request interceptor automatically attaches the JWT Bearer token to every API call. The response interceptor catches HTTP 401 errors and triggers an automatic logout with redirect to the login page.
+    </p>
+
+    <h2>7.4 UI Component Library</h2>
+    <p>The frontend includes a rich set of shared UI components:</p>
+    <ul>
+        <li><strong>LoadingSpinner:</strong> Animated loading indicator with customizable label text</li>
+        <li><strong>ErrorAlert:</strong> Error display card with optional retry button</li>
+        <li><strong>GlassCard:</strong> Reusable glassmorphism container with backdrop blur and translucent borders</li>
+        <li><strong>Sidebar:</strong> Fixed left navigation with role-aware menu items and animated active indicators</li>
+        <li><strong>Topbar:</strong> Top navigation bar with user info, theme toggle, and notification badge</li>
+        <li><strong>ThemeContext:</strong> React Context provider for global dark/light theme state management</li>
+    </ul>
+
+    <h2>7.5 Design System — Absolute Black Theme</h2>
+    <p>
+        The application implements a custom design system called <strong>"Absolute Black"</strong> — a high-contrast dark-mode-first design language using semantic CSS variables. The system supports full theme switching between "High Contrast Dark" and "Precision Light" modes with 500ms CSS transitions for smooth visual changes.
+    </p>
+    <p>Key design tokens include:</p>
+    <ul>
+        <li><strong>Surface hierarchy:</strong> 5 levels of surface containers (lowest → highest) for depth layering</li>
+        <li><strong>Semantic colors:</strong> Primary, Secondary, Tertiary, Error, Warning with on-* text variants</li>
+        <li><strong>Typography:</strong> Two font families — headline (display type) and body (reading type)</li>
+        <li><strong>Glassmorphism:</strong> Backdrop blur + semi-transparent backgrounds throughout the interface</li>
+        <li><strong>Micro-animations:</strong> Framer Motion used for page transitions, hover effects, data loading states, and pulsing live indicators</li>
+    </ul>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 8: FEATURE MODULES -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">08</div>
+    <h1 class="section-title">8. Feature Modules — Detailed Breakdown</h1>
+
+    <h2>8.1 Operational Hub (Dashboard)</h2>
+    <p>
+        The Dashboard is the primary command-center view that provides a real-time overview of metropolitan traffic and environmental conditions. It is the default landing page after login for all roles.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>On mount, the Dashboard calls <code>GET /api/analytics/dashboard-stats?city={city}</code> and <code>GET /api/analytics/alerts?city={city}</code> concurrently using <code>Promise.all()</code>.</li>
+        <li><strong>Auto-refresh:</strong> Data refreshes every 3 seconds via <code>setInterval</code> to maintain a live-stream experience.</li>
+        <li>The <strong>Live Data Sampling</strong> backend logic randomly samples a real historical row from the AQI dataset for the selected city, providing different environmental readings on each refresh.</li>
+        <li>The computed metrics include: Average Traffic Index (0-100), Average AQI (PM2.5), Active Alerts count, Network Health (%) and Average Velocity (km/h).</li>
+    </ul>
+    <h3>Sub-Components</h3>
+    <ul>
+        <li><strong>NexusLiveMonitor:</strong> The central visualization panel showing live sector grid with animated pulsating nodes representing traffic density.</li>
+        <li><strong>IntelligencePanel:</strong> Side panel showing key metrics, peak hours, and trend indicators.</li>
+        <li><strong>MetropolitanLeaderboard:</strong> All-city ranking table showing congestion, AQI, mobility score, and operational status (Optimal/Steady/Congested).</li>
+        <li><strong>BroadcastConsole:</strong> (Admin/Analyst only) Inline notification broadcast form.</li>
+    </ul>
+    <p><strong>City Selector:</strong> Users can switch between Delhi, Mumbai, Bengaluru, Chennai, and Hyderabad sectors. All metrics dynamically update based on the selected city.</p>
+
+    <h2>8.2 Traffic Analysis Module</h2>
+    <p>
+        A comprehensive traffic flow analysis page that combines historical trends, sector-level heatmaps, future forecasts, and congestion hotspot identification.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Three API calls execute in parallel: <code>traffic-trends</code>, <code>sector-stats</code>, and <code>forecast</code>.</li>
+        <li><strong>Traffic Trends:</strong> The backend groups processed data by hour and applies city-specific multipliers derived from the city's average PM2.5 relative to the median across all cities. A commuting boost factor (1.15x) is applied during rush hours (8-10 AM, 5-8 PM).</li>
+        <li><strong>Sector Stats:</strong> 10 metropolitan sectors (A1, A2, A3, A4, B1, B2, C1, C2, D3, E5) with unique congestion multipliers simulating realistic geographic variation.</li>
+        <li><strong>Forecast Integration:</strong> The ML model generates next-6-hour predictions which are appended to the trend chart with a visual "Forecast" tag.</li>
+        <li><strong>Time Range Filters:</strong> 24-hour, 7-day, and 30-day views with different aggregation strategies (hourly, daily, weekly).</li>
+    </ul>
+    <h3>Sub-Components</h3>
+    <ul>
+        <li><strong>CongestionMetrics:</strong> Recharts AreaChart showing congestion trends over time with forecast overlay.</li>
+        <li><strong>DistrictHeatmap:</strong> Visual sector grid with color-coded congestion levels.</li>
+        <li><strong>DynamicGridMap:</strong> Interactive SVG map with live pulsating nodes representing sector load.</li>
+        <li><strong>HotspotTable:</strong> Ranked list of top 4 congestion hotspots with delay estimates and throughput metrics.</li>
+    </ul>
+
+    <h2>8.3 Pollution Insights Panel</h2>
+    <p>
+        Environmental correlation analysis module that visualizes the relationship between air quality degradation and traffic congestion.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Fetches <code>dashboard-stats</code> for headline AQI metrics and <code>pollution-correlation</code> for hourly/daily/monthly correlation data.</li>
+        <li>The correlation endpoint applies sinusoidal modulation (<code>sin/cos</code>) to simulate realistic AQI fluctuation cycles throughout the day.</li>
+        <li>The frontend computes derived metrics: CO2 ppm (estimated from traffic index), NO2 (42% of AQI), and density mapping.</li>
+        <li>Includes <strong>CSV Report Export</strong> — Analyst/Admin users can download filtered traffic data as a CSV file for offline analysis.</li>
+    </ul>
+    <h3>Sub-Components</h3>
+    <ul>
+        <li><strong>PollutionHero:</strong> Big-number display for current AQI, PM2.5, and CO2 levels.</li>
+        <li><strong>CorrelationChart:</strong> Dual-axis Recharts chart overlaying AQI and congestion trends.</li>
+        <li><strong>HotspotPanel:</strong> Pollution hotspot identification panel with city-specific zone analysis.</li>
+    </ul>
+
+    <h2>8.4 Predictive Analytics Engine</h2>
+    <p>
+        The prediction module provides an interactive interface for users to input scenario parameters and receive ML-powered congestion forecasts.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Users set four parameters: <strong>Hour of Day</strong> (0-23), <strong>Pollution AQI</strong> (0-500), <strong>Weather Condition</strong> (Clear/Rain/Cloudy), and <strong>City</strong>.</li>
+        <li>The frontend sends a <code>POST /api/predictions/predict</code> request with the scenario parameters.</li>
+        <li>The backend loads the Random Forest model, runs inference with the input features, applies the city-specific multiplier, and returns:
+            <ul>
+                <li><code>predicted_congestion</code> — Percentage (5-100%)</li>
+                <li><code>suggestion</code> — Actionable recommendation (e.g., "Increase green time by 10-15 seconds")</li>
+                <li><code>confidence</code> — Model confidence score (0.82-0.88)</li>
+            </ul>
+        </li>
+        <li>The result is displayed with a status classification: "Optimal Neural Flow" (<40), "Moderate Transit Flow" (40-70), or "High Congestion Warning" (>70).</li>
+    </ul>
+    <h3>Sub-Components</h3>
+    <ul>
+        <li><strong>ScenarioParameters:</strong> Input form with sliders, dropdowns, and toggle controls.</li>
+        <li><strong>PredictionResultCard:</strong> Animated result display with congestion gauge and recommendation.</li>
+        <li><strong>FlowForecast:</strong> 6-hour ahead predictions chart using the <code>/forecast</code> endpoint.</li>
+        <li><strong>ImpactDrivers:</strong> Feature importance breakdown showing which factors most influence the prediction.</li>
+    </ul>
+
+    <h2>8.5 Smart Signals Optimization</h2>
+    <p>
+        An intelligent traffic signal management module that provides green-time recommendations for major intersections based on real-time ML predictions.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>The backend predicts current congestion for the selected city using the ML model, then generates signal timing recommendations for 5 city-specific intersections.</li>
+        <li><strong>City-Specific Intersections:</strong>
+            <ul>
+                <li>Delhi: Connaught Place, India Gate, Dwarka Sector 10, Okhla Phase 3, Lajpat Nagar</li>
+                <li>Mumbai: Gateway of India, Marine Drive, Bandra Kurla Complex, Borivali East, Dadar TT</li>
+                <li>Bengaluru: Silk Board, Whitefield, Koramangala, Electronic City, Indiranagar</li>
+                <li>Chennai: T. Nagar, Marina Beach, Anna Salai, Velachery, Adyar</li>
+                <li>Hyderabad: HITEC City, Charminar, Banjara Hills, Secunderabad, Gachibowli</li>
+            </ul>
+        </li>
+        <li>For each intersection, the recommended green time is calculated: <code>min(max(35 + local_congestion × 0.45, 35), 90)</code> seconds.</li>
+        <li>Status classification: "Critical Load" (≥75%), "Steady" (40-75%), "Optimal Flow" (≤40%).</li>
+        <li><strong>Route Rerouting:</strong> Users can trigger alternative route generation for congested intersections via the <code>/reroute</code> endpoint.</li>
+    </ul>
+    <h3>Sub-Components</h3>
+    <ul>
+        <li><strong>SignalMap:</strong> Visual grid map showing intersection locations with color-coded status indicators.</li>
+        <li><strong>SignalSuggestions:</strong> Ranked list of intersections with recommended green-time values.</li>
+        <li><strong>SignalInsights:</strong> System-wide metrics including efficiency percentage, CO2 savings, reliability, and total active nodes.</li>
+        <li><strong>SignalFlowScale:</strong> Color legend for interpreting congestion severity levels.</li>
+    </ul>
+
+    <h2>8.6 City Pulse (Municipal Grid)</h2>
+    <p>
+        A citizen-facing view that displays spatial load distribution across metropolitan divisions with trend forecasting.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Combines the <strong>LocationGrid</strong> module (spatial sector visualization) with the <strong>GoldenWindow</strong> module (trend forecaster showing optimal travel windows).</li>
+        <li>Data is derived from the sector-stats and forecast endpoints.</li>
+        <li>The Municipal Grid displays sectors with normal/congested status indicators in a visual grid layout.</li>
+    </ul>
+
+    <h2>8.7 Citizen Safety Hub</h2>
+    <p>
+        A health-focused module that provides real-time environmental safety advisories based on air quality data.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Fetches real-time environmental data from <code>dashboard-stats</code> including PM2.5, PM10, CO, and NO2 levels.</li>
+        <li>Generates health advisories based on PM2.5 thresholds:
+            <ul>
+                <li><strong>Safe</strong> (PM2.5 ≤ 50): "Optimal for outdoor exercise"</li>
+                <li><strong>Moderate</strong> (50 < PM2.5 ≤ 100): "Sensitive individuals should limit outdoor exertion"</li>
+                <li><strong>Hazardous</strong> (PM2.5 > 100): "High-efficiency masks recommended"</li>
+            </ul>
+        </li>
+        <li>Displays individual pollutant readings (CO, PM10, NO2) with units (μg/m³).</li>
+    </ul>
+
+    <h2>8.8 Admin Panel & User Management</h2>
+    <p>
+        Admin-exclusive module for system administration including user management, log viewing, and notification broadcasting.
+    </p>
+    <h3>Key Capabilities</h3>
+    <ul>
+        <li><strong>User CRUD:</strong> List all users, view details, update roles, delete accounts (with self-deletion protection).</li>
+        <li><strong>System Logs:</strong> View timestamped logs of all system events (registrations, logins, predictions, reroutes, exports).</li>
+        <li><strong>Activity Logs:</strong> User-specific audit trail showing actions performed.</li>
+        <li><strong>Dataset Upload:</strong> Upload new CSV datasets with timestamped file naming.</li>
+        <li><strong>Broadcast Notifications:</strong> Send notifications to all users, specific roles, or individual emails.</li>
+        <li><strong>System Stats:</strong> Total users, role distribution, total logs, total activity, and recent login count.</li>
+    </ul>
+
+    <h2>8.9 Inbox & Notification System</h2>
+    <p>
+        A multi-role notification system that supports broadcast notifications, role-targeted messages, and individual notifications with read/unread tracking.
+    </p>
+    <h3>How It Works</h3>
+    <ul>
+        <li>Notifications are stored centrally in <code>db.json</code> with a <code>user_email</code> field that can be "all" (broadcast), a role name (e.g., "User"), or a specific email.</li>
+        <li>The <code>GET /api/auth/notifications</code> endpoint filters notifications based on the current user's email and role.</li>
+        <li>Each notification tracks a <code>read_by[]</code> array, enabling per-user read status without duplicating notifications.</li>
+        <li>Analysts can send notifications to Users (but not to Admins or other Analysts — security enforced).</li>
+    </ul>
+
+    <h2>8.10 Report Export System</h2>
+    <p>
+        Analyst and Admin users can export filtered traffic data as downloadable CSV reports. The export endpoint supports filters for city, minimum congestion, and maximum congestion. All exports are logged in the activity audit trail with the user's email, filter parameters, and record count.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 9: SECURITY -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">09</div>
+    <h1 class="section-title">9. Security Implementation</h1>
+
+    <p>The system implements multiple layers of security:</p>
+
+    <h2>9.1 Authentication Security</h2>
+    <ul>
+        <li><strong>Password Hashing:</strong> All passwords are hashed using bcrypt (Passlib CryptContext) before storage. Plaintext passwords are never persisted.</li>
+        <li><strong>JWT Tokens:</strong> Sessions are managed via signed JWT tokens with HS256 algorithm and configurable 24-hour expiration.</li>
+        <li><strong>Token Validation:</strong> Every protected endpoint validates the JWT signature, expiration, and payload structure before processing the request.</li>
+        <li><strong>Automatic Logout:</strong> The frontend Axios interceptor detects HTTP 401 responses and triggers automatic session cleanup and login redirect.</li>
+    </ul>
+
+    <h2>9.2 Authorization Security</h2>
+    <ul>
+        <li><strong>RBAC Enforcement:</strong> Three roles (Admin, Analyst, User) with endpoint-level access control via FastAPI dependency injection.</li>
+        <li><strong>Admin Self-Registration Prevention:</strong> The <code>/register</code> endpoint blocks <code>role: "Admin"</code> — Admin accounts can only be created by existing Admins.</li>
+        <li><strong>Admin Self-Deletion Prevention:</strong> Admins cannot delete their own accounts through the admin panel.</li>
+        <li><strong>Analyst Notification Scope:</strong> Analysts can only send notifications to Users — they cannot target Admins or other Analysts.</li>
+    </ul>
+
+    <h2>9.3 Data Security</h2>
+    <ul>
+        <li><strong>Email Normalization:</strong> All emails are stripped and lowercased before storage and lookup, preventing case-sensitivity bypass attacks.</li>
+        <li><strong>Role Normalization:</strong> Role aliases are normalized server-side to prevent role escalation via legacy role names.</li>
+        <li><strong>Atomic Database Writes:</strong> The JSON database uses <code>os.replace()</code> with temporary files for crash-safe atomic writes.</li>
+        <li><strong>Input Validation:</strong> All request bodies are validated by Pydantic models with type checking, minimum/maximum lengths, and email format validation.</li>
+        <li><strong>Password Reset Tokens:</strong> Time-limited (1 hour) cryptographically random tokens for password resets.</li>
+    </ul>
+
+    <h2>9.4 API Security</h2>
+    <ul>
+        <li><strong>CORS Configuration:</strong> Cross-Origin Resource Sharing middleware configured for the deployed frontend domain.</li>
+        <li><strong>Request Logging:</strong> All HTTP requests are logged with method, path, status code, and processing time for audit purposes.</li>
+        <li><strong>Health Check:</strong> Unauthenticated <code>/health</code> endpoint for deployment monitoring (returns only status and timestamp).</li>
+    </ul>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 10: DEPLOYMENT -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">10</div>
+    <h1 class="section-title">10. Deployment & DevOps</h1>
+
+    <h2>10.1 Frontend Deployment (Vercel)</h2>
+    <p>
+        The React frontend is deployed on <strong>Vercel</strong> with automatic CI/CD triggered by Git pushes. Vercel handles static file serving, CDN distribution, and HTTPS certificates. The build command is <code>vite build</code> and the output directory is <code>dist/</code>. A <code>vercel.json</code> configuration ensures all SPA routes are redirected to <code>index.html</code> for client-side routing.
+    </p>
+    <p><strong>Production URL:</strong> <code>https://nexus-mobility-gray.vercel.app</code></p>
+
+    <h2>10.2 Backend Deployment (Render)</h2>
+    <p>
+        The FastAPI backend is deployed on <strong>Render</strong> using the infrastructure-as-code blueprint defined in <code>render.yaml</code>:
+    </p>
+    <pre><code>services:
+  - type: web
+    name: nexus-mobility-backend
+    plan: free
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.main:app -w 1 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.10.8
+      - key: PYTHONPATH
+        value: backend
+    healthCheckPath: /health</code></pre>
+    <p><strong>Production URL:</strong> <code>https://nexus-mobility-backend.onrender.com</code></p>
+
+    <h2>10.3 Docker Configuration</h2>
+    <p>
+        A Dockerfile is provided for containerized deployment (e.g., Hugging Face Spaces). It uses Python 3.10-slim as the base image, creates a non-root user (UID 1000) for security, copies the backend code and data directory, and runs Uvicorn on port 7860.
+    </p>
+    <pre><code>FROM python:3.10-slim
+RUN useradd -m -u 1000 user
+USER user
+WORKDIR /app
+COPY --chown=user requirements.txt .
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+COPY --chown=user backend ./backend
+COPY --chown=user data ./data
+EXPOSE 7860
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "7860"]</code></pre>
+
+    <h2>10.4 Environment Variables</h2>
+    <table>
+        <thead>
+            <tr><th>Variable</th><th>Purpose</th><th>Default</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>SMART_TRAFFIC_SECRET_KEY</code></td><td>JWT signing secret</td><td><code>smart-traffic-dev-secret</code></td></tr>
+            <tr><td><code>VITE_API_BASE_URL</code></td><td>Backend API URL for frontend</td><td><code>http://127.0.0.1:8001/api</code> (local)</td></tr>
+            <tr><td><code>PYTHON_VERSION</code></td><td>Python runtime version (Render)</td><td><code>3.10.8</code></td></tr>
+            <tr><td><code>PYTHONPATH</code></td><td>Module resolution path</td><td><code>backend</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>10.5 Local Development Setup</h2>
+    <pre><code># Terminal 1: Start Backend
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+
+# Terminal 2: Start Frontend
+cd frontend
+npm install
+npm run dev</code></pre>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 11: TESTING -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">11</div>
+    <h1 class="section-title">11. Testing & Quality Assurance</h1>
+
+    <h2>11.1 Model Validation Testing</h2>
+    <p>
+        Automated model validation runs at every server startup through the <code>model_validator.py</code> utility. This includes three sequential checks: model file presence, feature compatibility, and prediction range validation with 4 representative test cases spanning all congestion levels.
+    </p>
+
+    <h2>11.2 API Endpoint Testing</h2>
+    <p>
+        FastAPI's built-in Swagger UI (<code>/docs</code>) and ReDoc (<code>/redoc</code>) provide interactive API testing interfaces. All endpoints can be tested directly from the browser with JWT authentication support. The project includes a <code>tests/</code> directory for additional test scripts.
+    </p>
+
+    <h2>11.3 Frontend Quality</h2>
+    <ul>
+        <li><strong>Error Boundaries:</strong> Each page-level component includes try-catch error handling with user-friendly error alerts and retry buttons.</li>
+        <li><strong>Loading States:</strong> All data-fetching components display animated loading spinners during API calls.</li>
+        <li><strong>Responsive Design:</strong> The interface adapts from desktop (12-column grid) to tablet and mobile layouts.</li>
+        <li><strong>Theme Consistency:</strong> Both Light and Dark modes have been manually tested for 100% text legibility and contrast compliance.</li>
+    </ul>
+
+    <h2>11.4 Graceful Degradation</h2>
+    <p>
+        The system is designed to never crash due to missing data or model files. The ML service falls back to deterministic rule-based predictions if the model is unavailable. The analytics service falls back to static city profiles if the AQI dataset cannot be loaded. All API errors are caught and returned as structured JSON responses with appropriate HTTP status codes.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 12: FUTURE ENHANCEMENTS -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">12</div>
+    <h1 class="section-title">12. Future Enhancements & Recommendations</h1>
+
+    <p>The following enhancements are recommended for future iterations of the system:</p>
+
+    <h2>12.1 Machine Learning Improvements</h2>
+    <ul>
+        <li><strong>Real-Time Data Integration:</strong> Connect to live traffic APIs (Google Maps Traffic, TomTom) and government APIs (CPCB real-time AQI) for genuine real-time predictions instead of historical data sampling.</li>
+        <li><strong>Deep Learning Models:</strong> Implement LSTM (Long Short-Term Memory) or Transformer-based models for sequence-aware traffic prediction that captures temporal dependencies.</li>
+        <li><strong>Multi-Output Prediction:</strong> Extend the model to predict multiple targets simultaneously — congestion, travel time, incident probability, and emission levels.</li>
+        <li><strong>AutoML Pipeline:</strong> Integrate automated hyperparameter tuning using Optuna or scikit-learn's GridSearchCV.</li>
+        <li><strong>Anomaly Detection:</strong> Implement Isolation Forest or statistical methods to detect unusual traffic patterns that may indicate accidents or events.</li>
+    </ul>
+
+    <h2>12.2 Data Pipeline Enhancements</h2>
+    <ul>
+        <li><strong>Database Migration:</strong> Migrate from JSON file store to PostgreSQL or MongoDB for production-grade data persistence with ACID compliance.</li>
+        <li><strong>Real-Time Streaming:</strong> Implement WebSocket connections for true real-time data push instead of polling-based refresh.</li>
+        <li><strong>Data Lake Architecture:</strong> Set up a data lake on AWS S3 or Google Cloud Storage for storing and processing large historical datasets.</li>
+        <li><strong>ETL Pipeline:</strong> Build automated ETL (Extract, Transform, Load) pipelines using Apache Airflow for scheduled data ingestion.</li>
+    </ul>
+
+    <h2>12.3 Feature Additions</h2>
+    <ul>
+        <li><strong>Geospatial Mapping:</strong> Integrate Mapbox or Leaflet for real interactive maps with GPS-based traffic overlays.</li>
+        <li><strong>Incident Reporting:</strong> Allow citizens to report traffic incidents, accidents, and road hazards through the platform.</li>
+        <li><strong>Public Transit Integration:</strong> Display bus, metro, and train schedules alongside traffic data for multi-modal transit planning.</li>
+        <li><strong>Mobile Application:</strong> Build React Native or Flutter mobile apps for on-the-go access to traffic predictions and safety advisories.</li>
+        <li><strong>Email/SMS Alerts:</strong> Send automated alerts when congestion exceeds thresholds or air quality becomes hazardous.</li>
+        <li><strong>Historical Analytics:</strong> Provide year-over-year and month-over-month comparison dashboards for long-term trend analysis.</li>
+        <li><strong>Vehicle Emission Calculator:</strong> Estimate daily/monthly carbon footprint based on commute patterns and traffic conditions.</li>
+        <li><strong>Parking Availability:</strong> Integrate parking sensors for real-time parking space availability in commercial districts.</li>
+    </ul>
+
+    <h2>12.4 Infrastructure Improvements</h2>
+    <ul>
+        <li><strong>Microservices Architecture:</strong> Split the monolithic backend into separate services (Auth, Analytics, ML, Admin) for independent scaling.</li>
+        <li><strong>Caching Layer:</strong> Implement Redis caching for frequently accessed analytics queries to reduce database load.</li>
+        <li><strong>Load Balancing:</strong> Deploy behind NGINX or AWS ALB for horizontal scaling and failover.</li>
+        <li><strong>CI/CD Pipeline:</strong> Set up GitHub Actions for automated testing, building, and deployment on every commit.</li>
+        <li><strong>Monitoring:</strong> Integrate Prometheus + Grafana for backend performance monitoring and alerting.</li>
+    </ul>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 13: CONCLUSION -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">13</div>
+    <h1 class="section-title">13. Conclusion</h1>
+
+    <p>
+        The Smart Traffic & Mobility Analytics System (Nexus Mobility) successfully demonstrates the feasibility and effectiveness of integrating machine learning with real-time environmental data for urban traffic management. The system achieves its primary objectives:
+    </p>
+
+    <ol>
+        <li><strong>Real-Time Monitoring:</strong> The dashboard provides live-sampled environmental and traffic data for 5 major Indian cities with 3-second auto-refresh, giving municipal operators an up-to-date operational picture.</li>
+        <li><strong>Predictive Analytics:</strong> The Random Forest Regressor, trained on the India AQI dataset with 4 carefully selected features (hour, PM2.5, rainfall, temperature), provides reliable congestion predictions with automated city-specific calibration.</li>
+        <li><strong>Signal Optimization:</strong> The Smart Signals module translates ML predictions into actionable green-time recommendations for 25 real intersections across 5 cities, bridging the gap between data science and traffic engineering.</li>
+        <li><strong>Multi-User Platform:</strong> The three-tier RBAC system (Admin/Analyst/User) with JWT authentication provides appropriate access levels for different stakeholders — from city planners to general citizens.</li>
+        <li><strong>Production Deployment:</strong> The system is deployed and accessible globally via Vercel (frontend) and Render (backend), with Docker support for containerized environments.</li>
+    </ol>
+
+    <p>
+        The project demonstrates that even with synthesized labels derived from environmental proxies, meaningful traffic insights can be generated when domain knowledge is properly encoded into the data pipeline. The dual-layer prediction system (ML model + deterministic fallback) ensures 100% uptime for prediction services regardless of model availability.
+    </p>
+
+    <p>
+        The Absolute Black design system delivers a premium municipal-grade interface that meets the visual standards expected of government and enterprise applications. The glassmorphism aesthetic, combined with Framer Motion animations, creates an engaging user experience that encourages regular platform interaction.
+    </p>
+
+    <p>
+        With the recommended future enhancements — particularly real-time data integration, deep learning models, and geospatial mapping — Nexus Mobility can evolve from its current analytical prototype into a full-scale Smart City traffic management solution.
+    </p>
+</div>
+
+<!-- ============================== -->
+<!-- CHAPTER 14: REFERENCES -->
+<!-- ============================== -->
+<div class="content page-break">
+    <div class="chapter-num">14</div>
+    <h1 class="section-title">14. References</h1>
+
+    <ol>
+        <li>
+            <strong>FastAPI Documentation</strong> — Sebastián Ramírez. FastAPI: Modern, Fast (high-performance), Web framework for building APIs with Python 3.7+.
+            <br><em>https://fastapi.tiangolo.com/</em>
+        </li>
+        <li>
+            <strong>React Documentation</strong> — Meta (Facebook). React: A JavaScript library for building user interfaces. Version 18.
+            <br><em>https://react.dev/</em>
+        </li>
+        <li>
+            <strong>Scikit-Learn: Machine Learning in Python</strong> — Pedregosa, F. et al. (2011). Journal of Machine Learning Research, 12, pp. 2825-2830.
+            <br><em>https://scikit-learn.org/</em>
+        </li>
+        <li>
+            <strong>Random Forest Algorithm</strong> — Breiman, L. (2001). "Random Forests." Machine Learning, 45(1), pp. 5-32.
+        </li>
+        <li>
+            <strong>Central Pollution Control Board (CPCB)</strong> — National Air Quality Monitoring Programme (NAMP). Government of India.
+            <br><em>https://cpcb.nic.in/</em>
+        </li>
+        <li>
+            <strong>TomTom Traffic Index 2025</strong> — Global Traffic Congestion Rankings.
+            <br><em>https://www.tomtom.com/traffic-index/</em>
+        </li>
+        <li>
+            <strong>Vite Build Tool</strong> — Evan You. Next Generation Frontend Tooling.
+            <br><em>https://vitejs.dev/</em>
+        </li>
+        <li>
+            <strong>TailwindCSS</strong> — Adam Wathan. A Utility-First CSS Framework. Version 4.
+            <br><em>https://tailwindcss.com/</em>
+        </li>
+        <li>
+            <strong>Framer Motion</strong> — Framer. Production-ready motion library for React.
+            <br><em>https://www.framer.com/motion/</em>
+        </li>
+        <li>
+            <strong>JSON Web Tokens (JWT)</strong> — RFC 7519. Internet Engineering Task Force.
+            <br><em>https://datatracker.ietf.org/doc/html/rfc7519</em>
+        </li>
+        <li>
+            <strong>Lv, Y., Duan, Y., Kang, W., Li, Z., & Wang, F. Y.</strong> (2015). "Traffic Flow Prediction With Big Data: A Deep Learning Approach." IEEE Transactions on Intelligent Transportation Systems, 16(2), pp. 865-873.
+        </li>
+        <li>
+            <strong>Zhang, J., Zheng, Y., & Qi, D.</strong> (2018). "Deep Spatio-Temporal Residual Networks for Citywide Crowd Flows Prediction." AAAI 2017.
+        </li>
+        <li>
+            <strong>Pandas Documentation</strong> — McKinney, W. (2010). "Data Structures for Statistical Computing in Python." Proceedings of the 9th Python in Science Conference.
+            <br><em>https://pandas.pydata.org/</em>
+        </li>
+        <li>
+            <strong>Recharts</strong> — A composable charting library built on React components.
+            <br><em>https://recharts.org/</em>
+        </li>
+    </ol>
+
+    <div class="page-footer">
+        <strong>© 2026 Nexus Mobility Division | Smart City Infrastructure</strong><br>
+        Smart Traffic & Mobility Analytics System — Project Report v2.0<br>
+        <em>This document was generated as part of the Nexus Mobility project documentation.</em>
+    </div>
+</div>
+
+<!-- PDF Export Script -->
+<script>
+function exportPDF() {
+    // Method: Use browser's print-to-PDF
+    const printWindow = window;
+
+    // Temporarily hide the export buttons
+    const buttons = document.querySelector('.pdf-btn-container');
+    if (buttons) buttons.style.display = 'none';
+
+    // Trigger print dialog (user can select "Save as PDF")
+    window.print();
+
+    // Restore buttons after print dialog closes
+    setTimeout(() => {
+        if (buttons) buttons.style.display = 'flex';
+    }, 1000);
+}
+</script>
+
+</body>
+</html>

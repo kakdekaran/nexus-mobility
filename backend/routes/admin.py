@@ -1,5 +1,4 @@
 import os
-import shutil
 import uuid
 from datetime import datetime
 
@@ -17,6 +16,7 @@ from services.db import (
     get_users,
     update_user,
 )
+from services.dataset_service import DatasetServiceError, validate_and_save_uploaded_dataset
 
 router = APIRouter()
 
@@ -119,32 +119,29 @@ def get_user_activity(limit: int = 100, current_admin: dict = Depends(get_curren
 @router.post("/upload-dataset")
 async def upload_dataset(file: UploadFile = File(...), current_admin: dict = Depends(get_current_active_admin)):
     """Upload new dataset - Admin only"""
-    if not file.filename.endswith('.csv'):
-        raise HTTPException(status_code=400, detail="Only CSV files allowed")
-    
-    # Save file using absolute path
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    upload_dir = os.path.join(base_dir, "data", "uploads")
-    os.makedirs(upload_dir, exist_ok=True)
-    
-    file_path = os.path.join(upload_dir, f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{file.filename}")
-    
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    
+    try:
+        result = validate_and_save_uploaded_dataset(file)
+    except DatasetServiceError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+    file_path = os.path.join("data", "uploads", result["filename"])
+
     add_log({
         "id": str(uuid.uuid4()),
         "timestamp": datetime.utcnow().isoformat(),
         "type": "admin_dataset_uploaded",
         "admin_email": current_admin["sub"],
-        "filename": file.filename,
+        "filename": result["filename"],
+        "original_filename": file.filename,
+        "rows": result["rows"],
+        "uploaded_at": result["uploaded_at"],
         "file_path": file_path
     })
     
     return {
         "message": "Dataset uploaded successfully",
-        "filename": file.filename,
-        "path": file_path
+        "filename": result["filename"],
+        "rows": result["rows"],
     }
 
 @router.get("/stats")

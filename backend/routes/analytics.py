@@ -3,13 +3,20 @@ import os
 import uuid
 from datetime import datetime
 from math import cos, sin
+from pathlib import Path
 
 import pandas as pd
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
+from pydantic import BaseModel, Field
 
 from services.auth_handler import get_current_analyst_or_admin, get_current_user
 from services.db import add_log, log_activity
+from services.dataset_service import (
+    DatasetServiceError,
+    get_uploaded_csv_path,
+    process_uploaded_dataset,
+)
 
 router = APIRouter()
 
@@ -22,6 +29,11 @@ LITE_DATASET_PATH = os.path.join(BASE_DIR, "data", "india_aqi_lite.csv")
 LITE_DATASET = pd.read_csv(LITE_DATASET_PATH) if os.path.exists(LITE_DATASET_PATH) else None
 
 CITY_ALIASES = {"Bangalore": "Bengaluru"}
+
+
+class DatasetProcessRequest(BaseModel):
+    filename: str = Field(..., min_length=1, max_length=255)
+    save_processed_csv: bool = False
 
 
 def canonical_city(city: str) -> str:
@@ -280,6 +292,61 @@ def export_report(
         headers={
             "Content-Disposition": f"attachment; filename=traffic_report_{filename_city}_{datetime.utcnow().strftime('%Y%m%d')}.csv"
         },
+    )
+
+
+@router.post("/process-dataset")
+def process_dataset(
+    payload: DatasetProcessRequest,
+    current_user: dict = Depends(get_current_analyst_or_admin),
+):
+    try:
+        result = process_uploaded_dataset(
+            filename=payload.filename,
+            save_processed_csv=payload.save_processed_csv,
+        )
+    except DatasetServiceError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+    add_log(
+        {
+            "id": str(uuid.uuid4()),
+            "timestamp": datetime.utcnow().isoformat(),
+            "type": "dataset_processed",
+            "email": current_user["sub"],
+            "filename": payload.filename,
+            "rows_processed": result["summary"]["rows_processed"],
+        }
+    )
+    log_activity(
+        {
+            "id": str(uuid.uuid4()),
+            "timestamp": datetime.utcnow().isoformat(),
+            "user_email": current_user["sub"],
+            "action": "dataset_processed",
+            "details": f"Processed dataset {payload.filename} with {result['summary']['rows_processed']} rows.",
+        }
+    )
+    return result
+
+
+@router.get("/download-processed/{filename}")
+def download_processed_dataset(
+    filename: str,
+    current_user: dict = Depends(get_current_analyst_or_admin),
+):
+    try:
+        file_path = get_uploaded_csv_path(filename)
+    except DatasetServiceError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+    if not Path(file_path.name).name.startswith("processed_"):
+        raise HTTPException(status_code=400, detail="Only processed datasets are downloadable from this endpoint.")
+
+    return FileResponse(
+        path=str(file_path),
+        filename=file_path.name,
+        media_type="text/csv",
     )
 
 
