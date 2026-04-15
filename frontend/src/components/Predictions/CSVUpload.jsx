@@ -155,9 +155,8 @@ const CSVUpload = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
         timeout: 300000,
       });
-      if (isUserPanel) {
-        setResult(res.data);
-      } else {
+      setResult(res.data);
+      if (!isUserPanel) {
         setPublishAck(res.data);
       }
     } catch (err) {
@@ -298,37 +297,35 @@ const CSVUpload = () => {
         {(result || publishAck) && !loading && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
 
-            {isUserPanel && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <InsightCard
-                  icon="analytics"
-                  label="Avg Congestion"
-                  value={`${activeResult.insights?.average_congestion || 0}%`}
-                  color="text-primary"
-                />
-                <InsightCard
-                  icon="warning"
-                  label="Peak Load"
-                  value={activeResult.insights?.worst_time ? `${activeResult.insights.worst_time.time}` : '—'}
-                  sub={activeResult.insights?.worst_time ? `${activeResult.insights.worst_time.date_label} · ${activeResult.insights.worst_time.city}` : ''}
-                  color="text-red-400"
-                />
-                <InsightCard
-                  icon="thumb_up"
-                  label="Clearance"
-                  value={activeResult.insights?.best_time ? `${activeResult.insights.best_time.time}` : '—'}
-                  sub={activeResult.insights?.best_time ? `${activeResult.insights.best_time.date_label} · ${activeResult.insights.best_time.city}` : ''}
-                  color="text-green-400"
-                />
-                <InsightCard
-                  icon="traffic"
-                  label="Critical Nodes"
-                  value={activeResult.insights?.high_traffic_count || 0}
-                  sub={`Impacted Slots`}
-                  color="text-orange-400"
-                />
-              </div>
-            )}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <InsightCard
+                icon="analytics"
+                label="Avg Congestion"
+                value={`${activeResult.insights?.average_congestion || 0}%`}
+                color="text-primary"
+              />
+              <InsightCard
+                icon="warning"
+                label="Peak Load"
+                value={activeResult.insights?.worst_time ? `${activeResult.insights.worst_time.time}` : '—'}
+                sub={activeResult.insights?.worst_time ? `${activeResult.insights.worst_time.date_label} · ${activeResult.insights.worst_time.city}` : ''}
+                color="text-red-400"
+              />
+              <InsightCard
+                icon="thumb_up"
+                label="Clearance"
+                value={activeResult.insights?.best_time ? `${activeResult.insights.best_time.time}` : '—'}
+                sub={activeResult.insights?.best_time ? `${activeResult.insights.best_time.date_label} · ${activeResult.insights.best_time.city}` : ''}
+                color="text-green-400"
+              />
+              <InsightCard
+                icon="traffic"
+                label="Critical Nodes"
+                value={activeResult.insights?.high_traffic_count || 0}
+                sub={`Impacted Slots`}
+                color="text-orange-400"
+              />
+            </div>
 
             {isUserPanel && publishedItems.length > 0 && (
               <p className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-50">
@@ -368,7 +365,7 @@ const CSVUpload = () => {
               </div>
             )}
 
-            {isUserPanel && activeResult.predictions.length > 0 && (
+            {activeResult.predictions.length > 0 && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-70">

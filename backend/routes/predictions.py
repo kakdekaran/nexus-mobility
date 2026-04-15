@@ -1,7 +1,7 @@
 import io
 import os
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import pandas as pd
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 
 from services.auth_handler import get_current_analyst_or_admin, get_current_user, require_roles
-from services.db import add_log, add_prediction_result, get_prediction_results, log_activity
+from services.db import add_prediction_result, get_prediction_results, log_activity
 from services.ml import predict_traffic
 from utils.locations import canonicalize_location, get_cities, get_locations_for_city
 
@@ -18,7 +18,6 @@ router = APIRouter()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 VALID_CITIES = set(get_cities())
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-POLLUTION_COLUMNS = {"pm2_5_ugm3", "pm10_ugm3", "co_ugm3", "no2_ugm3"}
 
 def canonical_city(city: str) -> str:
     city_map = {k.lower(): k for k in VALID_CITIES}
@@ -527,19 +526,10 @@ async def upload_csv(file: UploadFile = File(...), current_user: dict = Depends(
         }
     )
 
-    if current_user.get("role") != "User":
-        return {
-            "message": "CSV processed and published to User panel.",
-            "result_id": saved_result_id,
-            "filename": file.filename,
-            "total_rows": len(df),
-            "processed": len(results),
-            "failed": len(errors),
-            "timestamp": datetime.utcnow().isoformat(),
-            "published_to_user_panel": True,
-        }
-
     response_payload["result_id"] = saved_result_id
+    response_payload["published_to_user_panel"] = current_user.get("role") != "User"
+    if current_user.get("role") != "User":
+        response_payload["message"] = "CSV processed and published to User panel."
     return response_payload
 
 

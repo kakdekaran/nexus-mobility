@@ -22,6 +22,7 @@ import Inbox from './pages/Inbox';
 import HelpCenter from './pages/HelpCenter';
 import CityPulse from './pages/CityPulse';
 import SafetyHub from './pages/SafetyHub';
+import PollutionInsights from './pages/PollutionInsights';
 import {
   getCurrentRole,
   getCurrentUserName,
@@ -85,6 +86,7 @@ function App() {
               <Route path="/pulse" element={<ProtectedRoute allowedRoles={['User']}><CityPulse /></ProtectedRoute>} />
               <Route path="/traffic" element={<ProtectedRoute allowedRoles={['Admin', 'Analyst', 'User']}><TrafficAnalysis /></ProtectedRoute>} />
               <Route path="/predict" element={<ProtectedRoute><Predictions /></ProtectedRoute>} />
+              <Route path="/pollution" element={<ProtectedRoute allowedRoles={['Admin', 'Analyst', 'User']}><PollutionInsights /></ProtectedRoute>} />
               <Route path="/safety" element={<ProtectedRoute allowedRoles={['User']}><SafetyHub /></ProtectedRoute>} />
               <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute allowedRoles={['Admin']}><AdminPanel /></ProtectedRoute>} />
