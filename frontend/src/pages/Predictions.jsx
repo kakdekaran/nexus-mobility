@@ -23,24 +23,26 @@ const Predictions = () => {
     
     try {
       const res = await api.post('/predictions/predict', {
-        hour_of_day: parseInt(params.hour.split(':')[0]) || 12,
-        pollution_aqi: parseFloat(params.aqi) || 50,
-        weather_condition: params.isRaining ? 1 : 0,
+        date: params.date,
+        time: params.time,
         city: params.city || "Delhi"
       });
 
       setPredictionResult({
-        congestion: res.data.predicted_congestion,
-        status: res.data.predicted_congestion > 70 ? 'High Congestion Warning' : 
-                res.data.predicted_congestion > 40 ? 'Moderate Transit Flow' : 'Optimal Neural Flow',
-        delay: Math.round(res.data.predicted_congestion / 5),
-        confidence: res.data.confidence || 0.85,
-        suggestion: res.data.suggestion,
-        city: params.city
+        congestion: res.data.congestion,
+        status: `${res.data.status} Congestion`,
+        label: res.data.date_label,
+        day: res.data.day,
+        time: res.data.time,
+        city: res.data.city,
+        emoji: res.data.emoji,
+        advice: res.data.advice,
+        is_peak: res.data.peak_hour,
+        delay: Math.round(res.data.congestion / 4) // Dynamic delay estimate
       });
-    } catch {
+    } catch (err) {
       setPredictionResult(null);
-      setError("Prediction service is currently unavailable.");
+      setError(err.response?.data?.detail || "Prediction service is currently unavailable.");
     } finally {
       setLoading(false);
     }

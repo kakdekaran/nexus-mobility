@@ -9,7 +9,6 @@ const Sidebar = () => {
     { name: 'Dashboard', icon: 'dashboard', path: '/dashboard', roles: ['Admin', 'Analyst', 'User'] },
     { name: 'City Pulse', icon: 'location_on', path: '/pulse', roles: ['User'] },
     { name: 'Traffic Analysis', icon: 'analytics', path: '/traffic', roles: ['Admin', 'Analyst', 'User'] },
-    { name: 'Pollution Insights', icon: 'eco', path: '/pollution', roles: ['Admin', 'Analyst', 'User'] },
     { name: 'Predictions', icon: 'query_stats', path: '/predict', roles: ['Admin', 'Analyst', 'User'] },
     { name: 'Safety Hub', icon: 'shield_with_heart', path: '/safety', roles: ['User'] },
     { name: 'Smart Signals', icon: 'traffic', path: '/signals', roles: ['Admin', 'Analyst', 'User'] },

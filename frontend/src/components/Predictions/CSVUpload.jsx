@@ -2,14 +2,17 @@ import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
 
-const SAMPLE_CSV = `hour_of_day,pollution_aqi,weather_condition,city
-8,45.5,0,Delhi
-9,48.2,0,Delhi
-10,52.1,1,Delhi
-17,78.5,0,Delhi
-18,82.3,0,Mumbai
-19,80.1,0,Mumbai
-14,35.6,2,Bangalore
+const SAMPLE_CSV = `date,time,city
+today,8 AM,Delhi
+today,9 AM,Delhi
+today,12 PM,Mumbai
+today,5 PM,Mumbai
+today,6 PM,Delhi
+today,7 PM,Bangalore
+tomorrow,8 AM,Chennai
+tomorrow,10 AM,Hyderabad
+tomorrow,5 PM,Delhi
+tomorrow,6 PM,Mumbai
 `;
 
 function downloadBlob(content, filename, mime) {
@@ -23,36 +26,46 @@ function downloadBlob(content, filename, mime) {
 }
 
 function resultsToCsv(predictions) {
-  const header = 'row,city,hour_of_day,pollution_aqi,weather_condition,predicted_congestion,confidence,suggestion';
+  const header = 'date,day,time,city,congestion_percent,traffic_status,advice';
   const rows = predictions.map((p) =>
     [
-      p.row,
-      p.input.city,
-      p.input.hour_of_day,
-      p.input.pollution_aqi,
-      p.input.weather_condition,
-      p.predicted_congestion,
-      p.confidence,
-      `"${p.suggestion}"`,
+      p.date_label,
+      p.day,
+      p.time,
+      p.city,
+      p.congestion,
+      p.status,
+      `"${p.advice}"`,
     ].join(',')
   );
   return [header, ...rows].join('\n');
 }
 
-const StatusBadge = ({ value }) => {
-  const color =
-    value >= 70
-      ? 'bg-red-500/20 text-red-400'
-      : value >= 40
-      ? 'bg-yellow-500/20 text-yellow-400'
-      : 'bg-green-500/20 text-green-400';
-  const label = value >= 70 ? 'High' : value >= 40 ? 'Moderate' : 'Low';
+const StatusBadge = ({ status, congestion }) => {
+  const colorMap = {
+    'Very High': 'bg-red-500/20 text-red-400',
+    'High': 'bg-orange-500/20 text-orange-400',
+    'Moderate': 'bg-yellow-500/20 text-yellow-400',
+    'Low': 'bg-green-500/20 text-green-400',
+    'Very Low': 'bg-emerald-500/20 text-emerald-400',
+  };
   return (
-    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest ${color}`}>
-      {label} ({value?.toFixed(1)}%)
+    <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${colorMap[status] || 'bg-gray-500/20 text-gray-400'}`}>
+      {status} ({congestion?.toFixed(1)}%)
     </span>
   );
 };
+
+const InsightCard = ({ icon, label, value, sub, color = 'text-primary' }) => (
+  <div className="bg-on-surface/5 rounded-2xl p-4 space-y-1">
+    <div className="flex items-center gap-2">
+      <span className={`material-symbols-outlined text-sm ${color}`} style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
+      <p className="text-[9px] font-black uppercase tracking-widest text-on-surface opacity-50">{label}</p>
+    </div>
+    <p className="font-black text-xl text-on-surface">{value}</p>
+    {sub && <p className="text-[10px] text-on-surface opacity-50 font-bold">{sub}</p>}
+  </div>
+);
 
 const CSVUpload = () => {
   const [isDragging, setIsDragging] = useState(false);
@@ -80,8 +93,7 @@ const CSVUpload = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    const f = e.dataTransfer.files?.[0];
-    handleFile(f);
+    handleFile(e.dataTransfer.files?.[0]);
   };
 
   const handleUpload = async () => {
@@ -117,11 +129,34 @@ const CSVUpload = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-1">
-        <h3 className="text-2xl font-black text-on-surface uppercase tracking-tight">Bulk CSV Prediction</h3>
-        <p className="text-[10px] text-on-surface font-black uppercase tracking-[0.2em] opacity-60">
-          Upload a CSV file to get batch traffic congestion predictions
+      <div className="space-y-2">
+        <h3 className="text-2xl font-black text-on-surface uppercase tracking-tight">
+          Traffic Prediction
+        </h3>
+        <p className="text-sm text-on-surface opacity-70 font-medium leading-relaxed max-w-2xl">
+          Upload a CSV file with <strong>date</strong>, <strong>time</strong>, and <strong>city</strong> — 
+          we'll predict how much traffic there will be. See which day and time has the 
+          most or least traffic!
         </p>
+      </div>
+
+      {/* CSV Format Guide */}
+      <div className="bg-primary/5 border border-primary/15 rounded-2xl p-5 space-y-3">
+        <p className="text-[10px] font-black uppercase tracking-widest text-primary">How to prepare your CSV</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+          <div className="space-y-1">
+            <p className="font-black text-on-surface text-xs">📅 date</p>
+            <p className="text-on-surface opacity-60 text-xs">today, tomorrow, 2026-04-15, 15/04/2026</p>
+          </div>
+          <div className="space-y-1">
+            <p className="font-black text-on-surface text-xs">🕐 time</p>
+            <p className="text-on-surface opacity-60 text-xs">8 AM, 5:30 PM, 17:00, 14</p>
+          </div>
+          <div className="space-y-1">
+            <p className="font-black text-on-surface text-xs">🏙️ city</p>
+            <p className="text-on-surface opacity-60 text-xs">Delhi, Mumbai, Bangalore, Chennai, Hyderabad</p>
+          </div>
+        </div>
       </div>
 
       {/* Drop Zone */}
@@ -130,7 +165,7 @@ const CSVUpload = () => {
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
-        className={`relative cursor-pointer rounded-[2rem] border-2 border-dashed transition-all p-12 flex flex-col items-center justify-center gap-4 text-center
+        className={`relative cursor-pointer rounded-[2rem] border-2 border-dashed transition-all p-10 flex flex-col items-center justify-center gap-3 text-center
           ${isDragging
             ? 'border-primary bg-primary/10'
             : file
@@ -138,27 +173,21 @@ const CSVUpload = () => {
             : 'border-on-surface/15 bg-on-surface/5 hover:bg-on-surface/10 hover:border-on-surface/30'
           }`}
       >
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".csv"
-          className="hidden"
-          onChange={(e) => handleFile(e.target.files?.[0])}
-        />
-        <span className="material-symbols-outlined text-5xl text-on-surface opacity-50">
+        <input ref={inputRef} type="file" accept=".csv" className="hidden" onChange={(e) => handleFile(e.target.files?.[0])} />
+        <span className="material-symbols-outlined text-4xl text-on-surface opacity-50">
           {file ? 'task_alt' : 'upload_file'}
         </span>
         {file ? (
           <>
             <p className="text-on-surface font-black text-sm">{file.name}</p>
             <p className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-50">
-              {(file.size / 1024).toFixed(1)} KB · Ready to upload
+              {(file.size / 1024).toFixed(1)} KB · Ready to predict
             </p>
           </>
         ) : (
           <>
-            <p className="text-on-surface font-black text-sm">Drag &amp; drop your CSV here, or click to browse</p>
-            <p className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-40">Max 10 MB · CSV only</p>
+            <p className="text-on-surface font-bold text-sm">Drag & drop your CSV here, or click to browse</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface opacity-40">Max 10 MB · CSV only</p>
           </>
         )}
       </div>
@@ -166,10 +195,7 @@ const CSVUpload = () => {
       {/* Error */}
       <AnimatePresence>
         {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+          <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="flex items-start gap-3 bg-red-500/10 border border-red-500/30 rounded-2xl p-4"
           >
             <span className="material-symbols-outlined text-red-400 text-xl mt-0.5">error</span>
@@ -183,20 +209,17 @@ const CSVUpload = () => {
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-3">
-        <button
-          onClick={handleUpload}
-          disabled={!file || loading}
+        <button onClick={handleUpload} disabled={!file || loading}
           className="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 disabled:opacity-40 active:scale-95 transition-all hover:brightness-110"
         >
           <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
-            {loading ? 'hourglass_top' : 'cloud_upload'}
+            {loading ? 'hourglass_top' : 'bolt'}
           </span>
-          {loading ? 'Processing...' : 'Run Predictions'}
+          {loading ? 'Predicting...' : 'Predict Traffic'}
         </button>
 
         {(file || result) && (
-          <button
-            onClick={handleReset}
+          <button onClick={handleReset}
             className="flex items-center gap-2 bg-on-surface/10 text-on-surface px-6 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] active:scale-95 transition-all hover:bg-on-surface/15"
           >
             <span className="material-symbols-outlined text-base">restart_alt</span>
@@ -209,28 +232,20 @@ const CSVUpload = () => {
           className="flex items-center gap-2 bg-on-surface/10 text-on-surface px-6 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] active:scale-95 transition-all hover:bg-on-surface/15 ml-auto"
         >
           <span className="material-symbols-outlined text-base">download</span>
-          Sample CSV
+          Download Sample CSV
         </button>
-      </div>
-
-      {/* CSV format hint */}
-      <div className="bg-on-surface/5 rounded-2xl p-5 text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60 space-y-1">
-        <p>Required columns: <span className="text-primary opacity-100">hour_of_day</span> (0–23) · <span className="text-primary opacity-100">pollution_aqi</span> (0–500) · <span className="text-primary opacity-100">weather_condition</span> (0=Clear, 1=Rainy, 2=Overcast) · <span className="text-primary opacity-100">city</span></p>
-        <p>Valid cities: Delhi · Mumbai · Bangalore · Chennai · Hyderabad</p>
       </div>
 
       {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center gap-3 py-10">
-          <motion.span
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             className="material-symbols-outlined text-4xl text-primary"
           >
             autorenew
           </motion.span>
           <p className="text-on-surface font-black text-sm uppercase tracking-widest opacity-60">
-            Running bulk predictions…
+            Analyzing traffic patterns…
           </p>
         </div>
       )}
@@ -238,74 +253,90 @@ const CSVUpload = () => {
       {/* Results */}
       <AnimatePresence>
         {result && !loading && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            {/* Summary cards */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+
+            {/* Insight Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: 'Total Rows', value: result.total_rows, icon: 'table_rows', color: 'text-primary' },
-                { label: 'Processed', value: result.processed, icon: 'check_circle', color: 'text-green-400' },
-                { label: 'Failed', value: result.failed, icon: 'cancel', color: 'text-red-400' },
-                { label: 'File', value: result.filename, icon: 'description', color: 'text-on-surface opacity-60', small: true },
-              ].map((c) => (
-                <div key={c.label} className="bg-on-surface/5 rounded-2xl p-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className={`material-symbols-outlined text-sm ${c.color}`}>{c.icon}</span>
-                    <p className="text-[9px] font-black uppercase tracking-widest text-on-surface opacity-50">{c.label}</p>
-                  </div>
-                  <p className={`font-black ${c.small ? 'text-xs truncate' : 'text-2xl'} text-on-surface`}>{c.value}</p>
-                </div>
-              ))}
+              <InsightCard
+                icon="analytics"
+                label="Average Traffic"
+                value={`${result.insights?.average_congestion || 0}%`}
+                color="text-primary"
+              />
+              <InsightCard
+                icon="warning"
+                label="Worst Time"
+                value={result.insights?.worst_time ? `${result.insights.worst_time.time}` : '—'}
+                sub={result.insights?.worst_time ? `${result.insights.worst_time.date_label} · ${result.insights.worst_time.day} · ${result.insights.worst_time.city} · ${result.insights.worst_time.congestion}%` : ''}
+                color="text-red-400"
+              />
+              <InsightCard
+                icon="thumb_up"
+                label="Best Time"
+                value={result.insights?.best_time ? `${result.insights.best_time.time}` : '—'}
+                sub={result.insights?.best_time ? `${result.insights.best_time.date_label} · ${result.insights.best_time.day} · ${result.insights.best_time.city} · ${result.insights.best_time.congestion}%` : ''}
+                color="text-green-400"
+              />
+              <InsightCard
+                icon="traffic"
+                label="High Traffic Slots"
+                value={result.insights?.high_traffic_count || 0}
+                sub={`out of ${result.processed} total`}
+                color="text-orange-400"
+              />
             </div>
 
-            {/* Predictions table */}
+            {/* Summary Stats */}
+            <div className="flex flex-wrap gap-3 text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60">
+              <span>📊 {result.total_rows} rows</span>
+              <span>·</span>
+              <span>✅ {result.processed} predicted</span>
+              {result.failed > 0 && <><span>·</span><span className="text-red-400">❌ {result.failed} errors</span></>}
+              {result.predictions_truncated && <><span>·</span><span className="text-yellow-400">Showing first 500 of {result.processed}</span></>}
+            </div>
+
+            {/* Predictions Table */}
             {result.predictions.length > 0 && (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-70">
-                  Prediction Results ({result.predictions.length}{result.predictions_truncated ? ` of ${result.processed}` : ''})
+                    Predictions ({result.predictions.length}{result.predictions_truncated ? ` of ${result.processed}` : ''})
                   </h4>
                   <button
-                    onClick={() => downloadBlob(resultsToCsv(result.predictions), 'predictions_results.csv', 'text/csv')}
+                    onClick={() => downloadBlob(resultsToCsv(result.predictions), 'traffic_predictions.csv', 'text/csv')}
                     className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-primary hover:opacity-80 transition-opacity"
                   >
                     <span className="material-symbols-outlined text-base">download</span>
-                    Download CSV
+                    Download Results
                   </button>
                 </div>
                 <div className="overflow-x-auto rounded-2xl border border-on-surface/10">
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="bg-on-surface/10 text-on-surface text-[10px] uppercase tracking-widest">
-                        {['Row', 'City', 'Hour', 'AQI', 'Weather', 'Congestion', 'Confidence', 'Suggestion'].map((h) => (
+                        {['Date', 'Day', 'Time', 'City', 'Traffic', 'Advice'].map((h) => (
                           <th key={h} className="px-4 py-3 text-left font-black opacity-60 whitespace-nowrap">{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
                       {result.predictions.map((p, i) => (
-                        <tr
-                          key={i}
-                          className="border-t border-on-surface/5 hover:bg-on-surface/5 transition-colors"
-                        >
-                          <td className="px-4 py-3 font-black text-on-surface opacity-50">{p.row}</td>
-                          <td className="px-4 py-3 font-black text-on-surface">{p.input.city}</td>
-                          <td className="px-4 py-3 font-black text-on-surface">{p.input.hour_of_day}:00</td>
-                          <td className="px-4 py-3 font-black text-on-surface">{p.input.pollution_aqi}</td>
+                        <tr key={i} className={`border-t border-on-surface/5 hover:bg-on-surface/5 transition-colors ${p.peak_hour ? 'bg-orange-500/[0.03]' : ''}`}>
                           <td className="px-4 py-3 font-black text-on-surface">
-                            {p.input.weather_condition === 0 ? 'Clear' : p.input.weather_condition === 1 ? 'Rainy' : 'Overcast'}
+                            <div>{p.date_label}</div>
+                            <div className="text-[9px] opacity-40 font-bold">{p.date}</div>
                           </td>
+                          <td className="px-4 py-3 font-bold text-on-surface opacity-70">{p.day}</td>
+                          <td className="px-4 py-3 font-black text-on-surface">
+                            {p.time}
+                            {p.peak_hour && <span className="ml-1.5 text-[8px] bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded-full font-black uppercase">Peak</span>}
+                          </td>
+                          <td className="px-4 py-3 font-black text-on-surface">{p.city}</td>
                           <td className="px-4 py-3">
-                            <StatusBadge value={p.predicted_congestion} />
+                            <StatusBadge status={p.status} congestion={p.congestion} />
                           </td>
-                          <td className="px-4 py-3 font-black text-on-surface">
-                            {(p.confidence * 100).toFixed(0)}%
-                          </td>
-                          <td className="px-4 py-3 text-on-surface opacity-60 max-w-[220px] truncate" title={p.suggestion}>
-                            {p.suggestion}
+                          <td className="px-4 py-3 text-on-surface opacity-60 max-w-[240px] text-[11px]" title={p.advice}>
+                            {p.advice}
                           </td>
                         </tr>
                       ))}
@@ -315,17 +346,17 @@ const CSVUpload = () => {
               </div>
             )}
 
-            {/* Error table */}
+            {/* Error Table */}
             {result.errors.length > 0 && (
               <div className="space-y-3">
                 <h4 className="text-[10px] font-black uppercase tracking-widest text-red-400">
-                  Validation Errors ({result.errors.length} rows)
+                  Errors ({result.errors.length} rows)
                 </h4>
                 <div className="overflow-x-auto rounded-2xl border border-red-500/20">
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="bg-red-500/10 text-on-surface text-[10px] uppercase tracking-widest">
-                        {['Row', 'City', 'Hour', 'AQI', 'Weather', 'Errors'].map((h) => (
+                        {['Row', 'Date', 'Time', 'City', 'Issue'].map((h) => (
                           <th key={h} className="px-4 py-3 text-left font-black opacity-60 whitespace-nowrap">{h}</th>
                         ))}
                       </tr>
@@ -334,10 +365,9 @@ const CSVUpload = () => {
                       {result.errors.map((e, i) => (
                         <tr key={i} className="border-t border-red-500/10">
                           <td className="px-4 py-3 font-black text-red-400">{e.row}</td>
-                          <td className="px-4 py-3 text-on-surface opacity-60">{e.input?.city ?? '—'}</td>
-                          <td className="px-4 py-3 text-on-surface opacity-60">{e.input?.hour_of_day ?? '—'}</td>
-                          <td className="px-4 py-3 text-on-surface opacity-60">{e.input?.pollution_aqi ?? '—'}</td>
-                          <td className="px-4 py-3 text-on-surface opacity-60">{e.input?.weather_condition ?? '—'}</td>
+                          <td className="px-4 py-3 text-on-surface opacity-60">{e.date || '—'}</td>
+                          <td className="px-4 py-3 text-on-surface opacity-60">{e.time || '—'}</td>
+                          <td className="px-4 py-3 text-on-surface opacity-60">{e.city || '—'}</td>
                           <td className="px-4 py-3 text-red-400 text-[10px]">{e.errors.join(' · ')}</td>
                         </tr>
                       ))}

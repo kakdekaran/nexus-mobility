@@ -8,7 +8,6 @@ import Topbar from './components/Navigation/Topbar';
 
 // Core Municipal Views
 import Dashboard from './pages/Dashboard';
-import PollutionInsights from './pages/PollutionInsights';
 import TrafficAnalysis from './pages/TrafficAnalysis';
 import Predictions from './pages/Predictions';
 import SmartSignals from './pages/SmartSignals';
@@ -85,7 +84,6 @@ function App() {
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/pulse" element={<ProtectedRoute allowedRoles={['User']}><CityPulse /></ProtectedRoute>} />
               <Route path="/traffic" element={<ProtectedRoute allowedRoles={['Admin', 'Analyst', 'User']}><TrafficAnalysis /></ProtectedRoute>} />
-              <Route path="/pollution" element={<ProtectedRoute allowedRoles={['Admin', 'Analyst', 'User']}><PollutionInsights /></ProtectedRoute>} />
               <Route path="/predict" element={<ProtectedRoute><Predictions /></ProtectedRoute>} />
               <Route path="/safety" element={<ProtectedRoute allowedRoles={['User']}><SafetyHub /></ProtectedRoute>} />
               <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />

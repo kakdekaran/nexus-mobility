@@ -36,7 +36,6 @@ const Dashboard = () => {
       
       setStats({
         avg_traffic_index: trafficIndex,
-        avg_aqi: Math.round(statsRes.data.avg_aqi || 0),
         active_alerts: alertCount,
         active_vehicles: statsRes.data.active_vehicles || 0,
         network_health: `${Math.max(65, Math.min(98, 100 - (alertCount * 3)))}%`,

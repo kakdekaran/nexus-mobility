@@ -1,164 +1,111 @@
 import os
 import pickle
 from pathlib import Path
-
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-AQI_DATA_PATH = BASE_DIR / "data" / "india_aqi_lite.csv"
-TRAFFIC_CONGESTION_PATH = BASE_DIR / "delhi_traffic" / "weekday_stats" / "2024_week_day_congestion_city.csv"
 DATA_DIR = BASE_DIR / "data"
 MODEL_DIR = DATA_DIR / "models"
 MODEL_PATH = MODEL_DIR / "traffic_predictor_lite.pkl"
 
-
-def clean_percentage(value):
-    if isinstance(value, str):
-        return float(value.replace("%", ""))
-    return float(value)
-
-
-def time_to_hour(value: str) -> int:
-    parsed = pd.to_datetime(value.strip(), format="%I:%M %p")
-    return int(parsed.hour)
-
-
-def load_traffic_data() -> pd.DataFrame:
-    traffic_df = pd.read_csv(TRAFFIC_CONGESTION_PATH)
-    traffic_long = traffic_df.melt(id_vars=["Time"], var_name="Day_Name", value_name="Congestion")
-    traffic_long["Congestion"] = traffic_long["Congestion"].apply(clean_percentage)
-    traffic_long["Hour"] = traffic_long["Time"].apply(time_to_hour)
-    return traffic_long
-
-
-def load_aqi_features() -> pd.DataFrame:
-    use_columns = ["City", "Hour", "Day_Name", "PM2_5_ugm3", "Is_Raining", "Temp_2m_C", "PM10_ugm3", "CO_ugm3", "NO2_ugm3"]
-    # The lite dataset is small enough to load fully, but we'll keep the logic robust
-    chunks = pd.read_csv(AQI_DATA_PATH, chunksize=100000)
-
-    delhi_rows = []
-    for chunk in chunks:
-        subset = chunk[chunk["City"].isin(["Delhi", "Bengaluru", "Mumbai", "Chennai", "Hyderabad"])]
-        if not subset.empty:
-            delhi_rows.append(subset)
-        if sum(len(frame) for frame in delhi_rows) >= 250000:
-            break
-
-    if not delhi_rows:
-        raise RuntimeError("AQI dataset did not contain enough training rows")
-
-    aqi_df = pd.concat(delhi_rows, ignore_index=True)
-    grouped = (
-        aqi_df.groupby(["Hour", "Day_Name"], as_index=False)[["PM2_5_ugm3", "Is_Raining", "Temp_2m_C", "PM10_ugm3", "CO_ugm3", "NO2_ugm3"]]
-        .mean()
-    )
-    return grouped
-
-
-def build_training_frame() -> pd.DataFrame:
-    print("Loading lite AQI dataset...")
-    aqi_features = load_aqi_features()
-    # If load_aqi_features grouped it, we might have multiple rows or mean rows.
-    # For training, we want a diverse set of rows.
+def generate_synthetic_traffic_data(num_samples=20000):
+    """
+    Generate synthetic traffic data based on realistic urban patterns.
+    Features: Hour, DayOfWeek, Month, IsWeekend
+    Target: Congestion (0-100)
+    """
+    np.random.seed(42)
     
-    # Reloading the lite CSV for raw rows to get better training distribution
-    # instead of just the mean-grouped version.
-    df = pd.read_csv(AQI_DATA_PATH)
+    hours = np.random.randint(0, 24, num_samples)
+    days = np.random.randint(0, 7, num_samples)
+    months = np.random.randint(1, 13, num_samples)
+    is_weekend = (days >= 5).astype(int)
     
-    cities = ['Delhi', 'Bengaluru', 'Mumbai', 'Chennai', 'Hyderabad']
-    df = df[df['City'].isin(cities)]
-
-    print(f"Synthesizing congestion labels for {len(df)} rows...")
+    congestion = []
     
-    def calculate_congestion(row):
+    for i in range(num_samples):
+        h = hours[i]
+        d = days[i]
+        m = months[i]
+        iw = is_weekend[i]
+        
         # Base congestion
-        base = 25.0
-        h = int(row['Hour'])
+        base = 20.0
         
-        # Peak hours adjustment
-        if (8 <= h <= 10) or (17 <= h <= 20):
-            base += 35
-        elif (11 <= h <= 16):
+        # Peak hours (Morning: 8-10 AM, Evening: 5-8 PM)
+        if 8 <= h <= 10:
+            peak_intensity = 40 if h == 9 else 30
+            base += peak_intensity
+        elif 17 <= h <= 20:
+            peak_intensity = 45 if h == 18 else 35
+            base += peak_intensity
+        elif 11 <= h <= 16:
             base += 15
+        elif 0 <= h <= 5:
+            base -= 10
             
-        # Pollution impact (PM2.5)
-        pm25 = row.get('PM2_5_ugm3', 0)
-        base += min(pm25 * 0.08, 20)
-        
-        # Weather impact
-        rain = row.get('Is_Raining', 0)
-        if rain > 0:
-            base += 15
+        # Weekend adjustment (less traffic overall, but maybe different peaks)
+        if iw:
+            base *= 0.7
+            if 11 <= h <= 20: # Weekend afternoon/evening rush
+                base += 10
+        else:
+            # Weekday specific (Friday is usually heavier)
+            if d == 4:
+                base *= 1.1
+                
+        # Monthly/Seasonal adjustment
+        # (e.g., Nov/Dec higher due to festivals/holidays)
+        if m in [10, 11, 12]:
+            base *= 1.15
+        elif m in [5, 6]: # Summer/Monsoon
+            base *= 0.9
             
-        # Add some noise for realism
-        import numpy as np
-        noise = np.random.normal(0, 3)
+        # Random noise
+        noise = np.random.normal(0, 5)
         
-        congestion = base + noise
-        return round(min(max(congestion, 5.0), 100.0), 1)
-
-    df['Congestion'] = df.apply(calculate_congestion, axis=1)
-    
-    # Fill missing values
-    df['PM2_5_ugm3'] = df['PM2_5_ugm3'].fillna(df['PM2_5_ugm3'].median())
-    df['Is_Raining'] = df['Is_Raining'].fillna(0)
-    df['Temp_2m_C'] = df['Temp_2m_C'].fillna(df['Temp_2m_C'].median())
-    
-    # Check for NaN in features we care about
-    features = ["Hour", "PM2_5_ugm3", "Is_Raining", "Temp_2m_C"]
-    df = df.dropna(subset=features)
+        final_congestion = base + noise
+        congestion.append(round(min(max(final_congestion, 5.0), 100.0), 1))
+        
+    df = pd.DataFrame({
+        'Hour': hours,
+        'DayOfWeek': days,
+        'Month': months,
+        'IsWeekend': is_weekend,
+        'Congestion': congestion
+    })
     
     return df
 
-
-def save_city_summary() -> None:
-    summary_chunks = []
-    chunks = pd.read_csv(AQI_DATA_PATH, chunksize=100000)
-    for chunk in chunks:
-        pollutants = [column for column in ["PM2_5_ugm3", "PM10_ugm3", "CO_ugm3", "NO2_ugm3"] if column in chunk.columns]
-        if "City" not in chunk.columns or not pollutants:
-            continue
-        summary_chunks.append(chunk[["City", *pollutants]].groupby("City", as_index=False).mean())
-
-    if not summary_chunks:
-        raise RuntimeError("Unable to build city summary from AQI dataset")
-
-    final_summary = pd.concat(summary_chunks, ignore_index=True).groupby("City", as_index=False).mean()
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    final_summary.to_json(DATA_DIR / "city_summary.json", orient="records")
-
-
 def train_system_model():
-    print("Loading traffic and AQI datasets...")
-    merged_df = build_training_frame()
+    print("Generating synthetic traffic dataset (Smart Mobility Focus)...")
+    df = generate_synthetic_traffic_data()
 
-    features = ["Hour", "PM2_5_ugm3", "Is_Raining", "Temp_2m_C"]
+    features = ["Hour", "DayOfWeek", "Month", "IsWeekend"]
     target = "Congestion"
-    X = merged_df[features]
-    y = merged_df[target]
+    X = df[features]
+    y = df[target]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    print("Training optimized congestion model...")
-    # Limiting depth and estimators to keep the model size < 100MB for GitHub
-    # 80 estimators and depth 12 should bring it well under 100MB
-    model = RandomForestRegressor(n_estimators=80, max_depth=12, random_state=42)
+    print("Training Random Forest model for Smart Traffic Analytics...")
+    # Optimized for size and accuracy
+    model = RandomForestRegressor(n_estimators=100, max_depth=15, random_state=42)
     model.fit(X_train, y_train)
 
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     with MODEL_PATH.open("wb") as file:
         pickle.dump(model, file)
 
-    save_city_summary()
-
+    # Save a small sample for reference
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    merged_df.head(2000).to_csv(DATA_DIR / "processed_sample.csv", index=False)
+    df.head(1000).to_csv(DATA_DIR / "traffic_training_sample.csv", index=False)
 
-    print(f"Model saved to {MODEL_PATH}")
+    print(f"✅ Model saved to {MODEL_PATH}")
     print(f"Validation score: {model.score(X_test, y_test):.4f}")
-
 
 if __name__ == "__main__":
     train_system_model()

@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 
-// interface DashboardStats is implied by context if needed, but we use the inline definition below
-
 const IntelligencePanel = ({ stats, city }) => {
   const [insight, setInsight] = useState("Analyzing municipal telemetry...");
   const [loading, setLoading] = useState(true);
@@ -10,12 +8,11 @@ const IntelligencePanel = ({ stats, city }) => {
     if (stats) {
       setLoading(false);
       const traffic = stats.avg_traffic_index;
-      const aqi = stats.avg_aqi;
       
-      if (traffic > 60 && aqi > 150) setInsight(`Critical congestion and poor air quality in ${city}. Recommend restricted industrial logistics.`);
-      else if (traffic > 60) setInsight(`High traffic density detected in ${city}. Automated signal optimization active.`);
-      else if (aqi > 150) setInsight(`Air quality warning for ${city}. Activating municipal haze advisory.`);
-      else setInsight(`Optimal urban flow in ${city}. Monitoring atmospheric consistency.`);
+      if (traffic > 80) setInsight(`Critical congestion in ${city}. Emergency rerouting protocols recommended for arterial roads.`);
+      else if (traffic > 60) setInsight(`High traffic density detected in ${city}. Automated signal optimization is currently active.`);
+      else if (traffic > 40) setInsight(`Steady urban flow in ${city}. No major bottlenecks detected at this timestamp.`);
+      else setInsight(`Optimal mobility in ${city}. Best time for logistics and transit operations.`);
     }
   }, [stats, city]);
 
@@ -30,16 +27,16 @@ const IntelligencePanel = ({ stats, city }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <div className="p-4 bg-on-surface/5 rounded-2xl border border-on-surface/5 space-y-1.5">
-          <p className="text-[9px] font-black text-on-surface uppercase">Congestion Index</p>
-          <p className={`text-xl font-black ${(stats?.avg_traffic_index || 0) > 50 ? 'text-error' : 'text-primary'}`}>
-            {stats?.avg_traffic_index || '—'}
+        <div className="p-4 bg-on-surface/5 rounded-2xl border border-on-surface/5 space-y-1.5 transition-all hover:bg-on-surface/10">
+          <p className="text-[9px] font-black text-on-surface uppercase opacity-50">Congestion Index</p>
+          <p className={`text-xl font-black ${(stats?.avg_traffic_index || 0) > 60 ? 'text-error' : 'text-primary'}`}>
+            {stats?.avg_traffic_index || '—'}%
           </p>
         </div>
-        <div className="p-4 bg-on-surface/5 rounded-2xl border border-on-surface/5 space-y-1.5">
-          <p className="text-[9px] font-black text-on-surface uppercase">Atmospheric AQI</p>
-          <p className={`text-xl font-black ${(stats?.avg_aqi || 0) > 100 ? 'text-error' : 'text-tertiary'}`}>
-            {stats?.avg_aqi || '—'}
+        <div className="p-4 bg-on-surface/5 rounded-2xl border border-on-surface/5 space-y-1.5 transition-all hover:bg-on-surface/10">
+          <p className="text-[9px] font-black text-on-surface uppercase opacity-50">Active Alerts</p>
+          <p className={`text-xl font-black ${(stats?.active_alerts || 0) > 0 ? 'text-tertiary' : 'text-primary'}`}>
+            0{stats?.active_alerts || 0}
           </p>
         </div>
       </div>
@@ -53,14 +50,23 @@ const IntelligencePanel = ({ stats, city }) => {
           {loading ? "..." : insight}
         </p>
       </div>
+
+      {/* Quick Prediction Shortcut */}
+      <div className="p-5 bg-on-surface/5 rounded-[2rem] border border-on-surface/10 border-dashed flex items-center justify-between group cursor-pointer hover:border-primary/50 transition-all" 
+           onClick={() => window.location.href='/predict'}>
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center">
+            <span className="material-symbols-outlined text-xl text-on-surface group-hover:text-primary transition-colors">query_stats</span>
+          </div>
+          <div>
+            <p className="text-[10px] font-black text-on-surface uppercase tracking-widest">Predictive Lab</p>
+            <p className="text-[9px] text-on-surface opacity-40 uppercase font-bold">Simulate Future Traffic</p>
+          </div>
+        </div>
+        <span className="material-symbols-outlined text-sm text-on-surface opacity-30 group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+      </div>
     </div>
   );
 };
 
 export default IntelligencePanel;
-
-
-
-
-
-
