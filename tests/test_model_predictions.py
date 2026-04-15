@@ -3,7 +3,6 @@ Tests for ML model predictions.
 
 Validates that:
 - The model can be loaded (or gracefully falls back)
-- Features in india_aqi_lite.csv are compatible with the model
 - Predictions fall within the expected 5-100 congestion range
 - The deterministic fallback also stays within range
 """
@@ -22,7 +21,6 @@ from services.ml import (
     predict_congestion,
 )
 from utils.model_validator import (
-    check_feature_compatibility,
     check_model_file,
     run_startup_validation,
 )
@@ -39,31 +37,23 @@ def test_startup_validation_does_not_raise():
     result = run_startup_validation()
     assert isinstance(result, dict)
     assert "model_file_present" in result
-    assert "features_compatible" in result
     assert "prediction_range_ok" in result
-
-
-def test_feature_compatibility():
-    """india_aqi_lite.csv must contain all feature columns the model expects."""
-    assert check_feature_compatibility(), (
-        "india_aqi_lite.csv is missing one or more required feature columns."
-    )
 
 
 # ---------------------------------------------------------------------------
 # Deterministic fallback predictions
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("hour,pm2_5,precip,temp,city", [
-    (9,  85.5, 1.0, 30.0, "Delhi"),      # Morning peak, rain
-    (14, 45.0, 0.0, 35.0, "Mumbai"),     # Midday
-    (2,  10.0, 0.0, 22.0, "Bengaluru"),  # Night
-    (18, 120.0, 1.0, 28.0, "Chennai"),   # Evening peak, rain
-    (12, 60.0, 0.0, 25.0, "Hyderabad"), # Midday average
+@pytest.mark.parametrize("hour,city,day,month", [
+    (9,  "Delhi", 0, 4),      # Monday morning peak, April
+    (14, "Mumbai", 2, 5),     # Wednesday Midday, May
+    (2,  "Bengaluru", 6, 1),  # Sunday Night, January
+    (18, "Chennai", 4, 11),   # Friday evening peak, November
+    (12, "Hyderabad", 1, 8),  # Tuesday Midday, August
 ])
-def test_deterministic_fallback_range(hour, pm2_5, precip, temp, city):
+def test_deterministic_fallback_range(hour, city, day, month):
     """Deterministic fallback must return congestion in [5, 100]."""
-    value = deterministic_fallback(hour, pm2_5, precip, temp, city)
+    value = deterministic_fallback(hour, city, day, month)
     assert 5.0 <= value <= 100.0, f"Unexpected fallback value {value} for {city}"
 
 
@@ -71,29 +61,29 @@ def test_deterministic_fallback_range(hour, pm2_5, precip, temp, city):
 # predict_congestion (model or fallback)
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("hour,pm2_5,precip,temp,city", [
-    (9,  85.5, 1.0, 30.0, "Delhi"),
-    (14, 45.0, 0.0, 35.0, "Mumbai"),
-    (2,  10.0, 0.0, 22.0, "Bengaluru"),
-    (18, 120.0, 1.0, 28.0, "Chennai"),
-    (12, 60.0, 0.0, 25.0, "Hyderabad"),
+@pytest.mark.parametrize("hour,city,day,month", [
+    (9,  "Delhi", 0, 4),
+    (14, "Mumbai", 2, 5),
+    (2,  "Bengaluru", 6, 1),
+    (18, "Chennai", 4, 11),
+    (12, "Hyderabad", 1, 8),
 ])
-def test_predict_congestion_range(hour, pm2_5, precip, temp, city):
+def test_predict_congestion_range(hour, city, day, month):
     """predict_congestion must always return a value clamped to [5, 100]."""
-    value = predict_congestion(hour, pm2_5, precip, temp, city)
+    value = predict_congestion(hour, city, day, month)
     assert 5.0 <= value <= 100.0, f"Congestion {value} out of range for {city}"
 
 
 def test_predict_congestion_returns_float():
     """predict_congestion should always return a float."""
-    result = predict_congestion(hour=8, pm2_5=75.0, precipitation=0.0, temp=28.0, city="Delhi")
+    result = predict_congestion(hour=8, city="Delhi", day_of_week=0, month=4)
     assert isinstance(result, float)
 
 
 def test_peak_hour_higher_than_night():
     """Peak-hour congestion should be higher than night-time congestion."""
-    peak = predict_congestion(hour=9, pm2_5=50.0, precipitation=0.0, temp=28.0, city="Delhi")
-    night = predict_congestion(hour=3, pm2_5=50.0, precipitation=0.0, temp=28.0, city="Delhi")
+    peak = predict_congestion(hour=9, city="Delhi", day_of_week=0, month=4)
+    night = predict_congestion(hour=3, city="Delhi", day_of_week=0, month=4)
     assert peak > night, f"Expected peak ({peak}) > night ({night})"
 
 
@@ -106,10 +96,10 @@ def test_model_prediction_range():
     """When the model is loaded its raw predictions should be near [5, 100]."""
     model = load_model()
     test_inputs = [
-        [9,  85.5, 0.5, 30.0],
-        [14, 45.0, 0.0, 35.0],
-        [2,  10.0, 0.0, 22.0],
-        [18, 120.0, 1.0, 28.0],
+        [9,  0, 4, 0],
+        [18, 4, 11, 0],
+        [14, 6, 5, 1],
+        [2,  2, 1, 0],
     ]
     for inp in test_inputs:
         pred = float(model.predict([inp])[0])
@@ -119,7 +109,7 @@ def test_model_prediction_range():
 
 @pytest.mark.skipif(not MODEL_AVAILABLE, reason="Model file not present; skipping ML-specific tests")
 def test_model_feature_count():
-    """Model should expect exactly 4 features: Hour, PM2_5, Is_Raining, Temp."""
+    """Model should expect exactly 4 features: Hour, DayOfWeek, Month, IsWeekend."""
     model = load_model()
     assert model.n_features_in_ == 4, (
         f"Model expects {model.n_features_in_} features, expected 4."
