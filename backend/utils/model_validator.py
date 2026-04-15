@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 PRIMARY_MODEL_PATH = BASE_DIR / "data" / "models" / "traffic_predictor_lite.pkl"
 
-# Features: [Hour, DayOfWeek, Month, IsWeekend, Weather, IsHoliday, IsEvent]
-FEATURES = ["Hour", "DayOfWeek", "Month", "IsWeekend", "Weather", "IsHoliday", "IsEvent"]
+# Features: [City, Location, Hour, DayOfWeek, Month, IsWeekend, Weather, IsHoliday, IsEvent]
+FEATURES = ["City", "Location", "Hour", "DayOfWeek", "Month", "IsWeekend", "Weather", "IsHoliday", "IsEvent"]
 PREDICTION_MIN = 5.0
 PREDICTION_MAX = 100.0
 
@@ -52,28 +52,34 @@ def load_model_for_validation():
 def check_prediction_range(model) -> bool:
     """
     Run a small set of representative predictions and verify they fall
-    within the expected 5-100 range.  Returns True if all pass.
+    within the expected ranges. Returns True if all pass.
     """
     test_cases = [
-        # [Hour, DayOfWeek, Month, IsWeekend, Weather, IsHoliday, IsEvent]
-        [9, 0, 4, 0, 0, 0, 0],   # Monday morning peak, April
-        [18, 4, 11, 0, 1, 0, 1], # Friday evening peak, Nov, Rainy, Event
-        [14, 6, 5, 1, 0, 1, 0],  # Sunday afternoon, May, Holiday
-        [2, 2, 1, 0, 2, 0, 0],   # Wednesday night, Jan, Foggy
+        # [City, Location, Hour, DayOfWeek, Month, IsWeekend, Weather, IsHoliday, IsEvent]
+        [0, 0, 9, 0, 4, 0, 0, 0, 0],   # Monday morning peak, April
+        [0, 1, 18, 4, 11, 0, 1, 0, 1], # Friday evening peak, Nov, Rainy, Event
+        [1, 2, 14, 6, 5, 1, 0, 1, 0],  # Sunday afternoon, May, Holiday
+        [2, 3, 2, 2, 1, 0, 2, 0, 0],   # Wednesday night, Jan, Foggy
     ]
 
     all_passed = True
     for case in test_cases:
         try:
-            prediction = float(model.predict([case])[0])
-            if not (0 <= prediction <= 140): # Allowing buffer for extra factors
+            # Model returns [VehicleCount, Congestion]
+            prediction = model.predict([case])[0]
+            vehicle_count = float(prediction[0])
+            congestion = float(prediction[1])
+            if not (0 <= congestion <= 140): # Allowing buffer for extra factors
                 logger.warning(
-                    "Raw prediction %s for input %s is unusual.",
-                    prediction, case
+                    "Raw congestion prediction %s for input %s is unusual.",
+                    congestion, case
                 )
                 all_passed = False
+            elif vehicle_count < 0:
+                logger.warning("Negative vehicle count predicted.")
+                all_passed = False
             else:
-                logger.debug("Prediction %.1f for input %s is within range.", prediction, case)
+                logger.debug("Prediction [%.1f, %.1f] for input %s is within range.", vehicle_count, congestion, case)
         except Exception as exc:
             logger.warning("Prediction failed for input %s: %s", case, exc)
             all_passed = False

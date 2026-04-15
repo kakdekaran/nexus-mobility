@@ -1,20 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import api from '../../services/api';
 
 const ScenarioParameters = ({ onPredict, isLoading }) => {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState("09:00");
   const [city, setCity] = useState("Delhi");
+  const [location, setLocation] = useState("");
+  const [locations, setLocations] = useState([]);
   const [weather, setWeather] = useState("clear");
   const [isHoliday, setIsHoliday] = useState(false);
   const [isEvent, setIsEvent] = useState(false);
 
-  const cities = ["Delhi", "Mumbai", "Bangalore", "Chennai", "Hyderabad"];
+  const cities = ["Delhi", "Mumbai", "Bangalore", "Chennai", "Hyderabad", "Pune"];
   const weatherOptions = ["Clear", "Rainy", "Foggy", "Stormy"];
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const res = await api.get(`/predictions/locations?city=${city}`);
+        const locs = res.data.locations;
+        setLocations(locs);
+        if (locs.length > 0) setLocation(locs[0]);
+      } catch (err) {
+        console.error("Failed to fetch locations", err);
+        setLocations([]);
+      }
+    };
+    fetchLocations();
+  }, [city]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onPredict({
       city,
+      location,
       time,
       date,
       weather,
@@ -49,6 +68,30 @@ const ScenarioParameters = ({ onPredict, isLoading }) => {
                 {c}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Location Selector */}
+        <div className="space-y-4">
+          <label className="text-[10px] font-black text-on-surface uppercase tracking-widest">Target Location</label>
+          <div className="relative group">
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full bg-on-surface/5 text-on-surface border border-on-surface/5 rounded-2xl py-4 px-5 focus:bg-on-surface/10 focus:border-primary/50 text-sm font-black tracking-widest transition-all outline-none appearance-none"
+            >
+              {locations.map((loc) => (
+                <option key={loc} value={loc} className="bg-surface-container text-on-surface">
+                  {loc}
+                </option>
+              ))}
+              {locations.length === 0 && (
+                <option value="" disabled className="bg-surface-container text-on-surface opacity-50">
+                  Loading locations...
+                </option>
+              )}
+            </select>
+            <span className="material-symbols-outlined absolute right-5 top-1/2 -translate-y-1/2 text-on-surface pointer-events-none group-focus-within:text-primary transition-colors">location_on</span>
           </div>
         </div>
 

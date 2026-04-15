@@ -47,7 +47,7 @@ const PredictionResultCard = ({ result }) => {
           <div className="space-y-3">
             <div className="flex flex-wrap justify-center lg:justify-start gap-3 items-center">
               <span className="px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full border border-primary/20">
-                {result.city}
+                {result.city} • {result.location}
               </span>
               <span className="px-4 py-1.5 bg-secondary/10 text-secondary text-[10px] font-black uppercase tracking-widest rounded-full border border-secondary/20">
                 {result.label} ({result.day})
@@ -60,7 +60,7 @@ const PredictionResultCard = ({ result }) => {
               {result.emoji} {result.status}
             </h4>
             <p className="text-on-surface text-sm font-medium opacity-70 max-w-xl">
-              {result.advice} Simulation predicts an estimated delay of <b>+{result.delay} minutes</b> compared to free-flow traffic.
+              {result.advice} Simulation predicts approx. <b>{result.vehicle_count?.toLocaleString() || 0} active vehicles</b> in the sector.
             </p>
           </div>
 
@@ -76,7 +76,7 @@ const PredictionResultCard = ({ result }) => {
             </div>
             <div className="bg-on-surface/5 p-5 rounded-[1.5rem] border border-on-surface/5 flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
-                <span className="material-symbols-outlined text-xl">{result.is_holiday ? 'event_available' : 'event_busy'}</span>
+                <span className="material-symbols-outlined text-xl">{result.is_holiday ? 'event_available' : result.is_event ? 'campaign' : 'event_busy'}</span>
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Special Status</p>
@@ -98,7 +98,7 @@ const PredictionResultCard = ({ result }) => {
           </span>
         </div>
         <div className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface opacity-40">
-          Source: Neural Mobility Engine v5.0-Enhanced
+          Source: Neural Mobility Engine v6.0-LocationSync
         </div>
       </div>
     </div>

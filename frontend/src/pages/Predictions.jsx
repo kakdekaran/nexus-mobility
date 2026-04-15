@@ -26,6 +26,7 @@ const Predictions = () => {
         date: params.date,
         time: params.time,
         city: params.city || "Delhi",
+        location: params.location || "Main",
         weather: params.weather || "clear",
         is_holiday: params.is_holiday || false,
         is_event: params.is_event || false
@@ -33,11 +34,13 @@ const Predictions = () => {
 
       setPredictionResult({
         congestion: res.data.congestion,
+        vehicle_count: res.data.vehicle_count,
         status: `${res.data.status} Congestion`,
         label: res.data.date_label,
         day: res.data.day,
         time: res.data.time,
         city: res.data.city,
+        location: res.data.location,
         weather: res.data.weather,
         is_holiday: res.data.is_holiday,
         is_event: res.data.is_event,

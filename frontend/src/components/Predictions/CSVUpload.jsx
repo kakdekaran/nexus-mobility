@@ -2,13 +2,17 @@ import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
 
-const SAMPLE_CSV = `date,time,city,weather,is_holiday,is_event
-2026-05-20,9 AM,Delhi,clear,no,no
-2026-05-20,6 PM,Delhi,rainy,no,yes
-2026-05-21,8 AM,Mumbai,foggy,no,no
-2026-05-25,5 PM,Bangalore,stormy,yes,no
-2026-06-15,10 AM,Chennai,clear,no,no
-2026-08-15,9 AM,Delhi,clear,yes,yes
+const SAMPLE_CSV = `date,time,city,location,weather,is_holiday,is_event
+2026-05-20,9 AM,Delhi,Connaught Place,clear,no,no
+2026-05-20,6 PM,Delhi,Lajpat Nagar,rainy,no,yes
+2026-05-21,8 AM,Mumbai,Andheri,foggy,no,no
+2026-05-25,5 PM,Bangalore,Whitefield,stormy,yes,no
+2026-06-15,10 AM,Chennai,T. Nagar,clear,no,no
+2026-07-03,8:30 AM,Hyderabad,HITEC City,clear,no,yes
+2026-07-03,7 PM,Pune,Wagholi,rainy,no,no
+2026-07-04,6:30 PM,Pune,Hadaparsar,clear,no,yes
+2026-08-15,9 AM,Delhi,India Gate,clear,yes,yes
+2026-09-01,7:45 AM,Pune,Hadapsar,foggy,no,no
 `;
 
 function downloadBlob(content, filename, mime) {
@@ -22,13 +26,14 @@ function downloadBlob(content, filename, mime) {
 }
 
 function resultsToCsv(predictions) {
-  const header = 'date,day,time,city,weather,is_holiday,is_event,congestion_percent,traffic_status,advice';
+  const header = 'date,day,time,city,location,weather,is_holiday,is_event,congestion_percent,traffic_status,advice';
   const rows = predictions.map((p) =>
     [
       p.date,
       p.day,
       p.time,
       p.city,
+      p.location,
       p.weather,
       p.is_holiday ? 'yes' : 'no',
       p.is_event ? 'yes' : 'no',
@@ -154,6 +159,10 @@ const CSVUpload = () => {
             <p className="text-on-surface opacity-60 text-[10px] font-medium leading-relaxed">Delhi, Mumbai, Bangalore...</p>
           </div>
           <div className="space-y-1">
+            <p className="font-black text-on-surface text-xs uppercase tracking-tighter">📍 location (Required)</p>
+            <p className="text-on-surface opacity-60 text-[10px] font-medium leading-relaxed">Connaught Place, Wagholi, Hadapsar...</p>
+          </div>
+          <div className="space-y-1">
             <p className="font-black text-on-surface text-xs uppercase tracking-tighter">☁️ weather (Optional)</p>
             <p className="text-on-surface opacity-60 text-[10px] font-medium leading-relaxed">clear, rainy, foggy, stormy</p>
           </div>
@@ -265,6 +274,38 @@ const CSVUpload = () => {
               />
             </div>
 
+            {Array.isArray(result.insights?.city_wise) && result.insights.city_wise.length > 0 && (
+              <div className="space-y-4">
+                <h4 className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-70">
+                  City-wise Summary
+                </h4>
+                <div className="overflow-x-auto rounded-[2rem] border border-on-surface/10 bg-on-surface/[0.02]">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="border-b border-on-surface/10 text-[9px] font-black uppercase tracking-widest text-on-surface opacity-40">
+                        <th className="px-6 py-4">City</th>
+                        <th className="px-6 py-4">Rows</th>
+                        <th className="px-6 py-4">Avg</th>
+                        <th className="px-6 py-4">Max</th>
+                        <th className="px-6 py-4">Top Location</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-on-surface/5">
+                      {result.insights.city_wise.map((row) => (
+                        <tr key={row.city} className="group hover:bg-on-surface/[0.03] transition-colors">
+                          <td className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface">{row.city}</td>
+                          <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.rows}</td>
+                          <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.average_congestion}%</td>
+                          <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.max_congestion}%</td>
+                          <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.top_location}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
             {result.predictions.length > 0 && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -285,6 +326,7 @@ const CSVUpload = () => {
                       <tr className="border-b border-on-surface/10 text-[9px] font-black uppercase tracking-widest text-on-surface opacity-40">
                         <th className="px-6 py-4">Date/Time</th>
                         <th className="px-6 py-4">City</th>
+                        <th className="px-6 py-4">Location</th>
                         <th className="px-6 py-4">Factors</th>
                         <th className="px-6 py-4">Congestion</th>
                         <th className="px-6 py-4">Advisory</th>
@@ -299,6 +341,9 @@ const CSVUpload = () => {
                           </td>
                           <td className="px-6 py-5">
                             <span className="text-[10px] font-black text-on-surface uppercase tracking-widest">{p.city}</span>
+                          </td>
+                          <td className="px-6 py-5">
+                            <span className="text-[10px] font-black text-on-surface uppercase tracking-widest">{p.location}</span>
                           </td>
                           <td className="px-6 py-5">
                             <div className="flex flex-wrap gap-2">

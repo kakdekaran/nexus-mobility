@@ -11,7 +11,8 @@ from pydantic import BaseModel, Field
 
 from services.auth_handler import get_current_analyst_or_admin, get_current_user
 from services.db import add_log, log_activity
-from services.ml import predict_congestion, city_factor
+from services.ml import predict_traffic, city_factor
+from utils.locations import get_cities, get_locations_for_city
 
 router = APIRouter()
 
@@ -19,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 PROCESSED_DATA = os.path.join(BASE_DIR, "data", "processed_sample.csv")
 CITY_SUMMARY = os.path.join(BASE_DIR, "data", "city_summary.json")
 
-CITY_ALIASES = {"Bangalore": "Bengaluru"}
-VALID_CITIES = ["Delhi", "Mumbai", "Bengaluru", "Chennai", "Hyderabad"]
+VALID_CITIES = get_cities()
 
 
 def canonical_city(city: str) -> str:
-    return CITY_ALIASES.get(city, city)
+    city_map = {k.lower(): k for k in VALID_CITIES}
+    return city_map.get(city.lower(), city)
 
 
 def get_data() -> pd.DataFrame | None:
@@ -40,18 +41,28 @@ def weekday_label(index: int) -> str:
 @router.get("/dashboard-stats")
 def get_dashboard_stats(city: str = "Delhi", current_user: dict = Depends(get_current_user)):
     now = datetime.now()
-    factor = city_factor(city)
+    locs = get_locations_for_city(city)
+    default_loc = locs[0] if locs else "Main"
 
     # Calculate current congestion for this city
-    current_congestion = predict_congestion(
+    current_congestion = predict_traffic(
         hour=now.hour,
         city=city,
+        location=default_loc,
         day_of_week=now.weekday(),
         month=now.month,
-    )
+    )["congestion"]
+    
+    current_vehicles = predict_traffic(
+        hour=now.hour,
+        city=city,
+        location=default_loc,
+        day_of_week=now.weekday(),
+        month=now.month,
+    )["vehicle_count"]
 
     # Calculate peak hour congestion
-    peak_congestion = predict_congestion(hour=18, city=city, day_of_week=now.weekday(), month=now.month)
+    peak_congestion = predict_traffic(hour=18, city=city, location=default_loc, day_of_week=now.weekday(), month=now.month)["congestion"]
 
     # Active alerts based on congestion level
     active_alerts = 0
@@ -69,6 +80,7 @@ def get_dashboard_stats(city: str = "Delhi", current_user: dict = Depends(get_cu
         "peak_congestion": round(peak_congestion, 1),
         "network_health": f"{max(65, min(98, 100 - (active_alerts * 3)))}%",
         "velocity": f"{max(15, round(75 - (current_congestion * 0.4)))} km/h",
+        "active_vehicles": current_vehicles,
         "day": weekday_label(now.weekday()),
         "time": now.strftime("%I:%M %p"),
     }
@@ -84,22 +96,25 @@ def get_traffic_trends(
     now = datetime.now()
     day_of_week = now.weekday()
     month = now.month
+    
+    locs = get_locations_for_city(city)
+    default_loc = locs[0] if locs else "Main"
 
     if time_range == "7d":
         # Show each day of the week
         return [
             {
                 "time": weekday_label(d),
-                "congestion": round(predict_congestion(hour=18, city=city, day_of_week=d, month=month), 1)
+                "congestion": round(predict_traffic(hour=18, city=city, location=default_loc, day_of_week=d, month=month)["congestion"], 1)
             }
             for d in range(7)
-            if predict_congestion(hour=18, city=city, day_of_week=d, month=month) >= min_congestion
+            if predict_traffic(hour=18, city=city, location=default_loc, day_of_week=d, month=month)["congestion"] >= min_congestion
         ]
 
     if time_range == "30d":
         # Simulated 4-week pattern
         week_factors = [0.96, 1.01, 1.07, 1.10]
-        base = predict_congestion(hour=18, city=city, day_of_week=day_of_week, month=month)
+        base = predict_traffic(hour=18, city=city, location=default_loc, day_of_week=day_of_week, month=month)["congestion"]
         return [
             {
                 "time": f"Week {i + 1}",
@@ -112,7 +127,7 @@ def get_traffic_trends(
     # 24h view – show each hour
     output = []
     for h in range(24):
-        congestion = predict_congestion(hour=h, city=city, day_of_week=day_of_week, month=month)
+        congestion = predict_traffic(hour=h, city=city, location=default_loc, day_of_week=day_of_week, month=month)["congestion"]
         if congestion >= min_congestion:
             # Format hour as AM/PM
             if h == 0:
@@ -130,8 +145,13 @@ def get_traffic_trends(
 @router.get("/compare-cities")
 def compare_cities(city1: str, city2: str, current_user: dict = Depends(get_current_user)):
     now = datetime.now()
-    c1 = predict_congestion(hour=now.hour, city=city1, day_of_week=now.weekday(), month=now.month)
-    c2 = predict_congestion(hour=now.hour, city=city2, day_of_week=now.weekday(), month=now.month)
+    locs1 = get_locations_for_city(city1)
+    def_loc1 = locs1[0] if locs1 else "Main"
+    locs2 = get_locations_for_city(city2)
+    def_loc2 = locs2[0] if locs2 else "Main"
+    
+    c1 = predict_traffic(hour=now.hour, city=city1, location=def_loc1, day_of_week=now.weekday(), month=now.month)["congestion"]
+    c2 = predict_traffic(hour=now.hour, city=city2, location=def_loc2, day_of_week=now.weekday(), month=now.month)["congestion"]
     return {
         "city1": {"name": city1, "congestion": round(c1, 1)},
         "city2": {"name": city2, "congestion": round(c2, 1)},
@@ -152,14 +172,18 @@ def export_report(
     # Generate a hourly report for the city
     rows = []
     target_city = city or "Delhi"
+    locs = get_locations_for_city(target_city)
+    default_loc = locs[0] if locs else "Main"
+    
     for h in range(24):
-        c = predict_congestion(hour=h, city=target_city, day_of_week=day_of_week, month=month)
+        c = predict_traffic(hour=h, city=target_city, location=default_loc, day_of_week=day_of_week, month=month)["congestion"]
         if min_congestion is not None and c < min_congestion:
             continue
         if max_congestion is not None and c > max_congestion:
             continue
         rows.append({
             "City": target_city,
+            "Location": default_loc,
             "Hour": h,
             "Time": f"{h:02d}:00",
             "Congestion": round(c, 1),
@@ -196,7 +220,9 @@ def export_report(
 @router.get("/alerts")
 def get_alerts(city: str = "Delhi", current_user: dict = Depends(get_current_user)):
     now = datetime.now()
-    congestion = predict_congestion(hour=now.hour, city=city, day_of_week=now.weekday(), month=now.month)
+    locs = get_locations_for_city(city)
+    default_loc = locs[0] if locs else "Main"
+    congestion = predict_traffic(hour=now.hour, city=city, location=default_loc, day_of_week=now.weekday(), month=now.month)["congestion"]
     alerts = []
 
     if congestion >= 70:
@@ -244,7 +270,9 @@ def clear_alerts(city: str = "Delhi", current_user: dict = Depends(get_current_u
 @router.get("/sector-stats")
 def get_sector_stats(city: str = "Delhi", current_user: dict = Depends(get_current_user)):
     now = datetime.now()
-    base_congestion = predict_congestion(hour=now.hour, city=city, day_of_week=now.weekday(), month=now.month)
+    locs = get_locations_for_city(city)
+    default_loc = locs[0] if locs else "Main"
+    base_congestion = predict_traffic(hour=now.hour, city=city, location=default_loc, day_of_week=now.weekday(), month=now.month)["congestion"]
 
     sector_multipliers = {
         "A1": 0.85, "A2": 1.15, "A3": 0.92, "A4": 1.28,
@@ -270,7 +298,9 @@ def get_metropolitan_leaderboard(current_user: dict = Depends(get_current_user))
 
     leaderboard = []
     for city in VALID_CITIES:
-        congestion = predict_congestion(hour=now.hour, city=city, day_of_week=now.weekday(), month=now.month)
+        locs = get_locations_for_city(city)
+        default_loc = locs[0] if locs else "Main"
+        congestion = predict_traffic(hour=now.hour, city=city, location=default_loc, day_of_week=now.weekday(), month=now.month)["congestion"]
         mobility_score = round(100 - congestion, 1)
 
         leaderboard.append({
