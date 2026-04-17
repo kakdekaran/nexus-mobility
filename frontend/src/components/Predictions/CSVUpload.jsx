@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
 import { getCurrentRole } from '../../services/session';
+import ForecastResultsVisualizer from './ForecastResultsVisualizer';
 
 const SAMPLE_CSV = `date,time,city,location,weather,is_holiday,is_event,vehicle_count,pm2_5_ugm3,pm10_ugm3,co_ugm3,no2_ugm3
 2026-05-20,9 AM,Delhi,Connaught Place,clear,no,no,4450,88,145,990,43
@@ -89,6 +90,8 @@ const CSVUpload = () => {
   const [publishedItems, setPublishedItems] = useState([]);
   const [publishAck, setPublishAck] = useState(null);
   const [error, setError] = useState(null);
+  const [isForecastMode, setIsForecastMode] = useState(false);
+  const [forecastDays, setForecastDays] = useState(7);
   const inputRef = useRef(null);
   const activeResult = result || { predictions: [], insights: {} };
 
@@ -150,13 +153,17 @@ const CSVUpload = () => {
     const form = new FormData();
     form.append('file', file);
 
+    const endpoint = isForecastMode ? '/predictions/forecast-from-csv' : '/predictions/upload-csv';
+    const params = isForecastMode ? { days: forecastDays } : {};
+
     try {
-      const res = await api.post('/predictions/upload-csv', form, {
+      const res = await api.post(endpoint, form, {
         headers: { 'Content-Type': 'multipart/form-data' },
+        params,
         timeout: 300000,
       });
       setResult(res.data);
-      if (!isUserPanel) {
+      if (!isUserPanel && !isForecastMode) {
         setPublishAck(res.data);
       }
     } catch (err) {
@@ -230,6 +237,40 @@ const CSVUpload = () => {
         </div>
       </div>
 
+      {/* Forecast Mode Toggle */}
+      <div className="flex flex-col gap-4 p-6 bg-primary/5 rounded-[2rem] border border-primary/20">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <p className="text-[10px] font-black uppercase tracking-widest text-primary">Intelligence Mode</p>
+            <p className="text-sm font-black text-on-surface uppercase tracking-tight">
+              {isForecastMode ? "⏳ Sequence Forecasting Enabled" : "🔍 Point-in-time Analysis"}
+            </p>
+          </div>
+          <button
+            onClick={() => setIsForecastMode(!isForecastMode)}
+            className={`px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${isForecastMode ? 'bg-primary text-on-primary' : 'bg-on-surface/10 text-on-surface'}`}
+          >
+            {isForecastMode ? "Switch to Normal" : "Enable Forecast"}
+          </button>
+        </div>
+        {isForecastMode && (
+          <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
+            <p className="text-[10px] font-bold text-on-surface/60 uppercase">Horizon:</p>
+            <div className="flex gap-2">
+              {[3, 7, 14].map(d => (
+                <button
+                  key={d}
+                  onClick={() => setForecastDays(d)}
+                  className={`px-3 py-1 rounded-lg text-[10px] font-black transition-all ${forecastDays === d ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-on-surface/5 text-on-surface opacity-40 hover:opacity-100'}`}
+                >
+                  {d} Days
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Drop Zone */}
       <div
         onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -269,9 +310,9 @@ const CSVUpload = () => {
           className="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 disabled:opacity-40 active:scale-95 transition-all hover:brightness-110"
         >
           <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
-            {loading ? 'hourglass_top' : 'bolt'}
+            {loading ? 'hourglass_top' : (isForecastMode ? 'auto_graph' : 'bolt')}
           </span>
-          {loading ? 'Analyzing...' : 'Predict Batch'}
+          {loading ? 'Analyzing...' : (isForecastMode ? `Forecast Next ${forecastDays} Days` : 'Predict Batch')}
         </button>
 
         {(file || result) && (
@@ -297,11 +338,15 @@ const CSVUpload = () => {
         {(result || publishAck) && !loading && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
 
+            {isForecastMode && result?.predictions && (
+              <ForecastResultsVisualizer data={result.predictions} />
+            )}
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <InsightCard
-                icon="analytics"
-                label="Avg Congestion"
-                value={`${activeResult.insights?.average_congestion || 0}%`}
+                icon={isForecastMode ? "timeline" : "analytics"}
+                label={isForecastMode ? "Avg Forecasted" : "Avg Congestion"}
+                value={`${activeResult.insights?.average_congestion || activeResult.insights?.average_forecasted_congestion || 0}%`}
                 color="text-primary"
               />
               <InsightCard

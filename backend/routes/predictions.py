@@ -11,6 +11,7 @@ from typing import List, Optional
 from services.auth_handler import get_current_analyst_or_admin, get_current_user, require_roles
 from services.db import add_prediction_result, get_prediction_results, log_activity
 from services.ml import predict_traffic
+from services.forecasting import generate_forecast
 from utils.locations import canonicalize_location, get_cities, get_locations_for_city
 
 router = APIRouter()
@@ -530,6 +531,65 @@ async def upload_csv(file: UploadFile = File(...), current_user: dict = Depends(
     response_payload["published_to_user_panel"] = current_user.get("role") != "User"
     if current_user.get("role") != "User":
         response_payload["message"] = "CSV processed and published to User panel."
+    return response_payload
+
+
+@router.post("/forecast-from-csv")
+async def forecast_from_csv(
+    file: UploadFile = File(...), 
+    days: int = Query(default=7, ge=1, le=30),
+    current_user: dict = Depends(get_current_user)
+):
+    if not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
+
+    content = await file.read()
+    if len(content) > CSV_MAX_BYTES:
+        raise HTTPException(status_code=413, detail="File exceeds the 10 MB size limit.")
+
+    try:
+        df = pd.read_csv(io.BytesIO(content))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Could not parse CSV.")
+
+    df.columns = df.columns.str.strip().str.lower()
+    
+    # We require date, time, city, location to build a baseline and shift forward
+    missing = SIMPLE_REQUIRED - set(df.columns)
+    if missing:
+        raise HTTPException(status_code=422, detail=f"Missing columns: {', '.join(sorted(missing))}")
+
+    forecast_results = generate_forecast(df, forecast_days=days)
+    
+    if not forecast_results:
+        raise HTTPException(status_code=422, detail="No valid historical segments found to generate forecast.")
+
+    avg_congestion = round(sum(r["congestion"] for r in forecast_results) / len(forecast_results), 1)
+    
+    response_payload = {
+        "filename": file.filename,
+        "forecast_days": days,
+        "total_forecast_rows": len(forecast_results),
+        "predictions": forecast_results[:RESPONSE_PREVIEW_LIMIT],
+        "predictions_truncated": len(forecast_results) > RESPONSE_PREVIEW_LIMIT,
+        "insights": {
+            "average_forecasted_congestion": avg_congestion,
+        },
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+    # Save to DB
+    saved_result_id = str(uuid.uuid4())
+    add_prediction_result({
+        "id": saved_result_id,
+        "created_at": datetime.utcnow().isoformat(),
+        "source": "forecast-from-csv",
+        "uploaded_by": current_user["sub"],
+        "uploader_role": current_user.get("role", "User"),
+        "payload": response_payload,
+    })
+
+    response_payload["result_id"] = saved_result_id
     return response_payload
 
 
