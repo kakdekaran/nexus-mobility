@@ -58,4 +58,5 @@ desktop.ini
 # Temp files
 *.tmp
 *.bak
+data/tmp*.json
 error_report.txt
