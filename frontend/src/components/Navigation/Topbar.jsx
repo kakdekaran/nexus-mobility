@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../../services/session';
 import api from '../../services/api';
+import TrafficAlerts from '../alerts/traffic-alerts';
 
 
 const Topbar = ({ user: initialUser }) => {
@@ -154,95 +155,10 @@ const Topbar = ({ user: initialUser }) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="relative">
-          <button 
-            onClick={() => { setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false); }}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors relative ${isNotifOpen ? 'bg-primary/20 text-primary' : 'text-on-surface hover:text-sky-300 hover:bg-surface-container-high/50'}`}
-          >
-            <span className="material-symbols-outlined">notifications</span>
-            {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-on-surface text-[8px] font-black flex items-center justify-center rounded-full ring-2 ring-on-surface/10 animate-pulse">
-                {unreadCount}
-              </span>
-            )}
-          </button>
-
-          <AnimatePresence>
-            {isNotifOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="absolute right-0 mt-3 w-80 bg-surface-container border border-on-surface/10 rounded-2xl shadow-2xl overflow-hidden z-[100] backdrop-blur-xl"
-              >
-                <div className="p-4 bg-on-surface/5 border-b border-on-surface/5 flex justify-between items-center">
-                  <p className="text-[10px] text-on-surface font-black uppercase tracking-widest leading-none">Notifications Center</p>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 bg-primary/20 text-primary text-[8px] font-black rounded-full uppercase tracking-widest">{unreadCount} New</span>
-                  </div>
-                </div>
-
-                <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
-                  {unreadNotifications.length > 0 ? unreadNotifications.map((notif) => (
-                    <div 
-                      key={notif.id}
-                      className={`p-4 border-b border-on-surface/5 transition-all relative group bg-indigo-500/5`}
-                    >
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
-                      <div className="flex gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                          notif.type === 'alert' ? 'bg-error/10 text-error' : 
-                          notif.type === 'warning' ? 'bg-warning/10 text-warning' : 
-                          'bg-sky-400/10 text-sky-400'
-                        }`}>
-                          <span className="material-symbols-outlined text-lg">
-                            {notif.type === 'alert' ? 'emergency' : notif.type === 'warning' ? 'warning' : 'info'}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-on-surface mb-1 leading-tight">{notif.title}</p>
-                          <p className={`text-[10px] text-on-surface leading-relaxed ${expandedNotif === notif.id ? '' : 'truncate'}`}>
-                            {notif.message}
-                          </p>
-                          <div className="flex items-center justify-between mt-3">
-                             <button 
-                               onClick={() => setExpandedNotif(expandedNotif === notif.id ? null : notif.id)}
-                               className="text-[8px] text-primary font-black uppercase tracking-widest hover:text-sky-300 transition-colors"
-                             >
-                               {expandedNotif === notif.id ? 'Collapse Details' : 'Expand Alert News'}
-                             </button>
-                             <button 
-                               onClick={() => markRead(notif.id)}
-                               className="px-2 py-1 bg-on-surface/5 hover:bg-primary text-[8px] text-on-surface hover:text-on-primary font-black uppercase tracking-widest rounded transition-all border border-on-surface/5"
-                             >
-                               Archive Directive
-                             </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )) : (
-                    <div className="p-10 text-center">
-                      <span className="material-symbols-outlined text-4xl text-on-surface mb-4 block">mail_lock</span>
-                      <p className="text-[10px] text-on-surface font-bold uppercase tracking-widest">Nexus Inbox Clean</p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3 bg-on-surface/5 border-t border-on-surface/5">
-                  <Link 
-                    to="/inbox" 
-                    onClick={() => setIsNotifOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-on-surface hover:text-primary transition-all group"
-                  >
-                    Open Command Inbox
-                    <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
-                  </Link>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <TrafficAlerts onShowPanel={(isOpen) => {
+          if (isOpen) setIsProfileOpen(false);
+          setIsNotifOpen(false);
+        }} />
         
         <div className="h-8 w-[1px] bg-surface-container-high mx-2"></div>
         

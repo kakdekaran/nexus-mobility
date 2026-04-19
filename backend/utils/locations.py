@@ -17,7 +17,7 @@ CITY_LOCATIONS = {
         {"name": "Malad", "base_volume": 3600},
         {"name": "Powai", "base_volume": 4200}
     ],
-    "Bangalore": [
+    "Bengaluru": [
         {"name": "Whitefield", "base_volume": 5500},
         {"name": "Indiranagar", "base_volume": 4200},
         {"name": "Koramangala", "base_volume": 4600},

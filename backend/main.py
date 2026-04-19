@@ -13,7 +13,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes import admin, analytics, auth, predictions, analyst
+from routes import admin, analytics, auth, predictions, analyst, alerts
 from utils.model_validator import run_startup_validation
 
 LOG_DIR = Path(__file__).resolve().parent.parent / "data" / "logs"
@@ -58,6 +58,7 @@ app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"]
 app.include_router(predictions.router, prefix="/api/predictions", tags=["Predictions"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 app.include_router(analyst.router, prefix="/api/analyst", tags=["Analyst"])
+app.include_router(alerts.router, prefix="/api/alerts", tags=["Alerts"])
 
 @app.api_route("/", methods=["GET", "HEAD"])
 def read_root():
@@ -71,6 +72,7 @@ def read_root():
             "predictions": "/api/predictions",
             "admin": "/api/admin (Admin only)",
             "analyst": "/api/analyst (Analyst/Admin only)",
+            "alerts": "/api/alerts",
         }
     }
 
