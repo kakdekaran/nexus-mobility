@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL, getDefaultRouteForRole, normalizeRole, setSession } from '../services/session';
+import { getApiErrorMessage } from '../services/api';
 
 const API_BASE = `${API_BASE_URL}/auth`;
 
@@ -73,7 +74,7 @@ const Login = () => {
       if (!err.response) {
         setError("GRID CONNECTIVITY FAULT: Backend is unreachable. Ensure VITE_API_BASE_URL is set.");
       } else {
-        setError(err.response?.data?.detail || "Authentication failed. Check credentials.");
+        setError(getApiErrorMessage(err, "Authentication failed. Check credentials."));
       }
     } finally {
       setLoading(false);

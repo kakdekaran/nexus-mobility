@@ -109,10 +109,11 @@ def _predict_pollution_metrics(
 
 def _normalize_city_or_raise(raw_city: str, valid_cities: set) -> str:
     from fastapi import HTTPException
-    city_map = {k.lower(): k for k in valid_cities}
-    city = city_map.get(raw_city.strip().lower(), raw_city.strip())
-    if city not in valid_cities:
-        raise HTTPException(status_code=422, detail=f"Unknown city: '{raw_city}'")
+    from utils.locations import _canonical_city
+    
+    city = _canonical_city(raw_city)
+    if not city or city not in valid_cities:
+        raise HTTPException(status_code=422, detail=f"Unknown city: '{raw_city}'. Supported: {', '.join(sorted(valid_cities))}")
     return city
 
 def _build_city_wise_insights(results: list[dict]) -> list[dict]:

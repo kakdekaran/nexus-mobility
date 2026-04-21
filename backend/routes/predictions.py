@@ -1,19 +1,22 @@
 import io
 import os
 import uuid
+import pandas as pd
+from typing import Optional, List
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Query
+from pydantic import BaseModel, Field, root_validator
 from datetime import datetime
 
-import pandas as pd
-from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
-from pydantic import BaseModel, Field
-from typing import List, Optional
-
-from services.auth_handler import get_current_analyst_or_admin, get_current_user, require_roles
+from services.auth_handler import get_current_user, get_current_analyst_or_admin, require_roles
 from services.db import add_prediction_result, get_prediction_results, log_activity
 from services.ml import predict_traffic
 from services.forecasting import generate_forecast
-from utils.locations import canonicalize_location, get_cities, get_locations_for_city
-from utils.parsers import _parse_date, _parse_time, _hour_to_ampm, _friendly_date_label, _traffic_status, _predict_pollution_metrics, _normalize_city_or_raise, _build_city_wise_insights, _apply_vehicle_hint
+from utils.locations import canonicalize_location, get_cities, get_locations_for_city, _canonical_city
+from utils.parsers import (
+    _parse_date, _parse_time, _hour_to_ampm, _friendly_date_label, 
+    _traffic_status, _predict_pollution_metrics, _normalize_city_or_raise, 
+    _build_city_wise_insights, _apply_vehicle_hint
+)
 
 router = APIRouter()
 
@@ -21,9 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 VALID_CITIES = set(get_cities())
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-def canonical_city(city: str) -> str:
-    city_map = {k.lower(): k for k in VALID_CITIES}
-    return city_map.get(city.lower(), city)
+# Response preview limit for batch operations
+RESPONSE_PREVIEW_LIMIT = 50
 
 @router.get("/locations")
 def get_locations(city: str = "Delhi"):
@@ -154,8 +156,8 @@ def predict_batch(data: BatchPredictionRequest, current_user: dict = Depends(get
         parsed_hour = _parse_time(row.time)
         if parsed_hour is None: row_errors.append(f"Invalid time: '{row.time}'")
 
-        city = canonical_city(row.city.strip())
-        if city not in VALID_CITIES: row_errors.append(f"Unknown city: '{row.city}'")
+        city = _canonical_city(row.city.strip())
+        if not city or city not in VALID_CITIES: row_errors.append(f"Unknown city: '{row.city}'")
 
         if row_errors:
             errors.append({"row": row_num, "errors": row_errors, "date": row.date, "time": row.time, "city": row.city})
@@ -257,8 +259,8 @@ def _simple_batch_predict(df: pd.DataFrame) -> tuple[list, list]:
         if parsed_hour is None: row_errors.append(f"Invalid time: '{row.get('time', '')}'")
 
         raw_city = str(row.get("city", "")).strip()
-        city = canonical_city(raw_city)
-        if city not in VALID_CITIES: row_errors.append(f"Unknown city: '{raw_city}'")
+        city = _canonical_city(raw_city)
+        if not city or city not in VALID_CITIES: row_errors.append(f"Unknown city: '{raw_city}'")
 
         if row_errors:
             errors.append({"row": row_num, "errors": row_errors, "date": str(row.get("date", "")), "time": str(row.get("time", "")), "city": raw_city})

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import api from '../../services/api';
+import api, { getApiErrorMessage } from '../../services/api';
 
 const cities = ['Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Hyderabad'];
 
@@ -39,7 +39,7 @@ const ReportGeneratorDrawer = ({ isOpen, onClose }) => {
         onClose();
       }, 2000);
     } catch (exportError) {
-      setError(exportError.response?.data?.detail || 'Unable to generate report.');
+      setError(getApiErrorMessage(exportError, 'Unable to generate report.'));
     } finally {
       setExporting(false);
     }

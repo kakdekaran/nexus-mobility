@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
+import api, { getApiErrorMessage } from '../../services/api';
 import { getCurrentRole } from '../../services/session';
 import ForecastResultsVisualizer from './ForecastResultsVisualizer';
+import { ErrorAlert } from '../UI';
 
 const SAMPLE_CSV = `date,time,city,location,weather,is_holiday,is_event,vehicle_count,pm2_5_ugm3,pm10_ugm3,co_ugm3,no2_ugm3
 2026-03-22,9 AM,Delhi,Connaught Place,clear,no,no,4100,72,110,800,32
@@ -96,8 +97,23 @@ const CSVUpload = () => {
   const [error, setError] = useState(null);
   const [isForecastMode, setIsForecastMode] = useState(false);
   const [forecastDays, setForecastDays] = useState(7);
+  
+  // Filtering states
+  const [cityFilter, setCityFilter] = useState('All');
+  const [locationFilter, setLocationFilter] = useState('');
+  
   const inputRef = useRef(null);
   const activeResult = result || { predictions: [], insights: {} };
+
+  // Deriving unique cities from results
+  const uniqueCities = ['All', ...new Set((activeResult?.predictions || []).map(p => p.city).filter(Boolean))];
+
+  // Logic for filtered predictions
+  const filteredPredictions = (activeResult?.predictions || []).filter(p => {
+    const matchesCity = cityFilter === 'All' || p.city === cityFilter;
+    const matchesLocation = p.location?.toLowerCase().includes(locationFilter?.toLowerCase() || '');
+    return matchesCity && matchesLocation;
+  });
 
   useEffect(() => {
     const fetchPublished = async () => {
@@ -171,8 +187,7 @@ const CSVUpload = () => {
         setPublishAck(res.data);
       }
     } catch (err) {
-      const detail = err?.response?.data?.detail;
-      setError(detail || 'Upload failed. Please try again.');
+      setError(getApiErrorMessage(err, 'Upload failed. Please try again.'));
     } finally {
       setLoading(false);
     }
@@ -337,6 +352,12 @@ const CSVUpload = () => {
         </button>
       </div>
 
+      {error && (
+        <div className="animate-in fade-in slide-in-from-top-4">
+          <ErrorAlert message={error} />
+        </div>
+      )}
+
       {/* Results */}
       <AnimatePresence>
         {(result || publishAck) && !loading && (
@@ -400,7 +421,11 @@ const CSVUpload = () => {
                     </thead>
                     <tbody className="divide-y divide-on-surface/5">
                       {activeResult.insights.city_wise.map((row) => (
-                        <tr key={row.city} className="group hover:bg-on-surface/[0.03] transition-colors">
+                        <tr 
+                          key={row.city} 
+                          onClick={() => setCityFilter(row.city)}
+                          className={`group hover:bg-primary/10 transition-colors cursor-pointer ${cityFilter === row.city ? 'bg-primary/10' : ''}`}
+                        >
                           <td className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface">{row.city}</td>
                           <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.rows}</td>
                           <td className="px-6 py-4 text-[10px] font-black text-on-surface">{row.average_congestion}%</td>
@@ -420,13 +445,39 @@ const CSVUpload = () => {
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-70">
                     Neural Flow Analysis Output
                   </h4>
-                  <button
-                    onClick={() => downloadBlob(resultsToCsv(activeResult.predictions), 'batch_predictions_report.csv', 'text/csv')}
-                    className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-primary hover:opacity-80 transition-opacity"
-                  >
-                    <span className="material-symbols-outlined text-base">file_download</span>
-                    Export Full Report
-                  </button>
+                  <div className="flex items-center gap-4">
+                    {/* Filter Bar */}
+                    <div className="flex h-10 bg-on-surface/5 rounded-xl ring-1 ring-on-surface/10 p-1">
+                        <select 
+                            value={cityFilter}
+                            onChange={(e) => setCityFilter(e.target.value)}
+                            className="bg-transparent border-none text-[9px] font-black uppercase tracking-widest text-on-surface focus:ring-0 px-3 cursor-pointer outline-none"
+                        >
+                            {uniqueCities.map(city => (
+                                <option key={city} value={city} className="bg-surface-container text-on-surface">{city}</option>
+                            ))}
+                        </select>
+                        <div className="w-[1px] bg-on-surface/10 mx-1 my-1.5" />
+                        <div className="flex items-center px-2 min-w-[120px]">
+                            <span className="material-symbols-outlined text-sm opacity-30 mr-2">search</span>
+                            <input 
+                                type="text"
+                                placeholder="SEARCH LOCATION..."
+                                value={locationFilter}
+                                onChange={(e) => setLocationFilter(e.target.value)}
+                                className="bg-transparent border-none p-0 text-[10px] font-bold text-on-surface placeholder:text-on-surface/20 focus:ring-0 outline-none w-full"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={() => downloadBlob(resultsToCsv(activeResult.predictions), 'batch_predictions_report.csv', 'text/csv')}
+                        className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-primary hover:opacity-80 transition-opacity ml-2"
+                    >
+                        <span className="material-symbols-outlined text-base">file_download</span>
+                        Export Full Report
+                    </button>
+                  </div>
                 </div>
                 <div className="overflow-x-auto rounded-[2rem] border border-on-surface/10 bg-on-surface/[0.02]">
                   <table className="w-full text-left">
@@ -442,7 +493,7 @@ const CSVUpload = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-on-surface/5">
-                      {activeResult.predictions.map((p, i) => (
+                      {filteredPredictions.length > 0 ? filteredPredictions.map((p, i) => (
                         <tr key={i} className="group hover:bg-on-surface/[0.03] transition-colors">
                           <td className="px-6 py-5">
                             <p className="text-xs font-black text-on-surface uppercase tracking-tight">{p.time}</p>
@@ -476,7 +527,20 @@ const CSVUpload = () => {
                             <p className="text-[10px] font-medium text-on-surface opacity-60 leading-relaxed max-w-[200px] italic">"{p.advice}"</p>
                           </td>
                         </tr>
-                      ))}
+                      )) : (
+                        <tr>
+                            <td colSpan="7" className="px-6 py-20 text-center text-on-surface/40">
+                                <span className="material-symbols-outlined text-4xl mb-4 block">search_off</span>
+                                <p className="text-[10px] font-black uppercase tracking-widest leading-none">No vectors matching filter</p>
+                                <button 
+                                  onClick={() => { setCityFilter('All'); setLocationFilter(''); }}
+                                  className="mt-6 text-[10px] font-black uppercase tracking-widest text-primary hover:opacity-80 transition-opacity"
+                                >
+                                  Reset Intelligence Filters
+                                </button>
+                            </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

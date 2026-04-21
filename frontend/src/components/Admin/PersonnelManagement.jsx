@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
+import api, { getApiErrorMessage } from '../../services/api';
 
 const PersonnelRow = ({ id, name, email, role, status, lastLogin, initial, color, onUpdate, onDelete }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -79,7 +79,7 @@ const AddUserModal = ({ onClose, onSuccess }) => {
       });
       onSuccess();
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create user node.');
+      setError(getApiErrorMessage(err, 'Failed to create user node.'));
     } finally {
       setLoading(false);
     }

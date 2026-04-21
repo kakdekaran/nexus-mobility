@@ -15,12 +15,22 @@ export const normalizeRole = (role) => {
   return ROLE_ALIASES[role] ?? 'User';
 };
 
-const isLocal = typeof window !== 'undefined' && 
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const isPrivateIPv4Host = (hostname) =>
+  /^(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3})$/.test(
+    hostname
+  );
+
+const isLocal = typeof window !== 'undefined' && (
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1' ||
+  window.location.hostname === '::1' ||
+  window.location.hostname.endsWith('.local') ||
+  isPrivateIPv4Host(window.location.hostname)
+);
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ?? 
-  (isLocal ? 'http://127.0.0.1:8000/api' : 'https://nexus-mobility-backend.onrender.com/api');
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') ??
+  (isLocal ? `http://${window.location.hostname}:8000/api` : 'https://nexus-mobility-backend.onrender.com/api');
 
 export const getToken = () => sessionStorage.getItem('nexus_token') || localStorage.getItem('nexus_token');
 

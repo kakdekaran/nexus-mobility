@@ -57,6 +57,10 @@ CITY_LOCATIONS = {
 }
 
 LOCATION_ALIASES = {
+    "Bengaluru": {
+        "bangalore": "Bengaluru",
+        "blr": "Bengaluru",
+    },
     "Pune": {
         "hadaparsar": "Hadapsar",
         "hadapar": "Hadapsar",
@@ -66,10 +70,21 @@ LOCATION_ALIASES = {
     }
 }
 
+CITY_ALIASES = {
+    "bangalore": "Bengaluru",
+    "blr": "Bengaluru",
+    "bengaluru": "Bengaluru",
+}
+
 
 def _canonical_city(city: str) -> str | None:
+    raw = str(city).strip().lower()
+    # Check direct aliases first
+    if raw in CITY_ALIASES:
+        return CITY_ALIASES[raw]
+    
     city_map = {k.lower(): k for k in CITY_LOCATIONS.keys()}
-    return city_map.get(str(city).strip().lower())
+    return city_map.get(raw)
 
 
 def canonicalize_location(city: str, location: str) -> str:

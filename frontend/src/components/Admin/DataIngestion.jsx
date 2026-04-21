@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import api from '../../services/api';
+import api, { getApiErrorMessage } from '../../services/api';
 
 const DataIngestion = () => {
   const inputRef = useRef(null);
@@ -38,7 +38,7 @@ const DataIngestion = () => {
       setSelectedFile(null);
       if (inputRef.current) inputRef.current.value = '';
     } catch (uploadError) {
-      setError(uploadError.response?.data?.detail || 'Upload failed.');
+      setError(getApiErrorMessage(uploadError, 'Upload failed.'));
     } finally {
       setUploading(false);
     }

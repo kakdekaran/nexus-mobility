@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import api from '../services/api';
+import api, { getApiErrorMessage } from '../services/api';
 import PredictionHero from '../components/Predictions/PredictionHero';
 import ScenarioParameters from '../components/Predictions/ScenarioParameters';
 import PredictionResultCard from '../components/Predictions/PredictionResultCard';
@@ -51,7 +51,7 @@ const Predictions = () => {
       });
     } catch (err) {
       setPredictionResult(null);
-      setError(err.response?.data?.detail || "Prediction service is currently unavailable.");
+      setError(getApiErrorMessage(err, "Prediction service is currently unavailable."));
     } finally {
       setLoading(false);
     }

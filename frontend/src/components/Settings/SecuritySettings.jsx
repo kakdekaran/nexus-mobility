@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../../services/api';
+import api, { getApiErrorMessage } from '../../services/api';
 
 const SecuritySettings = () => {
   const [passwords, setPasswords] = useState({ old: '', new: '', confirm: '' });
@@ -19,7 +19,7 @@ const SecuritySettings = () => {
       setMessage({ type: 'success', text: 'Access protocols updated.' });
       setPasswords({ old: '', new: '', confirm: '' });
     } catch (err) {
-      setMessage({ type: 'error', text: err.response?.data?.detail || 'Protocol rejection.' });
+      setMessage({ type: 'error', text: getApiErrorMessage(err, 'Protocol rejection.') });
     } finally {
       setLoading(false);
       setTimeout(() => setMessage(null), 3000);

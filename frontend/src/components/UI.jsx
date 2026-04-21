@@ -54,6 +54,20 @@ export const EmptyState = ({ message = 'No records found for this selection' }) 
 };
 
 export const ErrorAlert = ({ message, onRetry }) => {
+  const normalizedMessage = (() => {
+    if (typeof message === 'string') return message;
+    if (Array.isArray(message)) return message.join(' | ');
+    if (message && typeof message === 'object') {
+      if (typeof message.message === 'string') return message.message;
+      try {
+        return JSON.stringify(message);
+      } catch {
+        return 'Unexpected system error.';
+      }
+    }
+    return String(message ?? 'Unexpected system error.');
+  })();
+
   return (
     <div style={{ 
       background: '#fef2f2', 
@@ -68,7 +82,7 @@ export const ErrorAlert = ({ message, onRetry }) => {
       <AlertCircle size={24} />
       <div style={{ flex: 1 }}>
         <h4 style={{ margin: 0, fontWeight: '700' }}>System Error</h4>
-        <p style={{ margin: '4px 0 0 0', fontSize: '0.9rem', opacity: 0.8 }}>{message}</p>
+        <p style={{ margin: '4px 0 0 0', fontSize: '0.9rem', opacity: 0.8 }}>{normalizedMessage}</p>
       </div>
       {onRetry && (
         <motion.button
