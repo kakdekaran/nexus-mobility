@@ -96,8 +96,3 @@ graph TD
 
 ---
 
-## 📧 Contact & Support
-For enterprise integration or technical inquiries, please reach out via GitHub Issues or contact the project maintainers.
-
----
-*Developed with ❤️ for smarter, cleaner cities.*
